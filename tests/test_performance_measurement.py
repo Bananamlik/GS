@@ -15,6 +15,21 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class SourceTests(unittest.TestCase):
+    def test_elapsed_pacing_keeps_slow_frames_and_limits_fast_refresh(self):
+        source=(ROOT/'index.html').read_text()
+        policy=re.search(r'<script id="gsPerformancePolicy">(.*?)</script>',source,re.S)[1]
+        script="global.window=global;\n"+policy+"""
+        const assert=require('node:assert/strict'),make=GS_PERFORMANCE_POLICY.createPacer;
+        const p=make();assert.deepEqual([0,80,160,240].map(t=>p.allow(t,30)),[true,true,true,true]);
+        p.reset();assert.deepEqual([0,16.6,33.2,49.8,66.4].map(t=>p.allow(t,30)),[true,false,true,false,true]);
+        p.reset();let frames=0;for(let i=0;i<144;i++)frames+=p.allow(i*1000/144,72);
+        assert.equal(frames,72);assert.equal(p.allow(999,0),true);
+        assert.equal(p.allow(1000,30),true);assert.equal(p.allow(1001,30),false);
+        p.reset();assert.equal(p.allow(1002,30),true);assert.equal(p.allow(NaN,30),false);
+        """
+        result=subprocess.run(['node'],input=script,capture_output=True,text=True)
+        self.assertEqual(result.returncode,0,result.stderr)
+
     def test_runtime_files_match_and_scripts_parse(self):
         source = (ROOT / 'index.html').read_text()
         self.assertEqual(source, (ROOT / 'GS_Action_v34_runtime.html').read_text())
@@ -81,6 +96,63 @@ class BrowserSession(unittest.TestCase):
 
 
 class BrowserTests(BrowserSession):
+    def test_slow_render_is_not_skipped_again_at_30_fps(self):
+        self.page.evaluate("GS_ACTION.startTrial('bolt')")
+        self.page.wait_for_function('GS_ACTION.vfxWarmStatus?.ids && GS_ACTION.warmStatus.queued===0',timeout=60000)
+        self.page.select_option('#gaFpsCap','30',force=True)
+        self.page.evaluate('''() => {
+          window.pacedFrames=[];const C=STAGE3D.host.composer;
+          window.pacedRender=C.render;
+          C.render=()=>{pacedFrames.push(performance.now());const end=performance.now()+80;
+            while(performance.now()<end){};};
+        }''')
+        self.page.wait_for_function('pacedFrames.length>=10',timeout=15000)
+        result=self.page.evaluate('''() => {
+          STAGE3D.host.composer.render=pacedRender;
+          const times=pacedFrames.slice(2),intervals=times.slice(1).map((t,i)=>t-times[i]);
+          return {intervals,mean:intervals.reduce((a,b)=>a+b,0)/intervals.length,method:__GS_PACING_METHOD};
+        }''')
+        self.assertEqual(result['method'],'elapsed-time')
+        self.assertLess(result['mean'],95,result)
+
+    def test_module_preparation_cancels_and_rebuilds_after_context_loss(self):
+        self.page.evaluate('''() => {
+          window.__GS_BENCH_CALIBRATING=true;const R=STAGE3D.env.renderer;
+          window.epochFixture={calls:0,cancelled:false,native:R.compileAsync};
+          R.compileAsync=()=>{epochFixture.calls++;return epochFixture.calls===1?new Promise(()=>{}):Promise.resolve();};
+          window.epochId=Object.keys(GA_SKILL_LIB).find(id=>!STAGE3D.getEffect(id).__instantiated);
+          STAGE3D.prepare(epochId).catch(()=>{epochFixture.cancelled=true;});
+        }''')
+        self.page.wait_for_function('epochFixture.calls===1')
+        self.page.evaluate("STAGE3D.env.renderer.domElement.dispatchEvent(new Event('webglcontextlost'))")
+        self.page.wait_for_function('epochFixture.cancelled')
+        self.page.evaluate("STAGE3D.env.renderer.domElement.dispatchEvent(new Event('webglcontextrestored'))")
+        self.page.evaluate('STAGE3D.prepare(epochId)')
+        self.assertEqual(self.page.evaluate('epochFixture.calls'),2)
+        self.page.evaluate('() => {STAGE3D.env.renderer.compileAsync=epochFixture.native}')
+
+    def test_quality_changes_resize_once_and_skip_identical_settings(self):
+        self.page.set_viewport_size({'width':800,'height':1600})
+        self.page.wait_for_function('STAGE3D.env.camera.aspect===0.5')
+        self.page.evaluate('''() => {
+          GS_ACTION.enterGameSelect();const R=STAGE3D.env.renderer,C=STAGE3D.host.composer;
+          window.resizeTrace={buffer:0,legacy:0,composer:0};
+          const b=R.setDrawingBufferSize,s=R.setSize,c=C.setPixelRatio;
+          R.setDrawingBufferSize=function(...a){resizeTrace.buffer++;return b.apply(this,a);};
+          R.setSize=function(...a){resizeTrace.legacy++;return s.apply(this,a);};
+          C.setPixelRatio=function(...a){resizeTrace.composer++;return c.apply(this,a);};
+        }''')
+        self.page.select_option('#gaQuality','low',force=True)
+        first=self.page.evaluate('({...resizeTrace,width:STAGE3D.env.renderer.domElement.width,height:STAGE3D.env.renderer.domElement.height})')
+        self.assertEqual(first['buffer'],1)
+        self.assertEqual(first['legacy'],0)
+        self.assertEqual(first['composer'],1)
+        self.assertLessEqual(first['height'],960)
+        self.page.select_option('#gaQuality','low',force=True)
+        self.assertEqual(self.page.evaluate('resizeTrace'),{k:first[k] for k in ['buffer','legacy','composer']})
+        self.page.select_option('#gaQuality','high',force=True)
+        self.assertEqual(self.page.evaluate('STAGE3D.env.renderer.domElement.height'),1600)
+
     def start_bench(self, cap=60):
         self.page.select_option('#gaFpsCap', str(cap), force=True)
         self.page.evaluate('GS_ACTION.runBench(3, {warmupSeconds:0.3})')

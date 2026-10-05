@@ -1,5 +1,7 @@
 # v34-runtime-6 클라우드 검증
 
+후속 변경과 현재 결과: [v34-runtime-8](cloud-runtime-8.md). 이 문서는 runtime-6의 기록이다.
+
 ## 구현
 
 - 전투 준비 전 유휴 RAF에서 FPS 목표를 고정하고, 요청한 30/60FPS보다

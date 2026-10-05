@@ -28,4 +28,10 @@ python3 scripts/benchmark_cloud.py --seconds 600 --cap 60 --loop --output cloud-
 10분을 사용합니다. 브라우저 성능 검사는 다른 브라우저 검사와 동시에 실행하지
 않습니다. 원시 결과는 기본적으로 Git에서 제외합니다.
 
-검사 범위와 남은 작업은 [클라우드 검증 기록](docs/cloud-validation.md)에 있습니다.
+전체 효과의 실제 렌더 검사:
+
+```bash
+python3 scripts/audit_vfx_cloud.py --output cloud-results/vfx-all.json
+```
+
+검사 범위와 남은 작업은 [현재 클라우드 검증 기록](docs/cloud-runtime-8.md)에 있습니다.
