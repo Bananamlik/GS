@@ -1,0 +1,78 @@
+17:12:41 ok   desktop-1280x720 shot 01-lab
+17:12:49 ok   desktop-1280x720 GS_ACTION.start
+17:12:51 ok   desktop-1280x720 shot 02-game-menu
+17:12:51 ok   desktop-1280x720 warm wait
+17:12:51 ok   desktop-1280x720 click #gaStart
+17:12:55 ok   desktop-1280x720 shot 03-game-early
+17:12:55 ok   desktop-1280x720 enemies close
+17:12:58 ok   desktop-1280x720 shot 04-game-enemies
+17:12:58 ok   desktop-1280x720 cast skills
+17:13:00 ok   desktop-1280x720 shot 05-game-cast-a
+17:13:03 ok   desktop-1280x720 shot 06-game-cast-b
+17:13:03 ok   desktop-1280x720 low hp
+17:13:04 ok   desktop-1280x720 shot 07-game-low-hp
+17:13:04 ok   desktop-1280x720 clear wave -> draft
+17:13:05 ok   desktop-1280x720 draft open
+17:13:05 ok   desktop-1280x720 shot 08-draft
+17:13:06 ok   desktop-1280x720 leave
+17:13:06 ok   desktop-1280x720 startTrial
+17:13:06 ok   desktop-1280x720 trial warm
+17:13:08 ok   desktop-1280x720 shot 09-trial
+17:13:08 ok   desktop-1280x720 trial cast ult
+17:13:09 ok   desktop-1280x720 shot 10-trial-cast
+17:13:09 ok   desktop-1280x720 dom info
+17:13:09 desktop-1280x720 info {"vw": 1280, "vh": 720, "dpr": 1, "reticle": [633, 353, 14, 14], "skills": [395, 633, 491, 67], "vitals": {"x": 0, "y": 0, "width": 0, "height": 0, "top": 0, "right": 0, "bottom": 0, "left": 0}, "top": {"x": 560.3125, "y": 18, "width": 159.375, "height": 56.1875, "top": 18, "right": 719.6875, "bottom": 74.1875, "left": 560.3125}, "objective": [0, 0, 0, 0], "hint": [1014, 665, 248, 34], "feedback": [616, 398, 48, 29]}
+17:13:09 desktop-1280x720 pageerrors 0 []
+17:13:09 ok   viewport desktop-1280x720
+17:13:12 ok   phone-landscape-915x412 shot 01-lab
+17:13:18 ok   phone-landscape-915x412 GS_ACTION.start
+17:13:19 ok   phone-landscape-915x412 shot 02-game-menu
+17:13:19 ok   phone-landscape-915x412 warm wait
+17:13:19 ok   phone-landscape-915x412 click #gaStart
+17:13:22 ok   phone-landscape-915x412 shot 03-game-early
+17:13:22 ok   phone-landscape-915x412 enemies close
+17:13:25 ok   phone-landscape-915x412 shot 04-game-enemies
+17:13:25 ok   phone-landscape-915x412 cast skills
+17:13:27 ok   phone-landscape-915x412 shot 05-game-cast-a
+17:13:27 ok   phone-landscape-915x412 shot 06-game-cast-b
+17:13:27 ok   phone-landscape-915x412 low hp
+17:13:29 ok   phone-landscape-915x412 shot 07-game-low-hp
+17:13:29 ok   phone-landscape-915x412 clear wave -> draft
+17:13:29 ok   phone-landscape-915x412 draft open
+17:13:29 ok   phone-landscape-915x412 shot 08-draft
+17:13:29 ok   phone-landscape-915x412 leave
+17:13:29 ok   phone-landscape-915x412 startTrial
+17:13:29 ok   phone-landscape-915x412 trial warm
+17:13:31 ok   phone-landscape-915x412 shot 09-trial
+17:13:31 ok   phone-landscape-915x412 trial cast ult
+17:13:32 ok   phone-landscape-915x412 shot 10-trial-cast
+17:13:32 ok   phone-landscape-915x412 dom info
+17:13:32 phone-landscape-915x412 info {"vw": 915, "vh": 412, "dpr": 1, "reticle": [451, 199, 14, 14], "skills": [0, 0, 0, 0], "vitals": {"x": 0, "y": 0, "width": 0, "height": 0, "top": 0, "right": 0, "bottom": 0, "left": 0}, "top": {"x": 377.8125, "y": 18, "width": 159.375, "height": 56.1875, "top": 18, "right": 537.1875, "bottom": 74.1875, "left": 377.8125}, "objective": [0, 0, 0, 0], "hint": [0, 0, 0, 0], "feedback": [434, 244, 48, 29]}
+17:13:32 phone-landscape-915x412 pageerrors 0 []
+17:13:32 ok   viewport phone-landscape-915x412
+17:13:34 ok   phone-portrait-412x915 shot 01-lab
+17:13:37 ok   phone-portrait-412x915 GS_ACTION.start
+17:13:40 ok   phone-portrait-412x915 shot 02-game-menu
+17:13:40 ok   phone-portrait-412x915 warm wait
+17:13:40 ok   phone-portrait-412x915 click #gaStart
+17:13:43 ok   phone-portrait-412x915 shot 03-game-early
+17:13:43 ok   phone-portrait-412x915 enemies close
+17:13:46 ok   phone-portrait-412x915 shot 04-game-enemies
+17:13:46 ok   phone-portrait-412x915 cast skills
+17:13:48 ok   phone-portrait-412x915 shot 05-game-cast-a
+17:13:49 ok   phone-portrait-412x915 shot 06-game-cast-b
+17:13:49 ok   phone-portrait-412x915 low hp
+17:13:50 ok   phone-portrait-412x915 shot 07-game-low-hp
+17:13:50 ok   phone-portrait-412x915 clear wave -> draft
+17:13:51 ok   phone-portrait-412x915 draft open
+17:13:51 ok   phone-portrait-412x915 shot 08-draft
+17:13:51 ok   phone-portrait-412x915 leave
+17:13:51 ok   phone-portrait-412x915 startTrial
+17:13:51 ok   phone-portrait-412x915 trial warm
+17:13:53 ok   phone-portrait-412x915 shot 09-trial
+17:13:53 ok   phone-portrait-412x915 trial cast ult
+17:13:54 ok   phone-portrait-412x915 shot 10-trial-cast
+17:13:54 ok   phone-portrait-412x915 dom info
+17:13:54 phone-portrait-412x915 info {"vw": 412, "vh": 915, "dpr": 1, "reticle": [199, 451, 14, 14], "skills": [0, 0, 0, 0], "vitals": {"x": 0, "y": 0, "width": 0, "height": 0, "top": 0, "right": 0, "bottom": 0, "left": 0}, "top": {"x": 12, "y": 120, "width": 159.375, "height": 56.1875, "top": 120, "right": 171.375, "bottom": 176.1875, "left": 12}, "objective": [0, 0, 0, 0], "hint": [0, 0, 0, 0], "feedback": [182, 496, 48, 29]}
+17:13:54 phone-portrait-412x915 pageerrors 0 []
+17:13:54 ok   viewport phone-portrait-412x915
