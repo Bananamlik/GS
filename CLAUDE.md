@@ -4,11 +4,11 @@ GS Action: 단일 HTML 게임/VFX 스튜디오. 현재 상태는 `docs/STATUS.md
 
 ## 파일
 
-- `index.html` = `GS_Action_v34_runtime.html`. 항상 byte 동일. 한쪽만 바꾸지 않는다.
-- `GS_Action_v35_261005-2000.html`: PR #3 최종본과 byte 동일(md5 `f7d2ab883d7bc78fc05d9b046e45bf47`). main에 업로드됨. 수정하지 않는다.
+- `index.html` = `GS_Action_v34_runtime.html`. 항상 byte 동일. 한쪽만 바꾸지 않는다. 현재 md5 `5c7263984c75c6c44346abee821b4b88` (v35 + HUD 개선).
+- `GS_Action_v35_261005-2000.html`: PR #3 최종본과 byte 동일(md5 `f7d2ab883d7bc78fc05d9b046e45bf47`), HUD 개선 이전 빌드. 수정하지 않는다.
 - `gs-skill-lib_v7_261003-0344.csv`: 스킬 라이브러리.
 - `GS_Action_v14_261003-0447.html`, `gs-v14-report_v1_261003-0447.md`: 이전 버전·보고서.
-- `docs/`: 상태·증거. `tests/`, `scripts/`, `.github/workflows/`는 PR #3 계열과 CI PR(#9)에만 있음.
+- `docs/`: 상태·증거. `tests/`(25개), `scripts/`, `.github/workflows/tests.yml`은 `main`에 있고 PR마다 자동 실행됨(`workflow_dispatch`로 수동 실행도 가능).
 
 ## 규칙
 
@@ -33,4 +33,6 @@ GS Action: 단일 HTML 게임/VFX 스튜디오. 현재 상태는 `docs/STATUS.md
 
 ## PR 구조
 
-분할 PR은 쌓인 구조: A(#5) → BC(#6) → D(#7). 각각 draft. 앞 PR이 병합되면 다음 PR base를 갱신한다.
+- 분할 PR #5~#7, CI #9, HUD #10·#11은 모두 `main`에 병합됨(상세는 `docs/STATUS.md`).
+- 새 변경은 `main`에서 브랜치를 만든다. 코드 PR은 `index.html`과 `GS_Action_v34_runtime.html`을 함께 바꾸고 25개 테스트 통과를 확인한다.
+- 화면 확인이 필요하면 결과 수집용 브랜치(`claude/probe-*`)처럼 캡처 워크플로를 별도 브랜치에 얹어 실행한다. `main`에 넣지 않는다.
