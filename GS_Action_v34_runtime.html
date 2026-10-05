@@ -618,7 +618,11 @@ async function main(){
   composer.addPass(new RenderPass(scene, camera));
   const classicBloom = new ClassicBloomPass(innerWidth, innerHeight);
   composer.addPass(classicBloom);
-  composer.addPass(new OutputPass());
+  const outputPass=new OutputPass();
+  composer.addPass(outputPass);
+  // The current linear/no-tone output is an identity copy. Keep conversion for other settings.
+  function syncOutputPass(){outputPass.enabled=renderer.toneMapping!==THREE.NoToneMapping||renderer.outputColorSpace!==THREE.LinearSRGBColorSpace;return outputPass.enabled;}
+  syncOutputPass();
 
   // =====================================================================
   // 공용기반(env) — 모든 KERNEL 이펙트가 공유. 원본 ARCANUM-CORE(L111~L480) 대응.
@@ -1288,13 +1292,72 @@ async function main(){
   }
   const ENV = { THREE, scene, camera, ground, renderer, Pool3D, makePointsLayer, writeLayer, NOISE_GLSL, curl2, vnoise };
   window.STAGE3D._q.forEach(args=>realReg(...args));
+  const stormBatches=new Set(),stormProjection=new THREE.Matrix4(),stormPoint=new THREE.Vector4();
+  function stormDepth(o){
+    if(o.isSprite)stormPoint.setFromMatrixPosition(o.matrixWorld);
+    else{if(o.boundingSphere===null)o.computeBoundingSphere();const sphere=o.boundingSphere||o.geometry.boundingSphere;if(!sphere){o.geometry.computeBoundingSphere();stormPoint.copy(o.geometry.boundingSphere.center);}else stormPoint.copy(sphere.center);stormPoint.applyMatrix4(o.matrixWorld);}
+    return stormPoint.applyMatrix4(stormProjection).z;
+  }
+  function stormGroupOrder(o){for(let p=o.parent;p;p=p.parent)if(p.isGroup)return p.renderOrder;return 0;}
+  function syncStormBatches(){
+    if(!stormBatches.size)return;camera.updateMatrixWorld();stormProjection.multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse);
+    const barriers=[];
+    scene.traverseVisible(o=>{if(!o.geometry||!camera.layers.test(o.layers)||o.userData.gsStormBatch)return;const mats=Array.isArray(o.material)?o.material:[o.material];
+      if(!mats.some(m=>m?.visible&&m.transparent&&(m.blending!==THREE.AdditiveBlending||m.depthWrite)&&(m.opacity!==0||m.depthWrite)))return;
+      o.updateWorldMatrix(true,false);barriers.push({z:stormDepth(o),order:o.renderOrder,group:stormGroupOrder(o)});
+    });
+    for(const h of stormBatches)h.sync(barriers);
+  }
+  function createStormBatches(group){
+    const originals=[];group.traverse(o=>{const m=o.material;if(o.isMesh&&!o.isInstancedMesh&&o.geometry.type==='ConeGeometry'&&m?.isMeshBasicMaterial&&m.transparent&&m.blending===THREE.AdditiveBlending&&!m.depthWrite&&m.side===THREE.DoubleSide&&!m.map&&!m.envMap)originals.push(o);});
+    if(!originals.length||originals.some(o=>o.parent!==group||o.geometry!==originals[0].geometry||o.renderOrder!==originals[0].renderOrder))return null;
+    const material=originals[0].material.clone();material.color.setRGB(1,1,1);material.opacity=1;
+    material.onBeforeCompile=sh=>{
+      sh.vertexShader='attribute float gsStormAlpha; varying float vGsStormAlpha;\n'+sh.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\nvGsStormAlpha=gsStormAlpha;').replace('#include <project_vertex>','vec4 mvPosition=instanceMatrix*vec4(transformed,1.0);gl_Position=projectionMatrix*mvPosition;');
+      sh.fragmentShader='varying float vGsStormAlpha;\n'+sh.fragmentShader.replace('#include <color_fragment>','#include <color_fragment>\ndiffuseColor.a*=vGsStormAlpha;');
+    };
+    material.customProgramCacheKey=()=>'gs-storm-segment-alpha-v1';
+    const batches=[],matrix=new THREE.Matrix4(),center=new THREE.Vector3(),point=new THREE.Vector3();
+    for(const o of originals){o.userData.gsStormOriginalLayer=o.layers.mask;o.layers.set(31);}
+    group.userData.gsStormSegmented=true;
+    function addBatch(){const geo=originals[0].geometry.clone(),alpha=new THREE.InstancedBufferAttribute(new Float32Array(originals.length),1).setUsage(THREE.DynamicDrawUsage);geo.setAttribute('gsStormAlpha',alpha);
+      const mesh=new THREE.InstancedMesh(geo,material,originals.length);mesh.name='GS_STORM_SEGMENT';mesh.userData.gsStormBatch=true;mesh.frustumCulled=false;mesh.renderOrder=originals[0].renderOrder;mesh.boundingSphere=new THREE.Sphere(new THREE.Vector3(),1);
+      mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);mesh.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(originals.length*3),3).setUsage(THREE.DynamicDrawUsage);group.add(mesh);const b={mesh,alpha};batches.push(b);return b;}
+    const helper={sync(barriers){for(const b of batches)b.mesh.visible=false;
+      let visible=true;for(let p=group;p;p=p.parent)if(!p.visible){visible=false;break;}
+      if(!visible)return;const disabled=group.userData.gsStormBatchDisabled;
+      for(const o of originals)o.layers.mask=disabled?o.userData.gsStormOriginalLayer:1<<31;
+      if(disabled)return;
+      group.updateWorldMatrix(true,false);
+      const cuts=barriers.filter(b=>b.group===group.renderOrder&&b.order===originals[0].renderOrder).map(b=>b.z).sort((a,b)=>a-b),segments=new Map();
+      for(const o of originals){if(!o.visible||o.material.opacity===0)continue;o.updateWorldMatrix(false,false);const z=stormDepth(o);let slot=0;while(slot<cuts.length&&cuts[slot]<z)slot++;
+        if(slot<cuts.length&&Math.abs(cuts[slot]-z)<1e-7){o.layers.mask=o.userData.gsStormOriginalLayer;continue;}
+        if(!segments.has(slot))segments.set(slot,[]);segments.get(slot).push(o);
+      }
+      let index=0;for(const rows of segments.values()){const b=batches[index++]||addBatch(),mesh=b.mesh;center.set(0,0,0);
+        for(let i=0;i<rows.length;i++){const o=rows[i];matrix.multiplyMatrices(camera.matrixWorldInverse,o.matrixWorld);mesh.setMatrixAt(i,matrix);mesh.setColorAt(i,o.material.color);b.alpha.setX(i,o.material.opacity);
+          point.copy(o.geometry.boundingSphere.center).applyMatrix4(o.matrix);center.add(point);
+        }
+        mesh.boundingSphere.center.copy(center.divideScalar(rows.length));mesh.count=rows.length;mesh.visible=true;
+        for(const [attr,count] of [[mesh.instanceMatrix,rows.length*16],[mesh.instanceColor,rows.length*3],[b.alpha,rows.length]]){attr.clearUpdateRanges();attr.addUpdateRange(0,count);attr.needsUpdate=true;}
+      }
+    },dispose(){stormBatches.delete(helper);for(const b of batches)b.mesh.dispose();}};
+    stormBatches.add(helper);addBatch().mesh.visible=false;return helper;
+  }
+  const stormComposerRender=composer.render;
+  composer.render=function(...args){syncStormBatches();return stormComposerRender.apply(this,args);};
+  function skipZeroStormSurfaces(group){
+    const hidden=[];
+    return {restore(){for(const o of hidden){o.visible=true;delete o.userData.gsStormZeroHidden;}hidden.length=0;},
+      sync(){group.traverseVisible(o=>{const m=o.material;if(o.isMesh&&m?.isMeshBasicMaterial&&m.transparent&&!m.depthWrite&&m.opacity===0){o.visible=false;o.userData.gsStormZeroHidden=true;hidden.push(o);}});}};
+  }
   const CH_KEEP=new Set(); /*@V5 retained CH instances: released when unused 45 s, or beyond the 6 most recent*/
   for(const preset of CHROMA.BEAM_PRESETS){
     realReg('CH:'+preset.id,'CH_BEAM',preset.korean+' · CHROMA',function(env){
       const root=new THREE.Group();env.scene.add(root);
-      let effect=null,voice=null,rest=0,live=false,idle=0; /*@GS_PATCH*/ const ZERO=new THREE.Vector3();
+      let effect=null,stormVisibility=null,stormBatch=null,voice=null,rest=0,live=false,idle=0; /*@GS_PATCH*/ const ZERO=new THREE.Vector3();
       function stop(){voice?.stop();voice=null;live=false;root.visible=false;} /*@V5 perf: instance kept, freed after 45 s idle*/
-      function free(){if(effect){effect.dispose();effect=null;}CH_KEEP.delete(me);}
+      function free(){stormBatch?.dispose();stormBatch=null;stormVisibility?.restore();stormVisibility=null;if(effect){effect.dispose();effect=null;}CH_KEEP.delete(me);}
       const me={free,last:0,get live(){return live;}};
       return {bloomAmt:.45,
         trigger(target,castContext={}){
@@ -1312,14 +1375,16 @@ async function main(){
           root.position.copy(from);root.scale.setScalar(K);
           const lto=to.clone().sub(from).divideScalar(K);
           rest=0;idle=0;{const now=performance.now();me.last=now;CH_KEEP.add(me);const old=[...CH_KEEP].filter(k=>k!==me&&!k.live).sort((a,b)=>b.last-a.last);old.forEach((k,i)=>{if(i>=5||now-k.last>45000)k.free();});}
-          if(effect){effect.setEndpoints(ZERO,lto);effect.restart();}
-          else{effect=CHROMA.createBeamVFX(THREE,{preset:preset.id,from:new THREE.Vector3(),to:lto,power:1,duration:6});root.add(effect.group);} /*@GS_PATCH*/
+          if(effect){stormVisibility?.restore();effect.setEndpoints(ZERO,lto);effect.restart();}
+          else{effect=CHROMA.createBeamVFX(THREE,{preset:preset.id,from:new THREE.Vector3(),to:lto,power:1,duration:6});root.add(effect.group);
+            if(preset.id==='storm'){stormVisibility=skipZeroStormSurfaces(effect.group);stormBatch=createStormBatches(effect.group);}
+          } /*@GS_PATCH*/
           if(castContext.startAt>0){effect.update(Math.min(castContext.startAt,5.9));castContext.__seeked=true;} /*@V5 deterministic sample(t): one call*/
-          root.visible=true;live=true;castContext.onContactTime?.(effect.contactTime,effect.impactTimes||[effect.contactTime]);
+          stormVisibility?.sync();root.visible=true;live=true;castContext.onContactTime?.(effect.contactTime,effect.impactTimes||[effect.contactTime]);
           if(castContext.playAudio!==false)voice=CHROMA_AUDIO.start(preset.id);
           return true;
         },
-        update(dt){if(!effect||!live)return;effect.update(dt);if(effect.finished){rest=(rest||0)+dt;if(rest>1.8)stop();}else rest=0;}, /*@GS_PATCH*/
+        update(dt){if(!effect||!live)return;stormVisibility?.restore();effect.update(dt);stormVisibility?.sync();if(effect.finished){rest=(rest||0)+dt;if(rest>1.8)stop();}else rest=0;}, /*@GS_PATCH*/
         stop};
     });
   }
@@ -1382,7 +1447,7 @@ async function main(){
   window.STAGE3D.prepare=prepareEffect;window.STAGE3D.selectLab=id=>armEffect(id,false);
   window.STAGE3D.reg = realReg;
   window.STAGE3D.env = ENV;
-  window.STAGE3D.host = {controls, composer, classicBloom, grid, ground, groundMat, ambientLightRef, keyLight, fillLight}; /*@GS_PATCH*/
+  window.STAGE3D.host = {controls, composer, classicBloom, outputPass, syncOutputPass, syncStormBatches, grid, ground, groundMat, ambientLightRef, keyLight, fillLight}; /*@GS_PATCH*/
   window.STAGE3D.meta = {taxonomy:TAXONOMY, registry:REGISTRY, tierOf:ratingTierFor, displayName, spawn:id=>{const r=REGISTRY[EFFECT_ALIASES[id]||id];return r?.factory?lazyEffect(r.factory,!!window.__FX_SCALABLE?.has(EFFECT_ALIASES[id]||id),!/^(C:|D:|GS-)/.test(id),window.__FX_ADJ?.[EFFECT_ALIASES[id]||id]):null;}}; /*@GS_PATCH*/ /*@V6*/
   // Integration pilot: one active instance per registered effect ID.
   // The battle system owns damage, collision and target choice; this preview receives positions.
@@ -1792,6 +1857,7 @@ async function main(){
   const updatedMods = new Set();let fpsLast=0,fpsI=0,fpsK=0;const fpsRing=new Float64Array(40).fill(16.7),fpsSort=new Float64Array(40); /*@V11 @V12*/
   function tick(ts){
     requestAnimationFrame(tick); /*@V8 F05: scheduled first, so an exception below cannot stop the loop*/
+    if(window.__GS_BENCH_CALIBRATING){fpsLast=ts??performance.now();timer.update(ts);return;}
     {const now=ts??performance.now(),d=now-fpsLast;fpsLast=now; /*@V12 pacing: display refresh is measured, then every Nth refresh is drawn → equal frame spacing (144 Hz → 72, 120 → 60, 240 → 60)*/
      if(d>2&&d<100){fpsRing[fpsI++%40]=d;if(fpsI%40===0){fpsSort.set(fpsRing);fpsSort.sort();const hz=1000/fpsSort[8];window.__GS_HZ=hz;}}
      const cap=window.__GS_FPS_CAP||0,hz=window.__GS_HZ||60,n=cap>0?Math.max(1,Math.floor(hz/cap+.2)):1;window.__GS_SKIP_N=n;
@@ -1813,6 +1879,7 @@ async function main(){
       const m = REGISTRY[k].mod;
       if(updatedMods.has(m)) continue;
       updatedMods.add(m);
+      if(window.__GS_IS_WARM_MOD?.(m))continue;
       if(m.__dead) continue; /*@V8 F09*/
       try{
         m.update(dt);
@@ -1826,8 +1893,8 @@ async function main(){
       }
     }
     try{window.GS_AUDIO?.tick(dt);}catch(err){if(!window.__GS_AUDIO_ERR){window.__GS_AUDIO_ERR=1;console.error('[GS_AUDIO tick]',err);}} /*@V8 F05*/
-    const fxUpdateCpuMs=performance.now()-fxUpdateStarted;
-    const gsVisible=!!window.GS_VISUAL_ACTIVE?.size;
+    const fxUpdateCpuMs=performance.now()-fxUpdateStarted;window.__GS_TRACE_END?.('vfx.update',window.__GS_TRACE_START?fxUpdateStarted:-1);
+    let gsVisible=false;for(const key of window.GS_VISUAL_ACTIVE||[]){if(!window.__GS_IS_WARM_VISUAL?.(key)){gsVisible=true;break;}}
     const bloomTarget=gsVisible?Math.min(targetBloomAmt,.28):targetBloomAmt;
     classicBloom.uBloomAmt += (bloomTarget-classicBloom.uBloomAmt)*Math.min(1,dt*3);
     classicBloom.uKnee += ((gsVisible?0.58:0.12)-classicBloom.uKnee)*Math.min(1,dt*3);
@@ -1847,7 +1914,7 @@ async function main(){
     const actionProfile=window.__GS_COMBAT_ACTIVE&&window.__GS_FRAME;
     renderer.info.autoReset=!actionProfile;
     if(actionProfile)renderer.info.reset();
-    const renderStart=performance.now();if(!window.__GS_SKIP_RENDER?.())composer.render(); /*@V5 paused-menu throttle*/
+    window.__GS_HIDE_WARM_ROOTS?.();syncOutputPass();const renderStart=performance.now();try{if(!window.__GS_SKIP_RENDER?.())composer.render();}finally{window.__GS_TRACE_END?.('render.submit',window.__GS_TRACE_START?renderStart:-1);} /*@V5 paused-menu throttle*/
     if(actionProfile)try{window.__GS_FRAME({now:performance.now(),rawDt,actionCpuMs,fxUpdateCpuMs,renderCpuMs:performance.now()-renderStart,calls:renderer.info.render.calls,triangles:renderer.info.render.triangles,geometries:renderer.info.memory.geometries,textures:renderer.info.memory.textures});}catch(err){if(!window.__GS_FRAME_ERR){window.__GS_FRAME_ERR=1;console.error('[GS_ACTION FRAME]',err);}} /*@GS_PATCH*/
   }
   tick();
@@ -13499,7 +13566,7 @@ function syncMechVisual(r,e,id,dt){
   else playMech(r.mech,'idle');
  }catch(err){if(!V._mechSyncErr){V._mechSyncErr=1;console.warn('[GS Action mech sync]',err);}}
 }
-function stopPool(){for(const pool of V.pool.values())for(const x of pool){if(x.i===0)VFX_COMBAT.stop(x.id);else x.mod?.stop?.();x.until=0;x.zoneId=undefined;}}
+function stopPool(){cancelWarmFor();for(const pool of V.pool.values())for(const x of pool){if(x.i===0)VFX_COMBAT.stop(x.id);else x.mod?.stop?.();x.until=0;x.zoneId=undefined;}}
 // Unit footprints are retained by the host. Instances own only their materials and transforms.
 const judgeGeometries=new Map(),judgeEdges=new WeakMap();
 function judgeGeometry(kind,angle){const key=kind+':'+(angle??'');if(!judgeGeometries.has(key)){const g=kind==='circle'?new T.CircleGeometry(1,48):kind==='ring'?new T.RingGeometry(.96,1.04,48):kind==='box'?new T.BoxGeometry(1,1,1):kind==='plane'?new T.PlaneGeometry(1,1):new T.CircleGeometry(1,40,-angle/2,angle);g.userData.gsSharedJudge=true;judgeGeometries.set(key,g);}return judgeGeometries.get(key);}
@@ -13524,10 +13591,10 @@ function showPreview(e){dropPreview(e.slot);if(e.kind==='shield')return;
  const linger=V.mode==='trial'&&el('gaKeepJudge').checked?Math.max(e.duration,(previewSkill?.windup||0)+(previewSkill?.hitT||0)+(previewSkill?.hold||0)+.5):e.duration;
  V.previews.set(e.slot,{group,edge,until:e.t+linger,duration:linger});
 }
-function ensurePool(id,limit){const key=STAGE3D.resolveId?.(id)||id;
+function ensurePool(id,limit){const phaseStart=benchPhaseStart();const key=STAGE3D.resolveId?.(id)||id;
  let pool=V.pool.get(key);if(!pool){pool=[{id:key,i:0,until:0,mod:null}];V.pool.set(key,pool);}
  while(pool.filter(x=>!x.deployOnly).length<limit)pool.push({id:key,i:pool.length,until:0,mod:STAGE3D.meta.spawn(key)});
- return pool;
+ benchPhaseEnd('pool.create',phaseStart,{id:key,limit});return pool;
 }
 const deployHandles=new Map(),deployPulseEvents=[];
 const canonicalFxId=id=>STAGE3D.resolveId?.(id)||id;
@@ -13537,7 +13604,7 @@ function ensureDeployPool(id,count){const key=canonicalFxId(id),pool=ensurePool(
 }
 function prepareDeploySlots(id){const key=canonicalFxId(id),skills=V.world?.skills||D.heroes[V.heroKey].skills,count=skills.filter(s=>s.kind==='deploy'&&canonicalFxId(s.id)===key).length;return ensureDeployPool(id,Math.max(1,count));}
 function startDeployVisual(e){const zone=V.world?.zones.find(z=>z.zoneId===e.zoneId);if(!zone)return;
- const key=canonicalFxId(e.id),owned=[...deployHandles.values()].filter(h=>h.key===key).length;
+ const key=canonicalFxId(e.id);cancelWarmFor(key);const owned=[...deployHandles.values()].filter(h=>h.key===key).length;
  const pool=ensureDeployPool(key,owned+1),x=pool.find(x=>x.zoneId===undefined);if(!x){console.warn('[deploy capacity]',key);return;}
  const sk=zone.skill,posed=poseFor({id:e.id,caster:'hero',sk,slot:e.slot,origin:{x:V.world.hero.x,z:V.world.hero.z},target:{x:e.x,z:e.z},hold:e.duration}),target=new T.Vector3(posed.target.x,posed.target.y,posed.target.z);
  try{x.mod.stop?.();const result=x.mod.trigger(target,{origin:new T.Vector3(posed.origin.x,posed.origin.y,posed.origin.z),direction:new T.Vector3(posed.direction.x,posed.direction.y,posed.direction.z),scale:sk.fxScale||1,hold:e.duration,playAudio:true});if(result===false)throw Error('Deploy trigger refused');
@@ -13554,31 +13621,93 @@ function deployVisualSnapshot(){return [...deployHandles.values()].map(h=>({id:h
 function recordDeployPulse(e){deployPulseEvents.push({type:e.type,t:e.t,id:e.id,slot:e.slot,zoneId:e.zoneId});if(deployPulseEvents.length>80)deployPulseEvents.shift();}
 function clearZonePulse(){for(const z of V.zoneFx){z.pulseUntil=0;z.label?.classList.remove('pulse');z.o.material.opacity=.27;}}
 
-async function prepareWave(n,includeHero=false){const jobs=new Map();
+async function prepareWave(n,includeHero=false,throughWave=n){const phaseStart=benchPhaseStart(),phaseBench=V.bench;try{const jobs=new Map();
  if(includeHero)for(const s of V.world.skills)if(s.id){jobs.set(s.id,Math.max(jobs.get(s.id)||0,s.pool||1));if(s.kind==='deploy')prepareDeploySlots(s.id);}
- for(const kind of Object.keys(D.waves[n-1]||{})){const e=D.enemies[kind];const lp=e.lib&&V.world?.libPicks?.[e.lib];if(lp?.length){for(const k of lp)jobs.set(k.id,Math.max(jobs.get(k.id)||0,e.pool||1));continue;}jobs.set(e.vfx,Math.max(jobs.get(e.vfx)||0,e.pool||1));}
- if(n===D.waves.length)for(const k of V.world?.libPicks?.boss||[])jobs.set(k.id,Math.max(jobs.get(k.id)||0,1)); /*@V10*/
- if(n===6){jobs.set('VA:dueoksini_gaze',1);jobs.set('FX-141',3);}
+ for(let wave=n;wave<=throughWave;wave++){
+  for(const kind of Object.keys(D.waves[wave-1]||{})){const e=D.enemies[kind];const lp=e.lib&&V.world?.libPicks?.[e.lib];if(lp?.length){for(const k of lp)jobs.set(k.id,Math.max(jobs.get(k.id)||0,e.pool||1));continue;}jobs.set(e.vfx,Math.max(jobs.get(e.vfx)||0,e.pool||1));}
+  if(wave===D.waves.length)for(const k of V.world?.libPicks?.boss||[])jobs.set(k.id,Math.max(jobs.get(k.id)||0,1));
+  if(wave===6){jobs.set('VA:dueoksini_gaze',1);jobs.set('FX-141',3);}
+ }
   const seq=V.loadSeq,result=[],ids=[...jobs.keys()];
-  for(const [id,count] of jobs){if(seq!==V.loadSeq||!V.active)return {cancelled:true,failed:0,warmed:false};const pool=ensurePool(id,count),tasks=[Promise.resolve().then(()=>STAGE3D.prepare(id))];for(const x of pool)if(x.i>0&&x.mod)tasks.push(Promise.resolve().then(()=>x.mod.prepare?.()));result.push(...await Promise.allSettled(tasks));await new Promise(r=>setTimeout(r,0));}
+  for(const [id,count] of jobs){if(seq!==V.loadSeq||!V.active)return {cancelled:true,failed:0,warmed:false};const pool=ensurePool(id,count),tasks=[Promise.resolve().then(()=>STAGE3D.prepare(id))];for(const x of pool)if(x.i>0&&x.mod)tasks.push(Promise.resolve().then(()=>x.mod.prepare?.()));const prepareStart=benchPhaseStart();try{result.push(...await Promise.allSettled(tasks));}finally{benchPhaseEnd('vfx.prepare',prepareStart,{id,count},'async-wall',phaseBench);}await new Promise(r=>setTimeout(r,0));}
   const failed=result.filter(x=>x.status==='rejected');if(failed.length)console.warn('[GS Action] VFX prepare failures',failed.length);
-  let warm={warmed:true,failed:0,errors:[]};for(let i=0;i<ids.length;i+=2){if(seq!==V.loadSeq||!V.active)return {cancelled:true,failed:0,warmed:false};const part=warmBatch(ids.slice(i,i+2));warm.warmed=warm.warmed&&part.warmed;warm.failed+=part.failed;warm.errors.push(...part.errors);await new Promise(r=>setTimeout(r,0));}
- const summary={ids:jobs.size,failed:failed.length+warm.failed,warmed:warm.warmed&&failed.length===0,prepareFailed:failed.length,warm};V.lastWarmResult=summary;if(V.bench?.on&&summary.failed>0)V.bench.preparationIssues.push({wave:n,failed:summary.failed});return summary;
+  let warm={warmed:true,failed:0,interrupted:0,errors:[]};for(let i=0;i<ids.length;i++){if(seq!==V.loadSeq||!V.active||V.ctxLost)return {cancelled:true,failed:0,warmed:false};const part=await warmBatch(ids.slice(i,i+1));if(seq!==V.loadSeq||!V.active||V.ctxLost)return {cancelled:true,failed:0,warmed:false};if(part.cancelled){warm.warmed=false;warm.interrupted++;continue;}warm.warmed=warm.warmed&&part.warmed;warm.failed+=part.failed;warm.errors.push(...part.errors);await new Promise(r=>setTimeout(r,0));}
+ const summary={ids:jobs.size,fromWave:n,throughWave,failed:failed.length+warm.failed,warmed:warm.warmed&&failed.length===0,prepareFailed:failed.length,warm};V.lastWarmResult=summary;if(V.bench?.on&&(!summary.warmed||summary.failed>0))V.bench.preparationIssues.push({wave:n,failed:summary.failed,interrupted:warm.interrupted});return summary;
+}finally{benchPhaseEnd('wave.prepare',phaseStart,{wave:n,includeHero},'async-wall',phaseBench);}}
+let warmRT=null,warmQueue=Promise.resolve(),activeWarm=null,warmQueued=0;
+const warmRoots=new Map(),warmMods=new WeakSet();
+window.__GS_IS_WARM_MOD=mod=>warmMods.has(mod);
+window.__GS_IS_WARM_VISUAL=key=>!!activeWarm?.keys.has('GS-'+key);
+window.__GS_HIDE_WARM_ROOTS=()=>{for(const root of warmRoots.keys())root.visible=false;};
+function cancelWarmFor(key){if(activeWarm&&(!key||activeWarm.keys.has(key)))activeWarm.cancel();}
+function warmBatch(ids){const seq=V.loadSeq,bench=V.bench;warmQueued++;
+ const task=warmQueue.then(()=>runWarmBatch(ids,seq,bench));
+ warmQueue=task.catch(()=>{});return task.finally(()=>{warmQueued--;});
 }
-let warmRT=null; /*@V3_FIX C: 실제 렌더 기반 예열 — 셰이더 컴파일 + 텍스처/버퍼 업로드, 풀 인스턴스 포함*/
-function warmBatch(ids){const R=E.renderer,live=[],errors=[],prev=R.getRenderTarget();let rendered=false;
+async function runWarmBatch(ids,seq,bench){
+ const cancelled=()=>seq!==V.loadSeq||!V.active||V.ctxLost;
+ if(cancelled())return {cancelled:true,warmed:false,failed:0,errors:[]};
+ const phaseStart=benchPhaseStart(),R=E.renderer,errors=[],leases=[],roots=new Set();let rendered=false,wake;
+ const signal=new Promise(resolve=>{wake=resolve;});
+ const job={keys:new Set(ids.map(id=>STAGE3D.resolveId?.(id)||id)),cancelled:false,cleaned:false};
  const fail=(id,phase,error)=>{errors.push({id,phase,message:String(error?.message||error)});console.warn('[GS Action warm]',id,phase,error);};
- try{if(!warmRT)warmRT=new T.WebGLRenderTarget(64,64);
-  for(const id of ids){if(!id)continue;try{const key=STAGE3D.resolveId?.(id)||id,p0=V.pool.get(key)?.[0];
-   if(!p0||p0.until<=V.clock){live.push(()=>VFX_COMBAT.stop(id));const r=VFX_COMBAT.cast({id,origin:{x:3,y:4,z:-8},target:{x:3,y:0,z:-22},direction:{x:0,y:0,z:-1},playAudio:false});if(!r?.ok)fail(id,'trigger',r?.reason||'cast failed');}
-   for(const x of V.pool.get(key)||[])if(x.i>0&&x.zoneId===undefined&&x.until<=V.clock){if(!x.mod||['trigger','update','stop'].some(k=>typeof x.mod[k]!=='function')){fail(id,'instance','invalid pool module interface');continue;}live.push(()=>x.mod.stop());const t=x.mod.trigger?.(new T.Vector3(3,0,-22),{origin:new T.Vector3(3,4,-8),direction:new T.Vector3(0,0,-1),playAudio:false});if(t===false){fail(id,'trigger','busy');continue;}x.mod.update?.(1/60);}
-  }catch(error){fail(id,'trigger',error);}}
-  R.compile(scene,camera);R.setRenderTarget(warmRT);R.render(scene,camera);rendered=true;
- }catch(error){fail(null,'render',error);}
- finally{try{R.setRenderTarget(prev);}catch(error){fail(null,'restore',error);}for(const f of live)try{f();}catch(error){fail(null,'stop',error);}}
- const result={rendered,warmed:rendered&&errors.length===0,failed:errors.length,errors};V.lastWarmResult=result;return result;}
-
-function warmFx(id){if(!id)return;try{VFX_COMBAT.cast({id,origin:{x:3,y:4,z:-8},target:{x:3,y:0,z:-22},direction:{x:0,y:0,z:-1},playAudio:false});VFX_COMBAT.stop(id);}catch(error){console.warn('[GS Action warm]',id,error);}}
+ const cleanup=()=>{if(job.cleaned)return;job.cleaned=true;
+  for(const root of roots)if(warmRoots.get(root)?.job===job)warmRoots.delete(root);
+  for(const lease of leases){warmMods.delete(lease.mod);try{lease.stop();}catch(error){fail(lease.id,'stop',error);}}
+  if(activeWarm===job)activeWarm=null;
+ };
+ job.cancel=()=>{if(job.cancelled)return;job.cancelled=true;cleanup();wake();};activeWarm=job;
+ const invalid=()=>job.cancelled||cancelled();
+ const maskRoots=mod=>{
+  for(const root of mod.__gsRoots||[]){roots.add(root);warmRoots.set(root,{job,visible:root.visible});root.visible=false;}
+ };
+ const retain=(id,mod,stop)=>{if(!mod)throw Error('Missing warm module '+id);leases.push({id,mod,stop});warmMods.add(mod);};
+ const parallel=typeof R.compileAsync==='function'&&R.extensions.has('KHR_parallel_shader_compile');
+ try{
+  if(!warmRT)warmRT=new T.WebGLRenderTarget(64,64);
+  for(const id of ids){if(!id||invalid())continue;const key=STAGE3D.resolveId?.(id)||id,pool=V.pool.get(key),p0=pool?.[0];
+   if(!p0||p0.until<=V.clock){try{const mod=STAGE3D.getEffect(key);retain(id,mod,()=>VFX_COMBAT.stop(id));
+    let result;try{result=VFX_COMBAT.cast({id,origin:{x:3,y:4,z:-8},target:{x:3,y:0,z:-22},direction:{x:0,y:0,z:-1},playAudio:false});}finally{maskRoots(mod);}
+    if(!result?.ok)fail(id,'trigger',result?.reason||'cast failed');
+   }catch(error){fail(id,'trigger',error);}}
+   for(const x of pool||[])if(x.i>0&&x.zoneId===undefined&&x.until<=V.clock){try{
+    if(!x.mod||['trigger','update','stop'].some(k=>typeof x.mod[k]!=='function'))throw Error('Invalid pool module interface');
+    retain(id,x.mod,()=>x.mod.stop());let result;
+    try{result=x.mod.trigger(new T.Vector3(3,0,-22),{origin:new T.Vector3(3,4,-8),direction:new T.Vector3(0,0,-1),playAudio:false});x.mod.update(1/60);}finally{maskRoots(x.mod);}
+    if(result===false)fail(id,'trigger','busy');
+   }catch(error){fail(id,'trigger',error);}}
+  }
+  if(!roots.size||invalid())return {cancelled:invalid(),rendered:false,warmed:!invalid()&&errors.length===0,failed:errors.length,errors,parallel};
+  // A traversal view preserves parents/transforms and uses the real scene's lighting/fog.
+  const view=new T.Group();view.children=[...roots];
+  const renderView=new T.Scene(),lights=[];
+  scene.traverseVisible(object=>{if(object.isLight&&camera.layers.test(object.layers))lights.push(object);});
+  renderView.children=[...roots,...lights];renderView.fog=scene.fog;renderView.environment=scene.environment;
+  renderView.environmentIntensity=scene.environmentIntensity;renderView.environmentRotation.copy(scene.environmentRotation);
+  let stageStart;
+  for(const target of [warmRT,null]){
+   if(invalid())return {cancelled:true,warmed:false,failed:0,errors,parallel};
+   if(!parallel)await new Promise(resolve=>setTimeout(resolve,0));
+   if(invalid())return {cancelled:true,warmed:false,failed:0,errors,parallel};
+   stageStart=benchPhaseStart();const prev=R.getRenderTarget();let pending;
+   try{R.setRenderTarget(target);pending=parallel?R.compileAsync(view,camera,scene):R.compile(view,camera,scene);}
+   finally{R.setRenderTarget(prev);if(!parallel)benchPhaseEnd('warm.compile',stageStart,{ids,parallel},'sync',bench);}
+   if(parallel){let timeout;
+    try{await Promise.race([pending,signal,new Promise((_,reject)=>{timeout=setTimeout(()=>reject(Error('Shader preparation timed out')),15000);})]);}
+    finally{clearTimeout(timeout);benchPhaseEnd('warm.compile.wait',stageStart,{ids,parallel},'async-wall',bench);}
+   }
+  }
+  if(invalid())return {cancelled:true,warmed:false,failed:0,errors,parallel};
+  // Never retain a renderer target across an await. Restore the target active at render time.
+  const prev=R.getRenderTarget();stageStart=benchPhaseStart();
+  try{for(const root of roots){const mask=warmRoots.get(root);if(mask?.job===job)root.visible=mask.visible;}
+   H.syncStormBatches?.();R.setRenderTarget(warmRT);R.render(renderView,camera);rendered=true;
+  }finally{R.setRenderTarget(prev);window.__GS_HIDE_WARM_ROOTS();benchPhaseEnd('warm.render',stageStart,{ids,parallel},'sync',bench);}
+ }catch(error){fail(null,'prepare',error);}
+ finally{cleanup();benchPhaseEnd('warm.batch',phaseStart,{ids,parallel},'async-wall',bench);}
+ const result={rendered,warmed:rendered&&errors.length===0,failed:errors.length,errors,parallel};if(!invalid())V.lastWarmResult=result;return result;
+}
+function warmFx(id){return id?warmBatch([id]):Promise.resolve({warmed:false,failed:0,errors:[]});}
 function formOf(id,kind){
  if(kind==='chain'||kind==='projectile')return 'flight';
  if(kind==='beam'||kind==='dash')return 'beam';
@@ -13638,7 +13767,7 @@ function poseFor(entry){
  if(form==='unknown')return {...base,origin:{x:ox,y:5,z:oz},target:{x:tx,y:0,z:tz},hold:entry.hold||2,size:entry.size||'S'};
  return {...base,origin:{x:ox,y:yHand,z:oz},target:{x:tx,y:0,z:tz},hold:entry.hold||2.2,size:entry.size||'M'};
 }
-function fx(entry){const id=entry.id,key=STAGE3D.resolveId?.(id)||id;
+function fx(entry){const phaseStart=benchPhaseStart();try{const id=entry.id,key=STAGE3D.resolveId?.(id)||id;cancelWarmFor(key);
  if(entry.caster==='hero'&&(entry.sk||V.world?.skills?.[entry.slot])?.kind==='deploy')return {ok:true,id:key,deferredToZone:true};
  const skCast=entry.caster==='hero'?(entry.sk||V.world?.skills?.[entry.slot]):null; /*@V8 F01*/
  if(skCast?.kind==='shield'&&!skCast.showFx)return {ok:true,id:key,skipped:'shield'};
@@ -13665,7 +13794,7 @@ function fx(entry){const id=entry.id,key=STAGE3D.resolveId?.(id)||id;
   if(entry.leadWindow>0)(V.ledFx||(V.ledFx=new Map())).set(entry.caster,{x,key,until:V.clock+entry.leadWindow});
   return {ok:true,id:key,instance:x.i,form:posed.form,pending:!!posed.pending};
  }catch(error){console.warn('[GS Action VFX]',key,error);return {ok:false,id:key,reason:String(error?.message||error),form:posed.form};}
-}
+}finally{benchPhaseEnd('vfx.cast',phaseStart,{id:entry.id,caster:entry.caster});}}
 const timingEvents=[];
 const DEPLOY_ROLES={totem:{title:'피해 영역',color:0x75c9b5},turret:{title:'자동 포탑',color:0xf2bd68},wall:{title:'둔화 영역',color:0x85bfff},gate:{title:'가속 영역',color:0xe0a5ef}};
 const timingLabels={'zone:end':'영역 종료','windup':'범위 예고','fx:cast':'연출 시작','impact':'판정 종료','chain:hop':'연쇄 판정','hit':'피해 발생','telegraph:start':'적 예고','enemy:impact':'적 판정','zone:start':'영역 생성','trial:cast':'Beam 시험 시작','trial:impact':'Beam 시험 판정','trial:cue':'무피해 연출 표식'};
@@ -13738,7 +13867,7 @@ const marker=document.createElement('div');marker.className='threat';marker.inne
    el('gaWave').textContent=`WAVE ${String(e.n).padStart(2,'0')} / ${D.waves.length}`;
    {const ids=new Set(V.world.enemies.map(x=>x.id));for(const [id,r] of V.rigs)if(id!=='hero'&&!ids.has(id)){disposeRig(r);V.rigs.delete(id);}}
    toast(e.n===D.waves.length?'FINAL WAVE · 두억시니':`WAVE ${String(e.n).padStart(2,'0')} · 적 출현`);
- }else if(e.type==='wave:clear'){toast(`WAVE ${String(e.n).padStart(2,'0')} CLEAR · 체력 회복`);if(V.mode==='game'&&!V.bench&&e.n<D.waves.length&&V.settings.draft!==false)openDraft(e.n);if(e.n<D.waves.length||V.bench?.thermal)prepareWave(e.n<D.waves.length?e.n+1:1).catch(error=>console.warn('[GS Action prepare]',error));}
+ }else if(e.type==='wave:clear'){toast(`WAVE ${String(e.n).padStart(2,'0')} CLEAR · 체력 회복`);if(V.mode==='game'&&!V.bench&&e.n<D.waves.length&&V.settings.draft!==false)openDraft(e.n);if(!runAlreadyPrepared()&&(e.n<D.waves.length||V.bench?.thermal))prepareWave(e.n<D.waves.length?e.n+1:1).catch(error=>console.warn('[GS Action prepare]',error));}
  else if(e.type==='boss:phase')toast(`두억시니 · ${e.n}페이즈`);
  else if(e.type==='match:end'){
    inputBuffer.clear();V.paused=true;V.hitStop=0;V.cine=0;window.__GS_TIMESCALE=1;document.exitPointerLock?.();el('gaResult').style.display='grid';
@@ -13758,8 +13887,8 @@ async function resumeRun(){if(!runSaved||!V.paused||V.bench||!S.validateCheckpoi
  selectHero(p.heroKey);V.world=S.create(D,p.heroKey);if(!V.world.restoreCheckpoint(p)){clearActionWorld();showMenu('select','저장 데이터를 복원하지 못했습니다.');return false;}
  V.god=false;el('gaGod').textContent='무적';bindRig('hero');for(const e of V.world.events.splice(0))emit(e);V.paused=true;window.__GS_TIMESCALE=V.speed;
  showMenu('select','저장된 웨이브 VFX를 준비하고 있습니다…');el('gaHeroes').style.display='none';el('gaHeroInfo').style.display='none';el('gaStart').disabled=true;el('gaStart').textContent='VFX 준비 중…';el('gaCheckpointResume').disabled=true;
- let prep;try{prep=await prepareWave(p.wave,true);}catch(error){console.warn('[GS resume]',error);}if(seq!==V.loadSeq||!V.active||V.mode!=='game')return false;
- V.ready=true;el('gaStart').disabled=false;el('gaStart').textContent='저장된 웨이브 · 전투 시작';el('gaMenuNote').textContent=prep&&prep.failed===0?'웨이브 시작 상태를 복원했습니다. 시작 버튼을 누르세요.':'일부 VFX 준비에 실패했습니다. 시작 후 첫 사용 때 끊길 수 있습니다.';refreshRunSave();updateHud();return true;
+ let prep;try{prep=await prepareRun(p.wave);}catch(error){console.warn('[GS resume]',error);}if(seq!==V.loadSeq||!V.active||V.mode!=='game')return false;
+ V.ready=true;el('gaStart').disabled=false;el('gaStart').textContent='저장된 웨이브 · 전투 시작';el('gaMenuNote').textContent=prep&&prep.warmed&&prep.failed===0?'웨이브 시작 상태를 복원했습니다. 시작 버튼을 누르세요.':'일부 VFX 준비에 실패했습니다. 시작 후 첫 사용 때 끊길 수 있습니다.';refreshRunSave();updateHud();return true;
 }
 function combatFeedback(text,tone='neutral'){if(V.bench||!V.world)return;const n=el('gaCombatFeedback');if(feedbackUntil>V.clock&&(tone==='neutral'||n.textContent===text))return;n.textContent=text;n.dataset.tone=tone;n.style.opacity='1';feedbackUntil=V.clock+.7;}
 function systemEvent(e){if(e.type==='wave:clear'||e.type==='match:end'){feedbackUntil=0;el('gaCombatFeedback').style.opacity='0';}if(e.type==='wave:start'){stopPool();for(const slot of [...V.previews.keys()])dropPreview(slot);for(const id of [...V.tele.keys()])dropTele(id);inputBuffer.clear();saveBoundary();}if(e.type==='match:end'&&e.win&&!V.bench)clearRunSave();
@@ -13971,7 +14100,7 @@ function filterTrialEffects(){const term=el('gaTrialSearch').value.trim().toLowe
  trialPicked();}
 function trialPicked(){const found=el('gaTrialFx').options; /*@V11 selection change: details only, list untouched*/
  clearTimeout(trialPicked.t);trialPicked.t=setTimeout(()=>{const id=el('gaTrialFx').value,L=window.GA_SKILL_LIB?.[id],W=trialPicked.w||(trialPicked.w=new Set());if(!L||!V.active||V.mode!=='trial'||W.has(id))return;W.add(id); /*@V12 shaders and buffers are built when the skill is picked, not on its first cast*/
-  Promise.resolve().then(()=>STAGE3D.prepare(id)).then(()=>{if(!V.active||V.mode!=='trial'||!V.world)return;ensurePool(id,(L.variants?L.variants[L.def]:L).skill.pool||1);warmBatch([id]);}).catch(error=>console.warn('[GS Action trial warm]',error));},350);
+  const seq=V.loadSeq;Promise.resolve().then(()=>STAGE3D.prepare(id)).then(()=>{if(seq!==V.loadSeq||!V.active||V.mode!=='trial'||!V.world)return;ensurePool(id,(L.variants?L.variants[L.def]:L).skill.pool||1);return warmBatch([id]);}).catch(error=>console.warn('[GS Action trial warm]',error));},350);
  el('gaTrialCast').disabled=!found.length;renderScaleAudit();renderEquip();
  const cur=el('gaTrialFx').value,formNow=cur?formOf(cur):'';
  el('gaTrialMeta').textContent=`${found.length} / ${trialEffects.length}종 · ${cur?trialTag(cur)+' · '+formNow:'검색으로 전체 ID'}`;
@@ -14010,7 +14139,7 @@ function equipSkill(heroKey,slot,id,quiet,size,temp){ /*@V10 temp = this run onl
  if(V.world&&V.heroKey===heroKey&&V.mode==='trial')V.world.hero.cds[slot]=0; /*@V8*/
  if(!temp)(loadout[heroKey]||(loadout[heroKey]={}))[slot]=Vr.size?id+'|'+Vr.size:id;
  if(!quiet){if(!temp)saveLoadout();if(V.heroKey===heroKey)selectHero(heroKey);
-  Promise.resolve().then(()=>STAGE3D.prepare(id)).then(async()=>{ensurePool(id,sk.pool||1);if(sk.kind==='deploy'){const p=prepareDeploySlots(id);await Promise.all(p.map(x=>x.mod.prepare?.()));}if(V.active&&V.world)warmBatch([id]);}).catch(error=>console.warn('[GS Action equip]',error));}
+  const seq=V.loadSeq;Promise.resolve().then(()=>STAGE3D.prepare(id)).then(async()=>{if(seq!==V.loadSeq)return;ensurePool(id,sk.pool||1);if(sk.kind==='deploy'){const p=prepareDeploySlots(id);await Promise.all(p.map(x=>x.mod.prepare?.()));}if(V.active&&V.world)return warmBatch([id]);}).catch(error=>console.warn('[GS Action equip]',error));}
  return '';}
 function resetKit(heroKey){const hero=D.heroes[heroKey];if(!hero)return;ORIG_KIT[heroKey].forEach((sk,i)=>{hero.skills[i]=sk;BASE_TUNE[heroKey][i]={...ORIG_TUNE[heroKey][i]};});delete loadout[heroKey];saveLoadout();if(V.world&&V.heroKey===heroKey)V.world.hero.cds.fill(0);if(V.heroKey===heroKey)selectHero(heroKey);}
 function renderEquip(){const info=el('gaEquipInfo');if(!info)return;const id=el('gaTrialFx').value,L=window.GA_SKILL_LIB?.[id],slot=+el('gaEquipSlot').value,cls=slotClass(slot),sel=el('gaEquipSize');
@@ -14073,6 +14202,32 @@ function renderPresets(){const box=el('gaPresets');if(!box)return;const key=V.he
  el('gaKitInfo').textContent=D.heroes[key].skills.map(s=>`${s.key==='좌클릭'?'LMB':s.key==='우클릭'?'RMB':s.key} ${s.name.split(' · ')[0]}`).join('　');}
 // ── @V10 benchmark: 60 s automated battle on the real renderer. Frame times go into a preallocated buffer (no per-frame allocation).
 const BENCH_SLOTS=[0,1,0,3,0,5,0,4],perfEvents=[];
+// Diagnostic times are inclusive. Async preparation reports wall time, not CPU time.
+function benchPhaseStart(){return V.bench&&(V.bench.on||V.bench.starting)?performance.now():-1;}
+function benchPhaseEnd(phase,started,detail=null,kind='sync',B=V.bench){
+ if(started<0||!B||B!==V.bench||!(B.on||B.starting))return;
+ const ended=performance.now(),ms=ended-started;
+ const totals=B.phaseTotals||(B.phaseTotals=Object.create(null)),p=totals[phase]||(totals[phase]={count:0,totalMs:0,maxMs:0,kind});
+ p.count++;p.totalMs+=ms;p.maxMs=Math.max(p.maxMs,ms);
+ if(ms<8)return;
+ const spans=B.phaseSpans||(B.phaseSpans=[]);
+ spans.push({phase,kind,startMs:started-B.traceOrigin,durationMs:ms,detail,window:started<(B.measureAt??Infinity)?'preparation-or-warmup':'measurement',stack:ms>=50?new Error('Slow '+phase).stack:null});
+ if(spans.length>120){let smallest=0;for(let i=1;i<spans.length;i++)if(spans[i].durationMs<spans[smallest].durationMs)smallest=i;spans.splice(smallest,1);B.phaseSpansDropped=(B.phaseSpansDropped||0)+1;}
+}
+function calibrateBenchPacing(B){
+ return new Promise(resolve=>{let last=null,raf=0,done=false;const samples=[];
+  window.__GS_BENCH_CALIBRATING=true;
+  const finish=reason=>{if(done)return;done=true;clearTimeout(timeout);cancelAnimationFrame(raf);window.__GS_BENCH_CALIBRATING=false;
+   const ordered=samples.slice().sort((a,b)=>a-b),interval=ordered[Math.floor(ordered.length*.2)],hz=interval?1000/interval:null;
+   resolve({source:'idle-raf-with-render-suspended',samples:samples.length,observedHz:hz,usable:reason==='completed'&&Number.isFinite(hz)&&hz>=20&&hz<=360,reason});};
+  const timeout=setTimeout(()=>finish('timeout'),1500);
+  const frame=now=>{if(B!==V.bench||B.cancelled||document.hidden){finish('cancelled');return;}
+   if(last!==null&&now>last)samples.push(now-last);last=now;
+   if(samples.length>=24)finish('completed');else raf=requestAnimationFrame(frame);};
+  raf=requestAnimationFrame(frame);
+ });
+}
+
 function recordPerfEvent(e){if(!V.bench?.on)return;if(!['fx:cast','deploy:visual-start','spawn','wave:start','wave:clear','bench:loop','boss:phase','zone:start','zone:end'].includes(e.type))return;
  perfEvents.push({at:performance.now(),type:e.type,id:e.id??null,slot:e.slot??null,zoneId:e.zoneId??null,wave:V.world?.wave});if(perfEvents.length>160)perfEvents.shift();}
 function recordBenchFrame(B,frame,ms){if(ms<=1000/(B.targetFps||60)*1.5)return;B.slowFrames.push({elapsedSeconds:(frame.now-B.measureAt)/1000,intervalMs:ms,actionCpuMs:frame.actionCpuMs??null,fxUpdateCpuMs:frame.fxUpdateCpuMs??null,renderSubmissionCpuMs:frame.renderCpuMs,calls:frame.calls,triangles:frame.triangles,geometries:frame.geometries,textures:frame.textures,alive:V.world?.enemies.filter(e=>e.hp>0).length||0,deployZones:V.world?.zones.filter(z=>z.deploy).length||0,events:perfEvents.filter(e=>e.at>=frame.now-ms-5&&e.at<=frame.now).map(e=>({...e,at:e.at-B.measureAt}))});if(B.slowFrames.length>120){B.slowFrames.shift();B.slowFramesDropped++;}}
@@ -14083,26 +14238,34 @@ function benchBot(dt){const B=V.bench,w=V.world;if(!w||w.over){finishBench('matc
   if(B.cd<=0&&w.hero.state!=='windup'&&w.hero.state!=='dodge'){B.cd=.3;if(B.t-B.ultAt>9){w.hero.ult=100;B.ultAt=B.t;}for(let k=0;k<BENCH_SLOTS.length;k++){const slot=BENCH_SLOTS[(B.i+k)%BENCH_SLOTS.length];if(w.cast(slot,best)){B.i=(B.i+k+1)%BENCH_SLOTS.length;B.casts++;break;}}}}
 }
 async function runBench(seconds=60,options={}){if(V.bench)return;seconds=Math.min(600,Math.max(1,Number(seconds)||60));V.bench={on:false,starting:true,warmupSeconds:Math.min(30,Math.max(0,Number.isFinite(options.warmupSeconds)?options.warmupSeconds:5)),t:0,limit:seconds,thermal:options.thermal===true,ms:new Float32Array(Math.ceil(seconds*260)),times:new Float64Array(Math.ceil(seconds*260)),n:0,cd:1,i:0,casts:0,ultAt:-9,minScale:1,maxPressure:0,maxCalls:0,slowFrames:[],slowFramesDropped:0,longTasks:[],observer:null};
- const B=V.bench,seq=V.loadSeq+1;await start();B.starting=false;if(V.bench!==B||V.loadSeq!==seq||!V.ready||!V.world||V.mode!=='game'){if(V.bench===B)V.bench=null;return;}V.world.benchmarkLoop=B.thermal;
+ const B=V.bench;B.traceOrigin=performance.now();B.phaseTotals=Object.create(null);B.phaseSpans=[];B.phaseSpansDropped=0;
+ const previousSeq=V.loadSeq,previousPaused=V.paused,requestedCap=V.settings.fpsCap;B.calibrationSeq=previousSeq;B.calibrationPreviousPaused=previousPaused;V.paused=true;
+ B.calibration=await calibrateBenchPacing(B);
+ if(B!==V.bench||B.cancelled||V.loadSeq!==previousSeq||document.hidden||V.settings.fpsCap!==requestedCap){if(B===V.bench){V.bench=null;if(V.loadSeq===previousSeq)V.paused=previousPaused;}return;}
+ const baselineHz=B.calibration.usable?B.calibration.observedHz:(requestedCap||60),baselineSkip=requestedCap>0?Math.max(1,Math.floor(baselineHz/requestedCap+.2)):1;
+ B.targetFps=GS_PERFORMANCE_POLICY.target({fpsCap:requestedCap,refreshHz:baselineHz,skipN:baselineSkip});
+ B.targetBasis={requestedCap,baselineHz,baselineSkip,source:B.calibration.usable?'idle-raf':'configured-fallback',minimumRequestedCap:requestedCap||null};
+ const seq=V.loadSeq+1;await start();B.starting=false;if(V.bench!==B||V.loadSeq!==seq||!V.ready||!V.world||V.mode!=='game'){if(V.bench===B)V.bench=null;return;}V.world.benchmarkLoop=B.thermal;
  B.preparation=V.lastWarmResult?JSON.parse(JSON.stringify(V.lastWarmResult)):null;B.preparationIssues=[];B.initialLoadout=V.world.skills.map((s,slot)=>({slot,id:s.id||null,kind:s.kind,size:s.sizeTier||null}));B.enemyPicks=JSON.parse(JSON.stringify(V.world.libPicks));
- V.paused=false;el('gaMenu').style.display='none';V.world.hero.invuln=1e9;V.god=true;B.on=true;B.at=performance.now();B.measureAt=B.at+B.warmupSeconds*1000;B.runConfig={quality:V.settings.quality,fpsCap:V.settings.fpsCap,width:innerWidth,height:innerHeight,dpr:devicePixelRatio};B.targetFps=GS_PERFORMANCE_POLICY.target({fpsCap:B.runConfig.fpsCap,refreshHz:window.__GS_HZ,skipN:window.__GS_SKIP_N});perfEvents.length=0;perfLast=B.at;
+ V.paused=false;el('gaMenu').style.display='none';V.world.hero.invuln=1e9;V.god=true;B.on=true;B.at=performance.now();B.measureAt=B.at+B.warmupSeconds*1000;B.runConfig={quality:V.settings.quality,fpsCap:V.settings.fpsCap,width:innerWidth,height:innerHeight,dpr:devicePixelRatio};perfEvents.length=0;perfLast=B.at;
  try{if(window.PerformanceObserver&&PerformanceObserver.supportedEntryTypes?.includes('longtask')){B.observer=new PerformanceObserver(list=>{for(const e of list.getEntries()){if(e.startTime<B.measureAt)continue;B.longTasks.push({elapsedSeconds:(e.startTime-B.measureAt)/1000,durationMs:e.duration});if(B.longTasks.length>200)B.longTasks.shift();}});B.observer.observe({type:'longtask',buffered:false});}}catch{}
  toast('워밍업 '+B.warmupSeconds+'초 후 '+seconds+'초 측정'+(B.thermal?' · 6웨이브 반복':''));}
 function summarizeBenchFrames(values,target=V.bench?.targetFps||60){return GS_PERFORMANCE_POLICY.summarize(values,target);}
-function finishBench(reason='completed'){const B=V.bench;if(!B||!B.on)return;B.on=false;B.observer?.disconnect();TOUCH.mx=TOUCH.my=0;V.paused=true;clearZonePulse();
+function finishBench(reason='completed'){const B=V.bench;if(!B)return;if(!B.on){B.cancelled=true;if(V.loadSeq===B.calibrationSeq)V.paused=B.calibrationPreviousPaused;V.bench=null;return;}B.on=false;B.observer?.disconnect();TOUCH.mx=TOUCH.my=0;V.paused=true;clearZonePulse();
  if(V.world)V.world.benchmarkLoop=false;
  const values=Array.from(B.ms.subarray(0,B.n)),times=Array.from(B.times.subarray(0,B.n)),summary=summarizeBenchFrames(values),w=V.world;
  let gpu='?';try{const gl=E.renderer.getContext(),ext=gl.getExtension('WEBGL_debug_renderer_info');gpu=ext?gl.getParameter(ext.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER);}catch{}
  const first=values.filter((v,i)=>times[i]<=60),last=values.filter((v,i)=>times[i]>=Math.max(0,(times.at(-1)||0)-60));
  const target=B.targetFps,budgets=GS_PERFORMANCE_POLICY.budgets(target),checks=GS_PERFORMANCE_POLICY.checks(summary,budgets);
- const r={version:'GS_Action v34',buildId:'v34-runtime-1',reviewSourceSha256:window.GA_VFX_REVIEW.sourceSha256,scenario:B.thermal?'thermal-six-wave-loop':'fixed-kit-six-wave-battle',completion:reason,requestedSeconds:B.limit,warmupSeconds:B.warmupSeconds,totalWallSeconds:+((performance.now()-B.at)/1000).toFixed(1),wallSeconds:+Math.max(0,(performance.now()-B.measureAt)/1000).toFixed(1),...summary,
-  targetFps:target,budgets,metricChecks:checks,metricsPassed:reason==='completed'&&!B.sampleOverflow&&B.preparation?.warmed===true&&B.preparation.failed===0&&!B.preparationIssues.length&&Object.values(checks).every(Boolean),releaseApproved:false,
+ const r={version:'GS_Action v34',buildId:'v34-runtime-6',reviewSourceSha256:window.GA_VFX_REVIEW.sourceSha256,scenario:B.thermal?'thermal-six-wave-loop':'fixed-kit-six-wave-battle',completion:reason,requestedSeconds:B.limit,warmupSeconds:B.warmupSeconds,totalWallSeconds:+((performance.now()-B.at)/1000).toFixed(1),wallSeconds:+Math.max(0,(performance.now()-B.measureAt)/1000).toFixed(1),...summary,
+  targetFps:target,targetBasis:B.targetBasis,calibration:B.calibration,budgets,metricChecks:checks,metricsPassed:reason==='completed'&&!B.sampleOverflow&&B.preparation?.warmed===true&&B.preparation.failed===0&&!B.preparationIssues.length&&Object.values(checks).every(Boolean),releaseApproved:false,
   first60Seconds:summarizeBenchFrames(first),last60Seconds:summarizeBenchFrames(last),wave:w?.wave||0,loops:w?.benchmarkLoops||0,kills:w?.stats.kills||0,casts:B.casts,minResolution:Math.round(B.minScale*100)+'%',fxSaving:B.maxPressure,maxDrawCalls:B.maxCalls,maxGpuGeometries:B.maxGeometries||0,maxGpuTextures:B.maxTextures||0,sampleOverflow:!!B.sampleOverflow,runConfig:B.runConfig,measuredPacing:B.measuredPacing||null,preparation:B.preparation,preparationIssues:B.preparationIssues,
   canvas:canvas.width+'x'+canvas.height,dpr:window.devicePixelRatio,quality:V.settings.quality,fpsCap:V.settings.fpsCap,refreshHz:window.__GS_HZ||60,skipN:window.__GS_SKIP_N||1,touch:TOUCH.on,gpu,ua:navigator.userAgent,initialLoadout:B.initialLoadout,enemyPicks:B.enemyPicks,
-  slowFrames:B.slowFrames,slowFramesDropped:B.slowFramesDropped,longTasksSupported:!!B.observer,longTasks:B.longTasks,frameIntervalsMs:values,frameElapsedSeconds:times,diagnosticNote:'Events are temporal correlations. renderSubmissionCpuMs is CPU submission, not GPU time. Pause/app switching ends the measurement as interrupted. First/last summaries are frame samples ending in those wall-clock windows.'};
+  phaseTotals:B.phaseTotals,phaseSpans:B.phaseSpans,phaseSpansRetention:'largest-duration',phaseSpansDropped:B.phaseSpansDropped,phaseTraceOriginOffsetMs:B.traceOrigin-B.measureAt,slowFrames:B.slowFrames,slowFramesDropped:B.slowFramesDropped,longTasksSupported:!!B.observer,longTasks:B.longTasks,frameIntervalsMs:values,frameElapsedSeconds:times,diagnosticNote:'Phase spans use traceOrigin; add phaseTraceOriginOffsetMs to align with measurement time. Sync spans are inclusive main-thread elapsed time; async spans include waiting. Phase totals overlap and must not be summed. Slow-operation stacks identify call sites, not sampled CPU profiles. Idle RAF is observed cadence, not physical panel certification. The target is fixed before combat preparation and never reduced by loaded RAF. Events are temporal correlations. renderSubmissionCpuMs is CPU submission, not GPU time. Pause/app switching ends the measurement as interrupted. First/last summaries are frame samples ending in those wall-clock windows.'};
  V.benchResult=r;
  const verdict=r.metricsPassed?'프레임 예산 충족':reason!=='completed'?'중단 · 판정 보류':'프레임 예산 초과';
- el('gaBenchText').value=[`GS_Action v34 성능 측정 · ${verdict}`,`평균 ${r.fpsAvg} FPS · ${r.frames} 프레임 / ${r.seconds}s`,`프레임 시간 ms: 중앙 ${r.p50} · 95% ${r.p95} · 99% ${r.p99} · 최대 ${r.max}`,`프레임 지연: 목표 간격 1.5배 초과 ${r.overBudget} · 2배 초과 ${r.overDoubleBudget} · 50ms 초과 ${r.over50} · 100ms 초과 ${r.over100}`,`진행: 웨이브 ${r.wave} · 반복 ${r.loops} · 처치 ${r.kills} · 시전 ${r.casts}`,`자동 조절: 최저 해상도 ${r.minResolution} · FX 절감 단계 ${r.fxSaving} · 최대 draw call ${r.maxDrawCalls}`,`화면: ${r.canvas} · DPR ${r.dpr} · 품질 ${r.quality} · 프레임 제한 ${r.fpsCap} · 주사율 ${Math.round(r.refreshHz)}Hz ÷ ${r.skipN} · 터치 ${r.touch}`,`시작 60초: ${r.first60Seconds.fpsAvg} FPS · p95 ${r.first60Seconds.p95} · p99 ${r.first60Seconds.p99}`,`종료 60초: ${r.last60Seconds.fpsAvg} FPS · p95 ${r.last60Seconds.p95} · p99 ${r.last60Seconds.p99}`,`시험: 워밍업 ${r.warmupSeconds}초 제외 · ${r.targetFps.toFixed(1)} FPS 목표 · ${r.scenario} · ${r.completion} · 실전 승인 아님`,`GPU: ${r.gpu}`,`UA: ${r.ua}`].join('\n');
+ el('gaBenchText').value=[`GS_Action v34 성능 측정 · ${verdict}`,`평균 ${r.fpsAvg} FPS · ${r.frames} 프레임 / ${r.seconds}s`,`프레임 시간 ms: 중앙 ${r.p50} · 95% ${r.p95} · 99% ${r.p99} · 최대 ${r.max}`,`프레임 지연: 목표 간격 1.5배 초과 ${r.overBudget} · 2배 초과 ${r.overDoubleBudget} · 50ms 초과 ${r.over50} · 100ms 초과 ${r.over100}`,`진행: 웨이브 ${r.wave} · 반복 ${r.loops} · 처치 ${r.kills} · 시전 ${r.casts}`,`자동 조절: 최저 해상도 ${r.minResolution} · FX 절감 단계 ${r.fxSaving} · 최대 draw call ${r.maxDrawCalls}`,`화면: ${r.canvas} · DPR ${r.dpr} · 품질 ${r.quality} · 프레임 제한 ${r.fpsCap} · 주사율 ${Math.round(r.refreshHz)}Hz ÷ ${r.skipN} · 터치 ${r.touch}`,`시작 60초: ${r.first60Seconds.fpsAvg} FPS · p95 ${r.first60Seconds.p95} · p99 ${r.first60Seconds.p99}`,`종료 60초: ${r.last60Seconds.fpsAvg} FPS · p95 ${r.last60Seconds.p95} · p99 ${r.last60Seconds.p99}`,`목표 기준: 설정 ${r.targetBasis.requestedCap||'제한 없음'} · 사전 관측 ${r.calibration.observedHz?.toFixed(1)||'미확인'} Hz · 고정 목표 ${r.targetFps.toFixed(1)} FPS`,
+`시험: 워밍업 ${r.warmupSeconds}초 제외 · ${r.targetFps.toFixed(1)} FPS 목표 · ${r.scenario} · ${r.completion} · 실전 승인 아님`,`GPU: ${r.gpu}`,`UA: ${r.ua}`].join('\n');
  el('gaBenchOut').style.display='grid';}
 el('gaBench').onclick=()=>runBench(60);
 el('gaThermalBench').onclick=()=>runBench(600,{thermal:true});
@@ -14111,17 +14274,18 @@ el('gaBenchDownload').onclick=()=>{if(!V.benchResult)return;const url=URL.create
 
 el('gaBenchClose').onclick=()=>{el('gaBenchOut').style.display='none';V.bench=null;enterGameSelect();};
 // ── @V11 stability
-canvas.addEventListener('webglcontextlost',()=>{V.ctxLost=true;if(V.active&&!V.paused&&V.world&&!V.world.over)showMenu('pause','그래픽 장치가 초기화되어 멈췄습니다. 잠시 후 계속하기를 누르세요.');console.warn('[GS Action] WebGL context lost');});
-canvas.addEventListener('webglcontextrestored',()=>{V.ctxLost=false;V.gpu.released=0;console.warn('[GS Action] WebGL context restored');try{toast('그래픽 복구됨');}catch{}});
+canvas.addEventListener('webglcontextlost',()=>{V.ctxLost=true;V.recoveryNeeded=true;V.loadSeq++;V.runPreparation=null;V.cancelRecovery?.();cancelWarmFor();if(V.active&&!V.paused&&V.world&&!V.world.over)showMenu('pause','그래픽 장치가 초기화되어 멈췄습니다. 잠시 후 계속하기를 누르세요.');console.warn('[GS Action] WebGL context lost');});
+canvas.addEventListener('webglcontextrestored',()=>{V.ctxLost=false;V.gpu.released=0;if(V.active&&V.world&&!V.world.over){V.ready=true;el('gaStart').disabled=false;el('gaResume').disabled=false;el('gaStart').textContent='그래픽 복구 · 계속하기';}console.warn('[GS Action] WebGL context restored');try{toast('그래픽 복구됨');}catch{}});
 // Geometry buffers of objects that stayed hidden are released from GPU memory; three.js re-uploads them from the CPU copy the next time they are drawn.
 V.gpu={released:0,sweeps:0,last:0};
-function gpuSweep(idleMs){if(document.hidden||V.ctxLost)return 0;const now=performance.now(),vis=gpuSweep.vis||(gpuSweep.vis=new Set());vis.clear();let n=0;
+function gpuSweep(idleMs){if(document.hidden||V.ctxLost)return 0;const phaseStart=benchPhaseStart();const now=performance.now(),vis=gpuSweep.vis||(gpuSweep.vis=new Set());vis.clear();let n=0;
  scene.traverseVisible(o=>{const g=o.geometry;if(g){o.__gsSeen=now;vis.add(g);g.__gsRel=false;}});
+ for(const root of warmRoots.keys())root.traverse(o=>{if(o.geometry)vis.add(o.geometry);});
  scene.traverse(o=>{const g=o.geometry;if(!g||!g.isBufferGeometry||vis.has(g))return;if(o.__gsSeen===undefined){o.__gsSeen=now;return;}if(!g.__gsRel&&now-o.__gsSeen>=idleMs){g.__gsRel=true;g.dispose();n++;}});
- V.gpu.released+=n;V.gpu.sweeps++;V.gpu.last=n;return n;}
+ V.gpu.released+=n;V.gpu.sweeps++;V.gpu.last=n;benchPhaseEnd('gpu.sweep',phaseStart,{released:n});return n;}
 setInterval(()=>{try{gpuSweep(TOUCH.on?25000:45000);}catch(err){if(!V.gpu.err){V.gpu.err=1;console.warn('[GS Action gpu sweep]',err);}}},5000);
 function restoreRunKit(){const r=V.runKit;if(!r)return;V.runKit=null;const hero=D.heroes[r.key];r.skills.forEach((sk,i)=>{hero.skills[i]=sk;BASE_TUNE[r.key][i]=r.tune[i];});if(V.heroKey===r.key)selectHero(r.key);}
-function clearActionWorld(){closeDraft(true);restoreRunKit();if(V.bench&&!V.bench.starting){if(V.bench.on)finishBench('interrupted');V.bench.observer?.disconnect();V.bench=null;TOUCH.mx=TOUCH.my=0;}timingEvents.length=0;inputBuffer.clear();V.ready=false;for(const f of V.floaters)f.o.remove();V.floaters.length=0;
+function clearActionWorld(){V.runPreparation=null;closeDraft(true);restoreRunKit();if(V.bench&&!V.bench.starting){if(V.bench.on)finishBench('interrupted');V.bench.observer?.disconnect();V.bench=null;TOUCH.mx=TOUCH.my=0;}timingEvents.length=0;inputBuffer.clear();V.ready=false;for(const f of V.floaters)f.o.remove();V.floaters.length=0;
  stopAllDeployVisuals();stopPool();for(const slot of [...V.previews.keys()])dropPreview(slot);for(const q of V.rigs.values())disposeRig(q);V.rigs.clear();
  for(const id of [...V.tele.keys()])dropTele(id);V.ledFx?.clear();
  for(const z of V.zoneFx){z.label?.remove();V.root.remove(z.o);z.o.geometry.dispose();z.o.material.dispose();}V.zoneFx=[];V.world=null;
@@ -14144,18 +14308,36 @@ function startTrial(key=V.heroKey){const keepCursor=V.mode==='trial'&&V.uiCursor
  el('gaTrialHero').value=V.heroKey;el('gaMenu').style.display='none';el('gaWave').textContent='스킬 시험장 · '+(V.settings.cameraMode==='third'?'3인칭':'1인칭'); /*@V4 시점 표기*/el('gaCount').textContent='정지 표적 3 · 자유 시전';el('gaWaveWait').textContent='';filterTrialEffects();
  prepareWave(1,true).catch(error=>console.warn('[GS Action trial prepare]',error));updateHud();if(keepCursor){V.uiCursor=true;V.altHeld=altHeld;document.body.classList.add('ga-cursor');}else if(!TOUCH.on){V.uiCursor=true;V.altHeld=false;document.body.classList.add('ga-cursor');document.exitPointerLock?.();}
 }
+function runAlreadyPrepared(){const p=V.runPreparation;return !!p&&p.seq===V.loadSeq&&!V.ctxLost&&p.heroIds===V.world?.skills.map(s=>s.id||'').join('|');}
+async function prepareRun(fromWave=1){
+ const seq=V.loadSeq,fullRun=!E.renderer.extensions.has('KHR_parallel_shader_compile'),throughWave=fullRun?D.waves.length:fromWave;
+ const result=await prepareWave(fromWave,true,throughWave);
+ if(seq===V.loadSeq&&fullRun&&result.warmed&&!result.cancelled)V.runPreparation={seq,heroIds:V.world.skills.map(s=>s.id||'').join('|')};
+ return result;
+}
 async function start(){
  const seq=++V.loadSeq;
  enterAction('game');clearActionWorld();
  V.world=S.create(D,V.heroKey,927,V.bench?927:(Math.random()*0x7fffffff)|0);V.world.start(); /*@V10 enemy library casts vary per run*/bindRig('hero');for(const e of V.world.events.splice(0))emit(e);V.god=false;el('gaGod').textContent='무적';
  V.paused=true;window.__GS_TIMESCALE=V.speed;
- el('gaResult').style.display='none';showMenu('select','첫 웨이브 VFX를 준비하고 있습니다…');el('gaHeroes').style.display='none';el('gaHeroInfo').style.display='none';el('gaStart').disabled=true;el('gaStart').textContent='VFX 준비 중…';
- let prep=null;try{prep=await prepareWave(1,true);}catch(error){console.warn('[GS Action prepare]',error);}
+ el('gaResult').style.display='none';showMenu('select','이번 전투의 효과를 준비하고 있습니다…');el('gaHeroes').style.display='none';el('gaHeroInfo').style.display='none';el('gaStart').disabled=true;el('gaStart').textContent='VFX 준비 중…';
+ let prep=null;try{prep=await prepareRun();}catch(error){console.warn('[GS Action prepare]',error);}
  if(seq!==V.loadSeq||!V.active)return;
- const prepBad=!prep||prep.failed>0; /*@V8 F10*/
+ const prepBad=!prep||!prep.warmed||prep.failed>0; /*@V8 F10*/
  V.ready=true;el('gaStart').disabled=false;el('gaStart').textContent=prepBad?'전투 시작 (일부 연출 준비 실패)':'준비 완료 · 전투 시작';el('gaMenuNote').textContent=prepBad?`VFX 준비 ${prep?prep.failed+'건':''} 실패 · 해당 연출은 첫 사용 때 끊기거나 보이지 않을 수 있습니다.`:'준비가 끝났습니다. 시작하면 시점이 고정됩니다.';
 }
-function beginReady(){if(!V.ready||!V.world||V.world.over)return;if(V.draftOpen){el('gaMenu').style.display='none';return;}V.paused=false;el('gaMenu').style.display='none';toast(`${D.heroes[V.heroKey].name} · ${D.heroes[V.heroKey].title}`);lockPointer();}
+async function beginReady(){
+ if(!V.ready||!V.world||V.world.over||V.ctxLost||V.recovering)return false;
+ if(V.recoveryNeeded){const seq=V.loadSeq,world=V.world,job={};let timer;const cancelled=new Promise(resolve=>{V.cancelRecovery=()=>resolve();});V.recovering=job;el('gaStart').disabled=true;el('gaResume').disabled=true;el('gaMenuNote').textContent='복구된 그래픽 장치의 효과를 준비하고 있습니다…';
+  try{await Promise.race([E.renderer.compileAsync(scene,camera),cancelled,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('그래픽 준비 시간 초과')),15000);})]);
+   if(seq!==V.loadSeq||world!==V.world||V.ctxLost||!V.active)return false;const prep=await prepareRun(world.wave||1);
+   if(seq!==V.loadSeq||world!==V.world||V.ctxLost||!V.active)return false;
+   if(!prep?.warmed||prep.failed>0)throw Error('일부 VFX 준비 실패');V.recoveryNeeded=false;
+  }catch(error){if(seq===V.loadSeq&&world===V.world)el('gaMenuNote').textContent='그래픽 준비에 실패했습니다. 계속하기를 눌러 다시 시도하세요.';console.warn('[GS recovery]',error);return false;
+  }finally{clearTimeout(timer);if(V.recovering===job){V.recovering=false;V.cancelRecovery=null;}if(seq===V.loadSeq){el('gaStart').disabled=false;el('gaResume').disabled=false;}}
+ }
+ if(V.draftOpen){el('gaMenu').style.display='none';return false;}V.paused=false;el('gaMenu').style.display='none';toast(`${D.heroes[V.heroKey].name} · ${D.heroes[V.heroKey].title}`);lockPointer();return true;
+}
 function lockPointer(){if(!V.active||V.uiCursor||V.paused)return;if(V.bench)return;if(TOUCH.on)return; /*@V8 touch plays without pointer lock*/try{const p=canvas.requestPointerLock?.();p?.catch?.(()=>{if(V.active&&V.world&&!V.world.over&&!V.devOpen)showMenu('pause','시점 고정에 실패했습니다. 게임 화면을 클릭한 뒤 계속하기를 눌러주세요.');});}catch{if(V.active&&V.world&&!V.world.over)showMenu('pause','시점 고정이 지원되지 않습니다. 브라우저에서 열어주세요.');}}
 function syncFirstPersonCamera(){if(!V.world)return;
  const h=V.world.hero,cp=Math.cos(V.pitch),forward=(syncFirstPersonCamera.f||(syncFirstPersonCamera.f=new T.Vector3())).set(Math.sin(V.yaw)*cp,-Math.sin(V.pitch),-Math.cos(V.yaw)*cp);
@@ -14288,15 +14470,16 @@ window.__GS_TICK=function(dt){
  const f={x:Math.sin(V.yaw),z:-Math.cos(V.yaw)},r={x:Math.cos(V.yaw),z:Math.sin(V.yaw)};
  const fw=(V.keys.has('KeyW')?1:0)-(V.keys.has('KeyS')?1:0)-TOUCH.my,side=(V.keys.has('KeyD')?1:0)-(V.keys.has('KeyA')?1:0)+TOUCH.mx; /*@V8 stick*/
  const input={mx:f.x*fw+r.x*side,mz:f.z*fw+r.z*side,fx:f.x,fz:f.z};
- V.acc=Math.min(.15,V.acc+dt);while(V.acc>=S.STEP){{const h=V.world.hero;h.px=h.x;h.pz=h.z;const es=V.world.enemies;for(let i=0;i<es.length;i++){const e=es[i];e.px=e.x;e.pz=e.z;}}V.world.step(input);V.acc-=S.STEP;for(const e of V.world.events.splice(0))emit(e);flushInputBuffer();}
+ const simulationStart=benchPhaseStart();V.acc=Math.min(.15,V.acc+dt);while(V.acc>=S.STEP){{const h=V.world.hero;h.px=h.x;h.pz=h.z;const es=V.world.enemies;for(let i=0;i<es.length;i++){const e=es[i];e.px=e.x;e.pz=e.z;}}V.world.step(input);V.acc-=S.STEP;for(const e of V.world.events.splice(0))emit(e);flushInputBuffer();}benchPhaseEnd('simulation-and-events',simulationStart);
  if(V.mode==='trial'){V.world.hero.cds.fill(0);V.world.hero.ult=100;if(!V.world.controlTrialDamage)V.world.hero.invuln=1e9;}
  if(V.fireHeld&&V.world.hero.cds[0]<=0&&V.world.hero.state!=='windup'&&V.world.hero.state!=='dodge')cast(0);
  if(V.bench?.on)benchBot(dt);
  {const a=Math.min(1,Math.max(0,V.acc/S.STEP)),h=V.world.hero;lerpEnt(h,a);const es=V.world.enemies;for(let i=0;i<es.length;i++)lerpEnt(es[i],a);} /*@V12 drawn position = previous step → current step by the leftover time*/
- syncRigs(dt);updateHud();if(TOUCH.on)touchHud();
+ let stageStart=benchPhaseStart();syncRigs(dt);benchPhaseEnd('rigs.sync',stageStart);stageStart=benchPhaseStart();updateHud();if(TOUCH.on)touchHud();benchPhaseEnd('hud.update',stageStart);
 };
+window.__GS_TRACE_START=benchPhaseStart;window.__GS_TRACE_END=benchPhaseEnd;
 window.__GS_FRAME=function(frame){if(!V.active)return;const now=frame.now;
- if(perfLast){const ms=now-perfLast;if(ms>0&&Number.isFinite(ms)){perfSamples.push({at:now,ms});const B=V.bench;if(B&&B.on&&!V.paused&&perfLast>=B.measureAt){if(!B.n){B.targetFps=GS_PERFORMANCE_POLICY.target({fpsCap:B.runConfig.fpsCap,refreshHz:window.__GS_HZ,skipN:window.__GS_SKIP_N});B.measuredPacing={refreshHz:window.__GS_HZ||60,skipN:window.__GS_SKIP_N||1};}if(B.n<B.ms.length){B.ms[B.n]=ms;B.times[B.n]=(now-B.measureAt)/1000;B.n++;}else B.sampleOverflow=true;recordBenchFrame(B,frame,ms);if(V.gov.scale<B.minScale)B.minScale=V.gov.scale;if(V.gov.pressure>B.maxPressure)B.maxPressure=V.gov.pressure;if(frame.calls>B.maxCalls)B.maxCalls=frame.calls;B.maxGeometries=Math.max(B.maxGeometries||0,frame.geometries||0);B.maxTextures=Math.max(B.maxTextures||0,frame.textures||0);}}}perfLast=now;
+ if(perfLast){const ms=now-perfLast;if(ms>0&&Number.isFinite(ms)){perfSamples.push({at:now,ms});const B=V.bench;if(B&&B.on&&!V.paused&&perfLast>=B.measureAt){if(!B.n){B.measuredPacing={refreshHz:window.__GS_HZ||60,skipN:window.__GS_SKIP_N||1};}if(B.n<B.ms.length){B.ms[B.n]=ms;B.times[B.n]=(now-B.measureAt)/1000;B.n++;}else B.sampleOverflow=true;recordBenchFrame(B,frame,ms);if(V.gov.scale<B.minScale)B.minScale=V.gov.scale;if(V.gov.pressure>B.maxPressure)B.maxPressure=V.gov.pressure;if(frame.calls>B.maxCalls)B.maxCalls=frame.calls;B.maxGeometries=Math.max(B.maxGeometries||0,frame.geometries||0);B.maxTextures=Math.max(B.maxTextures||0,frame.textures||0);}}}perfLast=now;
  if(V.bench?.pendingFinish)finishBench(V.bench.pendingFinish);
  while(perfSamples.length&&perfSamples[0].at<now-2000)perfSamples.shift();
  if(now-perfHudAt<500||!perfSamples.length)return;perfHudAt=now;
@@ -14365,7 +14548,7 @@ el('gaMenuOpen').onclick=()=>{if(!V.world||V.world.over)return;V.uiCursor=false;
 el('gaExit').onclick=leaveToLab;el('gaPauseLab').onclick=leaveToLab;el('gaSelectLab').onclick=leaveToLab;
 el('gaResultTrial').onclick=()=>startTrial();el('gaResultLab').onclick=leaveToLab;
 mountRunSave();mountTactics();
-window.GS_ACTION={setTrialDamage(on){if(!V.world?.trial||V.mode!=='trial')return false;V.world.controlTrialDamage=!!on;V.god=!on;V.world.hero.invuln=on?0:1e9;el('gaGod').textContent=V.god?'무적 ON':'무적';return true;},get objective(){const o=objectiveRow();return o?JSON.parse(JSON.stringify(o)):null;},checkpoint:{get saved(){return runSaved?JSON.parse(JSON.stringify(runSaved)):null;},get storageOK(){return runSaveOK;},resume:resumeRun},showLabGuide,clearLabGuide,inspectSkillCast,get labGuide(){return labGuideSnapshot?{...labGuideSnapshot}:null;},get staticBatches(){return {...V.staticBatches};},get cameraMode(){return V.settings.cameraMode;},get cameraDistance(){return V.cameraDistance;},get bloomBuffers(){return {scale:H.classicBloom.resolutionScale,width:H.classicBloom.rtBright.width,height:H.classicBloom.rtBright.height};},version:'GS_Action v34',buildId:'v34-runtime-1',get deployVisuals(){return deployVisualSnapshot();},get deployPulseTrace(){return deployPulseEvents.map(e=>({...e}));},get vfxWarmStatus(){return V.lastWarmResult?JSON.parse(JSON.stringify(V.lastWarmResult)):null;},gpuSweep,get gpu(){return {...V.gpu,geometries:E.renderer.info.memory.geometries,textures:E.renderer.info.memory.textures};},runBench,stopBench:()=>finishBench('interrupted'),get benchResult(){return V.benchResult||null;},get benchOn(){return !!V.bench?.on;},draft:{get open(){return !!V.draftOpen;},get offers(){return (V.draft||[]).map(o=>({...o}));},pick:(i,slot)=>pickDraft(i,slot),skip:()=>closeDraft(),get enabled(){return V.settings.draft!==false;},set enabled(v){V.settings.draft=!!v;}},applyPreset,get runKit(){return V.runKit?V.runKit.key:null;},get timingTrace(){return timingEvents.map(e=>({...e}));},clearTimingTrace:()=>{timingEvents.length=0;renderTimingAudit();},scaleContract:id=>window.GA_VFX_CONTRACT(id),equipSkill:(hero,slot,id,size)=>equipSkill(hero,slot,id,false,size),resetKit,get loadout(){return JSON.parse(JSON.stringify(loadout));},get governor(){return {...V.gov};},beamTrialProfiles:()=>Object.values(window.GA_BEAM_TRIAL).map(p=>({...p})),fxTrialProfiles:()=>Object.values(window.GA_FX_TRIAL||{}).map(p=>({...p})),castTrialBeam:(id,target)=>V.mode==='trial'&&V.world?.castTrialBeam(id,target||aim()),get inputBuffer(){const p=inputBuffer.peek(performance.now());return p?{slot:p.slot,remainingMs:Math.max(0,p.expires-performance.now())}:null;},get sim(){return V.world},get status(){return {active:V.active,paused:V.paused,ready:V.ready,mode:V.mode,uiCursor:V.uiCursor,altHeld:V.altHeld,locked:V.locked,pointer:V.locked?'lock':V.uiCursor?'ui':'free',over:!!V.world?.over}},profile:COAST_PROFILE,get stageRoot(){return V.stage},get view(){try{return V.active&&V.world?{yaw:V.yaw,pitch:V.pitch,aim:aim(),eye:camera.position.toArray(),direction:camera.getWorldDirection(new T.Vector3()).toArray()}:null}catch(err){console.warn('[GS Action view]',err);return null;}},get mech(){const hero=V.rigs.get('hero');return {ready:!!V.mechGltf,clips:V.mechGltf?.animations.map(a=>a.name)||[],hero:!!hero?.visual,current:hero?.mech?.current||null};},formOf,poseFor,castTrialEffect,get lastTrialCast(){return V.lastTrialCast},catalog:()=>trialEffects.map(x=>({id:x.id,name:x.name,tag:trialTag(x.id),form:formOf(x.id),taxonomy:x.taxonomy||null,disposition:x.disposition||null})),start,startTrial,enterGameSelect,leaveToLab,stopFx:()=>{if(V.world){for(const p of V.world.pending.filter(p=>p.type==='trialBeamImpact'))dropPreview(p.slot);V.world.pending=V.world.pending.filter(p=>p.type!=='trialBeamImpact');}stopPool();try{VFX_COMBAT.stopAll();}catch{}},warmFx,authoredTune:BASE_TUNE,spawn:(kind,n=1)=>{const k=V.world?.spawn(kind,n);for(const e of V.world?.events.splice(0)||[])emit(e);return k;},god:on=>{if(V.world)V.world.hero.invuln=on?1e9:0;},resetCd:()=>{if(V.world)V.world.hero.cds.fill(0);},timescale:v=>{window.__GS_TIMESCALE=S.clamp(v,.01,2);},cast,fx,fxStats:()=>Object.fromEntries([...V.pool].map(([id,p])=>[id,p.map(x=>({index:x.i,busy:x.until>V.clock}))])),fxTest:(id,n=3)=>{for(let i=0;i<n;i++)fx({id,caster:'test',origin:{x:i*9-9,z:-12},target:{x:i*9-9,z:-27},dir:{x:0,z:-1},hold:2,size:'S'});return V.pool.get(id)?.length||0;},hitboxes:on=>{V.boxes=!!on;for(const r of V.rigs.values())r.ring.visible=V.boxes;}};
+window.GS_ACTION={setTrialDamage(on){if(!V.world?.trial||V.mode!=='trial')return false;V.world.controlTrialDamage=!!on;V.god=!on;V.world.hero.invuln=on?0:1e9;el('gaGod').textContent=V.god?'무적 ON':'무적';return true;},get objective(){const o=objectiveRow();return o?JSON.parse(JSON.stringify(o)):null;},checkpoint:{get saved(){return runSaved?JSON.parse(JSON.stringify(runSaved)):null;},get storageOK(){return runSaveOK;},resume:resumeRun},showLabGuide,clearLabGuide,inspectSkillCast,get labGuide(){return labGuideSnapshot?{...labGuideSnapshot}:null;},get staticBatches(){return {...V.staticBatches};},get cameraMode(){return V.settings.cameraMode;},get cameraDistance(){return V.cameraDistance;},get bloomBuffers(){return {scale:H.classicBloom.resolutionScale,width:H.classicBloom.rtBright.width,height:H.classicBloom.rtBright.height};},version:'GS_Action v34',buildId:'v34-runtime-6',get deployVisuals(){return deployVisualSnapshot();},get deployPulseTrace(){return deployPulseEvents.map(e=>({...e}));},get vfxWarmStatus(){return V.lastWarmResult?JSON.parse(JSON.stringify(V.lastWarmResult)):null;},gpuSweep,get gpu(){return {...V.gpu,geometries:E.renderer.info.memory.geometries,textures:E.renderer.info.memory.textures};},runBench,stopBench:()=>finishBench('interrupted'),get benchResult(){return V.benchResult||null;},get benchOn(){return !!V.bench?.on;},draft:{get open(){return !!V.draftOpen;},get offers(){return (V.draft||[]).map(o=>({...o}));},pick:(i,slot)=>pickDraft(i,slot),skip:()=>closeDraft(),get enabled(){return V.settings.draft!==false;},set enabled(v){V.settings.draft=!!v;}},applyPreset,get runKit(){return V.runKit?V.runKit.key:null;},get timingTrace(){return timingEvents.map(e=>({...e}));},clearTimingTrace:()=>{timingEvents.length=0;renderTimingAudit();},scaleContract:id=>window.GA_VFX_CONTRACT(id),equipSkill:(hero,slot,id,size)=>equipSkill(hero,slot,id,false,size),resetKit,get loadout(){return JSON.parse(JSON.stringify(loadout));},get governor(){return {...V.gov};},beamTrialProfiles:()=>Object.values(window.GA_BEAM_TRIAL).map(p=>({...p})),fxTrialProfiles:()=>Object.values(window.GA_FX_TRIAL||{}).map(p=>({...p})),castTrialBeam:(id,target)=>V.mode==='trial'&&V.world?.castTrialBeam(id,target||aim()),get inputBuffer(){const p=inputBuffer.peek(performance.now());return p?{slot:p.slot,remainingMs:Math.max(0,p.expires-performance.now())}:null;},get sim(){return V.world},get status(){return {active:V.active,paused:V.paused,ready:V.ready,mode:V.mode,uiCursor:V.uiCursor,altHeld:V.altHeld,locked:V.locked,pointer:V.locked?'lock':V.uiCursor?'ui':'free',over:!!V.world?.over}},profile:COAST_PROFILE,get stageRoot(){return V.stage},get view(){try{return V.active&&V.world?{yaw:V.yaw,pitch:V.pitch,aim:aim(),eye:camera.position.toArray(),direction:camera.getWorldDirection(new T.Vector3()).toArray()}:null}catch(err){console.warn('[GS Action view]',err);return null;}},get mech(){const hero=V.rigs.get('hero');return {ready:!!V.mechGltf,clips:V.mechGltf?.animations.map(a=>a.name)||[],hero:!!hero?.visual,current:hero?.mech?.current||null};},formOf,poseFor,castTrialEffect,get lastTrialCast(){return V.lastTrialCast},catalog:()=>trialEffects.map(x=>({id:x.id,name:x.name,tag:trialTag(x.id),form:formOf(x.id),taxonomy:x.taxonomy||null,disposition:x.disposition||null})),start,startTrial,enterGameSelect,leaveToLab,stopFx:()=>{if(V.world){for(const p of V.world.pending.filter(p=>p.type==='trialBeamImpact'))dropPreview(p.slot);V.world.pending=V.world.pending.filter(p=>p.type!=='trialBeamImpact');}stopPool();try{VFX_COMBAT.stopAll();}catch{}},warmFx,get warmStatus(){return {active:!!activeWarm,queued:warmQueued,maskedRoots:warmRoots.size,parallel:E.renderer.extensions.has('KHR_parallel_shader_compile')};},authoredTune:BASE_TUNE,spawn:(kind,n=1)=>{const k=V.world?.spawn(kind,n);for(const e of V.world?.events.splice(0)||[])emit(e);return k;},god:on=>{if(V.world)V.world.hero.invuln=on?1e9:0;},resetCd:()=>{if(V.world)V.world.hero.cds.fill(0);},timescale:v=>{window.__GS_TIMESCALE=S.clamp(v,.01,2);},cast,fx,fxStats:()=>Object.fromEntries([...V.pool].map(([id,p])=>[id,p.map(x=>({index:x.i,busy:x.until>V.clock}))])),fxTest:(id,n=3)=>{for(let i=0;i<n;i++)fx({id,caster:'test',origin:{x:i*9-9,z:-12},target:{x:i*9-9,z:-27},dir:{x:0,z:-1},hold:2,size:'S'});return V.pool.get(id)?.length||0;},hitboxes:on=>{V.boxes=!!on;for(const r of V.rigs.values())r.ring.visible=V.boxes;}};
 // Controlled review adapter: original cast functions and original simulation rules.
 let reviewCaptureWorld=null;
 GS_ACTION.reviewBegin=({id,hero=V.heroKey,size='',target='center'}={})=>{
@@ -61910,7 +62093,7 @@ body{color:var(--st-text);color-scheme:dark}button,input,select,textarea{font-fa
 </style>
 <script id="gsPerformancePolicy">/* Frame budget follows the actual paced display interval; approval remains external. */
 window.GS_PERFORMANCE_POLICY=Object.freeze({
- target({fpsCap=60,refreshHz=60,skipN=1}={}){const hz=Number.isFinite(refreshHz)&&refreshHz>=20&&refreshHz<=360?refreshHz:60,skip=Number.isInteger(skipN)&&skipN>=1&&skipN<=12?skipN:1;return fpsCap===30?30:Math.max(20,Math.min(360,hz/skip));},
+ target({fpsCap=60,refreshHz=60,skipN=1}={}){const hz=Number.isFinite(refreshHz)&&refreshHz>=20&&refreshHz<=360?refreshHz:60,skip=Number.isInteger(skipN)&&skipN>=1&&skipN<=12?skipN:1;return fpsCap===30?30:Math.max(fpsCap>0?fpsCap:20,Math.min(360,hz/skip));},
  budgets(target){const interval=1000/target;return {average:target*.95,p95:interval*1.2,p99:interval*2,max:100,intervalMs:interval};},
  summarize(values,target=60){const a=Array.from(values).filter(x=>Number.isFinite(x)&&x>0).sort((a,b)=>a-b),q=p=>a.length?a[Math.min(a.length-1,Math.floor(a.length*p))]:0,sum=a.reduce((s,x)=>s+x,0),interval=1000/target;return {seconds:+(sum/1000).toFixed(1),frames:a.length,fpsAvg:a.length?+(1000*a.length/sum).toFixed(1):0,p50:+q(.5).toFixed(1),p95:+q(.95).toFixed(1),p99:+q(.99).toFixed(1),max:+(a.at(-1)||0).toFixed(1),over50:a.filter(x=>x>50).length,over100:a.filter(x=>x>100).length,overBudget:a.filter(x=>x>interval*1.5).length,overDoubleBudget:a.filter(x=>x>interval*2).length};},
  checks(summary,budgets){return {samples:summary.frames>=2,average:summary.fpsAvg>=budgets.average,p95:summary.p95<=budgets.p95,p99:summary.p99<=budgets.p99,max:summary.max<=budgets.max};}
