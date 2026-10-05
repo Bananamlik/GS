@@ -13898,7 +13898,7 @@ async function resumeRun(){if(!runSaved||!V.paused||V.bench||!S.validateCheckpoi
  let prep;try{prep=await prepareRun(p.wave);}catch(error){console.warn('[GS resume]',error);}if(seq!==V.loadSeq||!V.active||V.mode!=='game')return false;
  V.ready=true;el('gaStart').disabled=false;el('gaStart').textContent='저장된 웨이브 · 전투 시작';el('gaMenuNote').textContent=prep&&prep.warmed&&prep.failed===0?'웨이브 시작 상태를 복원했습니다. 시작 버튼을 누르세요.':'일부 VFX 준비에 실패했습니다. 시작 후 첫 사용 때 끊길 수 있습니다.';refreshRunSave();updateHud();return true;
 }
-function combatFeedback(text,tone='neutral'){if(V.bench||!V.world)return;const n=el('gaCombatFeedback');if(feedbackUntil>V.clock&&(tone==='neutral'||n.textContent===text))return;n.textContent=text;n.dataset.tone=tone;n.style.opacity='1';feedbackUntil=V.clock+.7;}
+function combatFeedback(text,tone='neutral'){if(V.bench||!V.world||V.draftOpen)return;const n=el('gaCombatFeedback');if(feedbackUntil>V.clock&&(tone==='neutral'||n.textContent===text))return;n.textContent=text;n.dataset.tone=tone;n.style.opacity='1';feedbackUntil=V.clock+.7;}
 function systemEvent(e){if(e.type==='wave:clear'||e.type==='match:end'){feedbackUntil=0;el('gaCombatFeedback').style.opacity='0';}if(e.type==='wave:start'){stopPool();for(const slot of [...V.previews.keys()])dropPreview(slot);for(const id of [...V.tele.keys()])dropTele(id);inputBuffer.clear();saveBoundary();}if(e.type==='match:end'&&e.win&&!V.bench)clearRunSave();
  if(e.type==='control:blocked')combatFeedback(e.reason+' · 행동 불가','avoid');
  if(e.type==='combat:blocked')combatFeedback('벽에 차단됨','block');
@@ -13952,15 +13952,16 @@ const tuneFor=base=>Object.fromEntries(Object.entries(TUNE_SAVED).filter(([k,row
 try{applyTuneOverlay(tuneFor(true));}catch(error){console.warn('[GA tune]',error);}
 const SETTINGS_KEY='ga-play-settings-v1';
 // ── @V8 touch input: left stick = move, drag elsewhere = look, buttons = skills. Pointer events with capture; state cleared on cancel/pause.
-const TOUCH={on:false,mx:0,my:0,stick:-1,sx:0,sy:0,look:-1,lx:0,ly:0};
+const TOUCH={on:false,mx:0,my:0,stick:-1,sx:0,sy:0,look:-1,lx:0,ly:0};try{if(localStorage.getItem('gsStickUsed'))document.body.classList.add('ga-stick-used');}catch{}
 const TB=[...document.querySelectorAll('#gaTBtns button[data-slot]')],tRoot=el('gaTouch'),tStick=el('gaTStick'),tBase=el('gaTBase'),tKnob=el('gaTKnob');
 function touchMode(on){if(TOUCH.on===on)return;TOUCH.on=on;document.body.classList.toggle('ga-touch',on);document.body.classList.toggle('ga-trial-min',on);if(on){document.exitPointerLock?.();V.uiCursor=false;document.body.classList.remove('ga-cursor');}else touchReset();
  const g=el('gaControlGuide');if(g&&on&&!g.dataset.touch){g.dataset.touch='1';const d=document.createElement('div');d.innerHTML='<kbd>터치</kbd> 왼쪽 드래그 이동 · 오른쪽 드래그 시점 · 버튼 기술';g.prepend(d);}}
 function touchReset(){TOUCH.mx=TOUCH.my=0;TOUCH.stick=TOUCH.look=-1;tBase.style.display='none';V.fireHeld=false;for(const b of TB)b.classList.remove('on');}
-function touchHud(){const h=V.world.hero,sk=V.world.skills;for(const b of TB){const i=+b.dataset.slot,s=sk[i];const availability=V.world.actionAvailability(i);if(b.dataset.controlReason!==(availability.controlReason||''))b.dataset.controlReason=availability.controlReason||'';if(b.getAttribute('aria-disabled')!==String(!availability.allowed))b.setAttribute('aria-disabled',String(!availability.allowed));b.classList.toggle('cd',!s||h.cds[i]>0||(!!s.ult&&h.ult<100)||!!availability.controlReason);}}
+function touchHud(){const h=V.world.hero,sk=V.world.skills;for(const b of TB){const i=+b.dataset.slot,s=sk[i];const availability=V.world.actionAvailability(i);if(b.dataset.controlReason!==(availability.controlReason||''))b.dataset.controlReason=availability.controlReason||'';if(b.getAttribute('aria-disabled')!==String(!availability.allowed))b.setAttribute('aria-disabled',String(!availability.allowed));b.classList.toggle('cd',!s||h.cds[i]>0||(!!s.ult&&h.ult<100)||!!availability.controlReason);
+ /*@HUD cooldown readout: numeric key first, text only on change*/const reason=availability.controlReason||'',key=!s?-1:reason?-2:h.cds[i]>0?Math.ceil(h.cds[i]*10):(s.ult&&h.ult<100)?-3-Math.floor(h.ult):0;if(key!==b.__cdk||key===-2){b.__cdk=key;const text=key<=-3?(-3-key)+'%':key===-2?reason:key>0?(key/10).toFixed(1)+'s':'';if(b.dataset.cdn!==text)b.dataset.cdn=text;}}}
 window.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')touchMode(true);else if(e.pointerType==='mouse'&&TOUCH.on&&!e.target.closest?.('#gaTouch'))touchMode(false);},true);
 if(matchMedia('(pointer:coarse)').matches&&!matchMedia('(any-pointer:fine)').matches)touchMode(true);
-tStick.addEventListener('pointerdown',e=>{if(TOUCH.stick!==-1)return;e.preventDefault();TOUCH.stick=e.pointerId;TOUCH.sx=e.clientX;TOUCH.sy=e.clientY;try{tStick.setPointerCapture(e.pointerId);}catch{}
+tStick.addEventListener('pointerdown',e=>{if(TOUCH.stick!==-1)return;e.preventDefault();if(!document.body.classList.contains('ga-stick-used')){document.body.classList.add('ga-stick-used');try{localStorage.setItem('gsStickUsed','1');}catch{}}TOUCH.stick=e.pointerId;TOUCH.sx=e.clientX;TOUCH.sy=e.clientY;try{tStick.setPointerCapture(e.pointerId);}catch{}
  const r=tRoot.getBoundingClientRect();tBase.style.left=(e.clientX-r.left)+'px';tBase.style.top=(e.clientY-r.top)+'px';tKnob.style.transform='';tBase.style.display='block';});
 tStick.addEventListener('pointermove',e=>{if(e.pointerId!==TOUCH.stick)return;let dx=(e.clientX-TOUCH.sx)/48,dy=(e.clientY-TOUCH.sy)/48;const m=Math.hypot(dx,dy);if(m>1){dx/=m;dy/=m;}
  const shaped=GS_GAMEPLAY_POLICY.stick(dx,dy);TOUCH.mx=shaped.x;TOUCH.my=shaped.y;tKnob.style.transform=`translate(${dx*32}px,${dy*32}px)`;});
@@ -14193,7 +14194,7 @@ function openDraft(n){const offers=draftOffers(n);if(!offers.length)return;if(V.
    const h=document.createElement('strong');h.textContent=o.name.split(' · ')[0];const m=document.createElement('small');m.textContent=`${clsName(o.cls)}${o.size?' · '+sizeName(o.size):''} · ${o.src}`;const l=document.createElement('span');l.textContent=o.line;
    const row=document.createElement('div');row.className='dslots';for(const slot of DRAFT_SLOTS[o.cls]||[]){const b=document.createElement('button');b.type='button';const cur=hero.skills[slot];b.textContent=`${cur.key} ← 교체`;b.title=`현재: ${cur.name}`;const s=document.createElement('em');s.textContent=cur.name;b.appendChild(s);b.onclick=()=>pickDraft(i,slot);row.appendChild(b);}
    const why=document.createElement('p');why.className='ga-draft-advice';why.textContent=o.advice.focus+' · '+o.advice.reason;d.append(h,m,l,why,draftComparison(o,hero),row);return d;}));
- el('gaDraft').style.display='grid';el('gaObjective').hidden=true;}
+ el('gaDraft').style.display='grid';el('gaObjective').hidden=true;feedbackUntil=0;el('gaCombatFeedback').style.opacity='0';}
 function closeDraft(silent){if(!V.draftOpen)return;V.draftOpen=false;V.draft=null;el('gaDraft').style.display='none';if(silent)return;V.paused=false;window.__GS_TIMESCALE=V.speed;lockPointer();}
 function pickDraft(i,slot){const o=V.draft?.[i];if(!o||!(DRAFT_SLOTS[o.cls]||[]).includes(slot))return '선택 불가';
  if(!V.runKit||V.runKit.key!==V.heroKey)V.runKit={key:V.heroKey,skills:D.heroes[V.heroKey].skills.slice(),tune:BASE_TUNE[V.heroKey].map(x=>({...x}))};
@@ -14441,7 +14442,7 @@ function syncRigs(dt){const w=V.world;if(!w)return;renderEnemies.clear();for(con
   const local=worldPoint.sub(camera.position).applyQuaternion(threatInverse);
   let dx=local.z>0?-local.x:local.x,dy=local.z>0?local.y:-local.y;if(Math.abs(dx)+Math.abs(dy)<.01)dy=1;
   const mag=Math.max(Math.abs(dx),Math.abs(dy));dx/=mag;dy/=mag;
-  t.marker.style.left=(50+dx*44)+'%';t.marker.style.top=(50+dy*38)+'%';t.marker.style.display='block';
+  {const W=innerWidth,H=innerHeight,mx=(50+dx*44)*W/100;let my=(50+dy*38)*H/100;const reserve=TOUCH.on?(W-mx<235?250:0):110;if(reserve&&H-my<reserve)my=Math.max(40,H-reserve); /*@HUD marker clear of skill bar and touch buttons*/t.marker.style.left=mx+'px';t.marker.style.top=my+'px';}t.marker.style.display='block';
   t.marker.querySelector('b').style.transform=`rotate(${Math.atan2(dy,dx)*180/Math.PI+90}deg)`;
   t.marker.querySelector('span').textContent=Math.max(0,t.until-V.clock).toFixed(1)+'s';shownThreats++;
  }
@@ -62125,6 +62126,16 @@ window.GS_GAMEPLAY_POLICY=Object.freeze({
 #gaMenu .card{max-height:calc(100dvh - 32px);overflow:auto;box-sizing:border-box}
 
 #gaResultSkills th{white-space:nowrap}#gaResultSkills td:first-child{overflow-wrap:anywhere}
+</style>
+<style id="gsHudPatch">/* HUD A+B: skill-name wrapping, touch readability, cooldown readout, stick hint */
+#gaSkills .skill span{word-break:keep-all;overflow-wrap:anywhere}
+@media(min-width:761px){body.ga-touch.ga-on #gaSkills{transform:scale(.85)}body.ga-touch.ga-on #gaObjective:not([data-boss=true]){top:128px}}
+body.ga-touch #gaUltText{display:none}
+#gaTouch button.cd{opacity:1;background:#0d1c2788;border-color:#cfe6ee55;color:#eaf4f6aa}
+#gaTouch button[data-cdn]:not([data-cdn=""])::after{content:attr(data-cdn);font:800 11px/1 ui-monospace,monospace;color:#ffe08a;text-shadow:0 1px 3px #000,0 0 6px #000;margin-top:2px}
+#gaTouch button[data-cdn]:not([data-cdn=""]){align-content:center}
+#gaTStick::before{content:'이동';position:absolute;left:max(36px,10%);bottom:max(40px,14%);width:92px;height:92px;box-sizing:border-box;border:2px dashed #cfe6ee66;border-radius:50%;display:grid;place-items:center;color:#cfe6eeaa;font:600 12px system-ui;pointer-events:none}
+body.ga-stick-used #gaTStick::before{display:none}
 </style>
 <style id="gsSkillInfoStyle">.gs-skill-info{margin:18px 0;padding:16px;background:#101e2d;border:1px solid #365168;border-radius:14px;color:#dceaf6;font:12px/1.8 system-ui}.gs-skill-info h4{font-size:16px;margin:0 0 12px}.gs-skill-info h5{font-size:12px;margin:14px 0 6px}.gs-info-controls{display:flex;gap:8px}.gs-skill-info select{min-width:0;width:100%;min-height:44px;background:#1d3043;color:#e4f3ff;border:1px solid #4a647b;border-radius:8px;padding:8px}.gs-info-source{color:#95dfc8}.gs-skill-info dl{display:grid;grid-template-columns:84px 1fr;gap:8px;margin:14px 0}.gs-skill-info dt{color:#9eb4c9}.gs-skill-info dd{margin:0;overflow-wrap:anywhere}.gs-skill-info ul{padding-left:18px}.gs-info-note{font-size:11px;color:#a8bfd0}.gs-skill-info svg{display:block;width:100%;height:auto;background:#0a1722;border:1px solid #27445a;border-radius:10px;margin:14px 0}.gs-skill-info svg text{fill:#c4dce9;font:11px system-ui}.gs-info-scene{display:flex!important;align-items:center;gap:8px;min-height:44px}.gs-skill-info button{width:100%;min-height:44px;border-radius:9px;background:#265c4d!important;color:#e6fff5!important;border:1px solid #6aa38e!important;margin-top:12px;font:12px system-ui}.gs-skill-info table{width:100%;border-collapse:collapse}.gs-skill-info td{padding:8px 4px;border-bottom:1px solid #304459;font-size:11px}#gsTrialSkillDetail{margin-top:14px}#gsTrialSkillDetail>summary{min-height:44px;font-size:12px;cursor:pointer;color:#bcd1e4}@media(max-width:760px){.gs-skill-info{padding:12px}.gs-skill-info dl{grid-template-columns:72px 1fr}.gs-skill-info svg text{font-size:12px}}
 </style>
