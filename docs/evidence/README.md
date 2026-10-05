@@ -9,6 +9,7 @@
 | `gs-pr3-split-plan_v1_261005-1329.md` | `5589372a4723a1dd29d64d5368591d2b` | PR #3 분할 계획 (A/B/C/D 묶음, 병합 게이트) | 코드 분할 전에 쓴 계획. 실제 분할은 BC를 합쳐 3개 PR로 함. |
 | `gs-split-verification_v2_261005-1927.md` | `2c86942246182e1f613e08c5b7b3fc7d` | 3개 패치 구성·검증 (A, BC, D) | SwiftShader 결과. 1회 실행. |
 | `gs-gpu-measurement_v1_261005-2028.md` | `00631745408de10569c080c264b1e918` | 사용자 PC 실제 GPU 측정 해석 | 빌드 파일 해시 미확인. main v34 비교 없음. 1대·1회. |
+| `gs-ci-results_v1_261005-2359.md` | `45ac8eca41a81cd1168ac5fa202ef937` | GitHub Actions 테스트 25개 결과 (D 25/25, BC 24/25, A 11/25) | 각 1회, SwiftShader. 예상된 실패 포함. |
 
 ## 한계
 

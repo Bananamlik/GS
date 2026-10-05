@@ -7,7 +7,7 @@ GS Action: 단일 HTML 게임/VFX 스튜디오. 현재 상태는 `docs/STATUS.md
 - `index.html` = `GS_Action_v34_runtime.html`. 항상 byte 동일. 한쪽만 바꾸지 않는다.
 - `gs-skill-lib_v7_261003-0344.csv`: 스킬 라이브러리.
 - `GS_Action_v14_261003-0447.html`, `gs-v14-report_v1_261003-0447.md`: 이전 버전·보고서.
-- `docs/`: 상태·증거. `tests/`, `scripts/`는 PR #3 계열(CI 별도 PR)에만 있음.
+- `docs/`: 상태·증거. `tests/`, `scripts/`, `.github/workflows/`는 PR #3 계열과 CI PR(#9)에만 있음.
 
 ## 규칙
 

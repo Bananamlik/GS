@@ -1,6 +1,6 @@
 # STATUS
 
-갱신: 2026-10-05 KST. 근거: `docs/evidence/`. 검증하지 못한 항목은 UNVERIFIED.
+갱신: 2026-10-05 23:59 KST. 근거: `docs/evidence/`. 검증하지 못한 항목은 UNVERIFIED.
 
 ## 1. 코드 상태
 
@@ -20,6 +20,14 @@
 
 B와 C는 같은 함수를 함께 다뤄 한 PR로 묶음.
 
+| 부가 | PR | 내용 |
+|---|---|---|
+| 문서 | [#8](https://github.com/Bananamlik/GS/pull/8) | 이 문서, `CLAUDE.md`, `docs/evidence/` (docs-only, base `main`) |
+| CI | [#9](https://github.com/Bananamlik/GS/pull/9) | PR #3의 `tests/`·`scripts/` + GitHub Actions (base: #7 브랜치) |
+| 닫음 | [#4](https://github.com/Bananamlik/GS/pull/4) | 권한 확인용. 닫힘. |
+
+probe 브랜치 `claude/ci-probe-a`, `claude/ci-probe-bc`는 단계별 테스트 결과 수집용이며 PR·병합 대상이 아님. 필요 없으면 삭제해도 됨.
+
 ## 2. 검증 상태
 
 | 항목 | 결과 | 환경 |
@@ -28,8 +36,9 @@ B와 C는 같은 함수를 함께 다뤄 한 PR로 묶음.
 | `cmp index.html GS_Action_v34_runtime.html` | 3단계 모두 동일 | 클라우드 세션 |
 | `node --check` `<script>` 247개 (importmap JSON 제외) | 3단계 모두 0 실패 | 클라우드 세션 |
 | PR #3 node 전용 `SourceTests` 3개 | 3단계 모두 통과 | 클라우드 세션 |
-| 브라우저 테스트 25개, 클라우드 세션 | **UNVERIFIED** (`cdn.jsdelivr.net` 차단, playwright 미설치) | 클라우드 세션 |
-| 브라우저 테스트 25개, SwiftShader | PR #3 24/25 통과(실패 1: `test_fixed_target_and_real_phase_records`, 속도 민감). A 단독 11/14 실패(B·C·D 기능 요구). BC 24/25(실패 1: D 기능 테스트). 1회 실행. | 다른 환경, `gs-split-verification_v2` 기준. 이 repo에서 재현 안 함. |
+| 브라우저 테스트 25개, 클라우드 세션 | **UNVERIFIED** (`cdn.jsdelivr.net` 차단, playwright 미설치). 대신 GitHub Actions 결과 아래 행 참고. | 클라우드 세션 |
+| 브라우저 테스트 25개, GitHub Actions | D(= PR #3 코드) **25/25 통과**. BC 24/25(실패 1: D 기능 테스트, 예상). A 11/25(실패 14: BC·D 기능을 요구, 예상). 각 1회. | GitHub 러너, SwiftShader. `docs/evidence/gs-ci-results_v1_261005-2359.md` |
+| 브라우저 테스트 25개, 다른 환경(SwiftShader) | PR #3 24/25, A 단독 11/14 실패, BC 24/25. 위 GitHub Actions 결과와 A·BC는 일치. | `gs-split-verification_v2` 기준. |
 | 실제 GPU / Galaxy S25+ / 소리 / 발열 | 아래 §3 외 **UNVERIFIED** | |
 
 ## 3. 실제 GPU 측정 (사용자 PC 1대)
@@ -66,6 +75,6 @@ AMD Radeon 내장, ANGLE/D3D11, Chrome 154, 1920×922, 품질 auto, 설정 60 �
 1. 같은 PC·같은 조건으로 main v34 3회 측정.
 2. PR #3 계열 60초 측정 후 결과 JSON(`phaseTotals`, `phaseSpans`, `longTasks`)을 `docs/evidence/`에 저장. 끊김 원인 좁히기.
 3. 품질 `낮음` 1회 측정(GPU 병목 vs CPU 병목 구분).
-4. CI: `tests/`·`scripts/`를 #7 위에 쌓아 GitHub Actions로 25개 실행 (별도 PR).
+4. CI: [#9](https://github.com/Bananamlik/GS/pull/9)에서 25/25 통과 확인. 병합 여부는 사용자 결정. #9는 #7 위에 쌓여 있어 #5~#7이 먼저 병합되어야 base가 정리됨.
 5. Galaxy S25+ 화면·소리·터치·발열 (사용자 직접).
 6. 장시간·메모리·복구 재검증 (GPU 환경).
