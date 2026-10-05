@@ -1299,13 +1299,72 @@ async function main(){
   }
   const ENV = { THREE, scene, camera, ground, renderer, Pool3D, makePointsLayer, writeLayer, NOISE_GLSL, curl2, vnoise };
   window.STAGE3D._q.forEach(args=>realReg(...args));
+  const stormBatches=new Set(),stormProjection=new THREE.Matrix4(),stormPoint=new THREE.Vector4();
+  function stormDepth(o){
+    if(o.isSprite)stormPoint.setFromMatrixPosition(o.matrixWorld);
+    else{if(o.boundingSphere===null)o.computeBoundingSphere();const sphere=o.boundingSphere||o.geometry.boundingSphere;if(!sphere){o.geometry.computeBoundingSphere();stormPoint.copy(o.geometry.boundingSphere.center);}else stormPoint.copy(sphere.center);stormPoint.applyMatrix4(o.matrixWorld);}
+    return stormPoint.applyMatrix4(stormProjection).z;
+  }
+  function stormGroupOrder(o){for(let p=o.parent;p;p=p.parent)if(p.isGroup)return p.renderOrder;return 0;}
+  function syncStormBatches(){
+    if(!stormBatches.size)return;camera.updateMatrixWorld();stormProjection.multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse);
+    const barriers=[];
+    scene.traverseVisible(o=>{if(!o.geometry||!camera.layers.test(o.layers)||o.userData.gsStormBatch)return;const mats=Array.isArray(o.material)?o.material:[o.material];
+      if(!mats.some(m=>m?.visible&&m.transparent&&(m.blending!==THREE.AdditiveBlending||m.depthWrite)&&(m.opacity!==0||m.depthWrite)))return;
+      o.updateWorldMatrix(true,false);barriers.push({z:stormDepth(o),order:o.renderOrder,group:stormGroupOrder(o)});
+    });
+    for(const h of stormBatches)h.sync(barriers);
+  }
+  function createStormBatches(group){
+    const originals=[];group.traverse(o=>{const m=o.material;if(o.isMesh&&!o.isInstancedMesh&&o.geometry.type==='ConeGeometry'&&m?.isMeshBasicMaterial&&m.transparent&&m.blending===THREE.AdditiveBlending&&!m.depthWrite&&m.side===THREE.DoubleSide&&!m.map&&!m.envMap)originals.push(o);});
+    if(!originals.length||originals.some(o=>o.parent!==group||o.geometry!==originals[0].geometry||o.renderOrder!==originals[0].renderOrder))return null;
+    const material=originals[0].material.clone();material.color.setRGB(1,1,1);material.opacity=1;
+    material.onBeforeCompile=sh=>{
+      sh.vertexShader='attribute float gsStormAlpha; varying float vGsStormAlpha;\n'+sh.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\nvGsStormAlpha=gsStormAlpha;').replace('#include <project_vertex>','vec4 mvPosition=instanceMatrix*vec4(transformed,1.0);gl_Position=projectionMatrix*mvPosition;');
+      sh.fragmentShader='varying float vGsStormAlpha;\n'+sh.fragmentShader.replace('#include <color_fragment>','#include <color_fragment>\ndiffuseColor.a*=vGsStormAlpha;');
+    };
+    material.customProgramCacheKey=()=>'gs-storm-segment-alpha-v1';
+    const batches=[],matrix=new THREE.Matrix4(),center=new THREE.Vector3(),point=new THREE.Vector3();
+    for(const o of originals){o.userData.gsStormOriginalLayer=o.layers.mask;o.layers.set(31);}
+    group.userData.gsStormSegmented=true;
+    function addBatch(){const geo=originals[0].geometry.clone(),alpha=new THREE.InstancedBufferAttribute(new Float32Array(originals.length),1).setUsage(THREE.DynamicDrawUsage);geo.setAttribute('gsStormAlpha',alpha);
+      const mesh=new THREE.InstancedMesh(geo,material,originals.length);mesh.name='GS_STORM_SEGMENT';mesh.userData.gsStormBatch=true;mesh.frustumCulled=false;mesh.renderOrder=originals[0].renderOrder;mesh.boundingSphere=new THREE.Sphere(new THREE.Vector3(),1);
+      mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);mesh.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(originals.length*3),3).setUsage(THREE.DynamicDrawUsage);group.add(mesh);const b={mesh,alpha};batches.push(b);return b;}
+    const helper={sync(barriers){for(const b of batches)b.mesh.visible=false;
+      let visible=true;for(let p=group;p;p=p.parent)if(!p.visible){visible=false;break;}
+      if(!visible)return;const disabled=group.userData.gsStormBatchDisabled;
+      for(const o of originals)o.layers.mask=disabled?o.userData.gsStormOriginalLayer:1<<31;
+      if(disabled)return;
+      group.updateWorldMatrix(true,false);
+      const cuts=barriers.filter(b=>b.group===group.renderOrder&&b.order===originals[0].renderOrder).map(b=>b.z).sort((a,b)=>a-b),segments=new Map();
+      for(const o of originals){if(!o.visible||o.material.opacity===0)continue;o.updateWorldMatrix(false,false);const z=stormDepth(o);let slot=0;while(slot<cuts.length&&cuts[slot]<z)slot++;
+        if(slot<cuts.length&&Math.abs(cuts[slot]-z)<1e-7){o.layers.mask=o.userData.gsStormOriginalLayer;continue;}
+        if(!segments.has(slot))segments.set(slot,[]);segments.get(slot).push(o);
+      }
+      let index=0;for(const rows of segments.values()){const b=batches[index++]||addBatch(),mesh=b.mesh;center.set(0,0,0);
+        for(let i=0;i<rows.length;i++){const o=rows[i];matrix.multiplyMatrices(camera.matrixWorldInverse,o.matrixWorld);mesh.setMatrixAt(i,matrix);mesh.setColorAt(i,o.material.color);b.alpha.setX(i,o.material.opacity);
+          point.copy(o.geometry.boundingSphere.center).applyMatrix4(o.matrix);center.add(point);
+        }
+        mesh.boundingSphere.center.copy(center.divideScalar(rows.length));mesh.count=rows.length;mesh.visible=true;
+        for(const [attr,count] of [[mesh.instanceMatrix,rows.length*16],[mesh.instanceColor,rows.length*3],[b.alpha,rows.length]]){attr.clearUpdateRanges();attr.addUpdateRange(0,count);attr.needsUpdate=true;}
+      }
+    },dispose(){stormBatches.delete(helper);for(const b of batches)b.mesh.dispose();}};
+    stormBatches.add(helper);addBatch().mesh.visible=false;return helper;
+  }
+  const stormComposerRender=composer.render;
+  composer.render=function(...args){syncStormBatches();return stormComposerRender.apply(this,args);};
+  function skipZeroStormSurfaces(group){
+    const hidden=[];
+    return {restore(){for(const o of hidden){o.visible=true;delete o.userData.gsStormZeroHidden;}hidden.length=0;},
+      sync(){group.traverseVisible(o=>{const m=o.material;if(o.isMesh&&m?.isMeshBasicMaterial&&m.transparent&&!m.depthWrite&&m.opacity===0){o.visible=false;o.userData.gsStormZeroHidden=true;hidden.push(o);}});}};
+  }
   const CH_KEEP=new Set(); /*@V5 retained CH instances: released when unused 45 s, or beyond the 6 most recent*/
   for(const preset of CHROMA.BEAM_PRESETS){
     realReg('CH:'+preset.id,'CH_BEAM',preset.korean+' · CHROMA',function(env){
       const root=new THREE.Group();env.scene.add(root);
-      let effect=null,voice=null,rest=0,live=false,idle=0; /*@GS_PATCH*/ const ZERO=new THREE.Vector3();
+      let effect=null,stormVisibility=null,stormBatch=null,voice=null,rest=0,live=false,idle=0; /*@GS_PATCH*/ const ZERO=new THREE.Vector3();
       function stop(){voice?.stop();voice=null;live=false;root.visible=false;} /*@V5 perf: instance kept, freed after 45 s idle*/
-      function free(){if(effect){effect.dispose();effect=null;}CH_KEEP.delete(me);}
+      function free(){stormBatch?.dispose();stormBatch=null;stormVisibility?.restore();stormVisibility=null;if(effect){effect.dispose();effect=null;}CH_KEEP.delete(me);}
       const me={free,last:0,get live(){return live;}};
       return {bloomAmt:.45,
         trigger(target,castContext={}){
@@ -1323,14 +1382,16 @@ async function main(){
           root.position.copy(from);root.scale.setScalar(K);
           const lto=to.clone().sub(from).divideScalar(K);
           rest=0;idle=0;{const now=performance.now();me.last=now;CH_KEEP.add(me);const old=[...CH_KEEP].filter(k=>k!==me&&!k.live).sort((a,b)=>b.last-a.last);old.forEach((k,i)=>{if(i>=5||now-k.last>45000)k.free();});}
-          if(effect){effect.setEndpoints(ZERO,lto);effect.restart();}
-          else{effect=CHROMA.createBeamVFX(THREE,{preset:preset.id,from:new THREE.Vector3(),to:lto,power:1,duration:6});root.add(effect.group);} /*@GS_PATCH*/
+          if(effect){stormVisibility?.restore();effect.setEndpoints(ZERO,lto);effect.restart();}
+          else{effect=CHROMA.createBeamVFX(THREE,{preset:preset.id,from:new THREE.Vector3(),to:lto,power:1,duration:6});root.add(effect.group);
+            if(preset.id==='storm'){stormVisibility=skipZeroStormSurfaces(effect.group);stormBatch=createStormBatches(effect.group);}
+          } /*@GS_PATCH*/
           if(castContext.startAt>0){effect.update(Math.min(castContext.startAt,5.9));castContext.__seeked=true;} /*@V5 deterministic sample(t): one call*/
-          root.visible=true;live=true;castContext.onContactTime?.(effect.contactTime,effect.impactTimes||[effect.contactTime]);
+          stormVisibility?.sync();root.visible=true;live=true;castContext.onContactTime?.(effect.contactTime,effect.impactTimes||[effect.contactTime]);
           if(castContext.playAudio!==false)voice=CHROMA_AUDIO.start(preset.id);
           return true;
         },
-        update(dt){if(!effect||!live)return;effect.update(dt);if(effect.finished){rest=(rest||0)+dt;if(rest>1.8)stop();}else rest=0;}, /*@GS_PATCH*/
+        update(dt){if(!effect||!live)return;stormVisibility?.restore();effect.update(dt);stormVisibility?.sync();if(effect.finished){rest=(rest||0)+dt;if(rest>1.8)stop();}else rest=0;}, /*@GS_PATCH*/
         stop};
     });
   }
@@ -1393,7 +1454,7 @@ async function main(){
   window.STAGE3D.prepare=prepareEffect;window.STAGE3D.selectLab=id=>armEffect(id,false);
   window.STAGE3D.reg = realReg;
   window.STAGE3D.env = ENV;
-  window.STAGE3D.host = {controls, composer, classicBloom, outputPass, syncOutputPass, grid, ground, groundMat, ambientLightRef, keyLight, fillLight}; /*@GS_PATCH*/
+  window.STAGE3D.host = {controls, composer, classicBloom, outputPass, syncOutputPass, syncStormBatches, grid, ground, groundMat, ambientLightRef, keyLight, fillLight}; /*@GS_PATCH*/
   window.STAGE3D.meta = {taxonomy:TAXONOMY, registry:REGISTRY, tierOf:ratingTierFor, displayName, spawn:id=>{const r=REGISTRY[EFFECT_ALIASES[id]||id];return r?.factory?lazyEffect(r.factory,!!window.__FX_SCALABLE?.has(EFFECT_ALIASES[id]||id),!/^(C:|D:|GS-)/.test(id),window.__FX_ADJ?.[EFFECT_ALIASES[id]||id]):null;}}; /*@GS_PATCH*/ /*@V6*/
   // Integration pilot: one active instance per registered effect ID.
   // The battle system owns damage, collision and target choice; this preview receives positions.
