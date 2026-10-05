@@ -14194,8 +14194,10 @@ function openDraft(n){const offers=draftOffers(n);if(!offers.length)return;if(V.
    const h=document.createElement('strong');h.textContent=o.name.split(' · ')[0];const m=document.createElement('small');m.textContent=`${clsName(o.cls)}${o.size?' · '+sizeName(o.size):''} · ${o.src}`;const l=document.createElement('span');l.textContent=o.line;
    const row=document.createElement('div');row.className='dslots';for(const slot of DRAFT_SLOTS[o.cls]||[]){const b=document.createElement('button');b.type='button';const cur=hero.skills[slot];b.textContent=`${cur.key} ← 교체`;b.title=`현재: ${cur.name}`;const s=document.createElement('em');s.textContent=cur.name;b.appendChild(s);b.onclick=()=>pickDraft(i,slot);row.appendChild(b);}
    const why=document.createElement('p');why.className='ga-draft-advice';why.textContent=o.advice.focus+' · '+o.advice.reason;d.append(h,m,l,why,draftComparison(o,hero),row);return d;}));
- el('gaDraft').style.display='grid';el('gaObjective').hidden=true;feedbackUntil=0;el('gaCombatFeedback').style.opacity='0';}
-function closeDraft(silent){if(!V.draftOpen)return;V.draftOpen=false;V.draft=null;el('gaDraft').style.display='none';if(silent)return;V.paused=false;window.__GS_TIMESCALE=V.speed;lockPointer();}
+ el('gaDraft').style.display='grid';el('gaObjective').hidden=true;feedbackUntil=0;el('gaCombatFeedback').style.opacity='0';requestAnimationFrame(draftScrollHint);}
+function draftScrollHint(){const d=el('gaDraft'),c=d.querySelector('.card');if(!c||d.style.display==='none')return;d.classList.toggle('ga-more',c.scrollHeight-c.clientHeight-c.scrollTop>24);} /*@HUD scroll hint while the draft card has more below*/
+el('gaDraft').querySelector('.card')?.addEventListener('scroll',draftScrollHint,{passive:true});addEventListener('resize',draftScrollHint);
+function closeDraft(silent){if(!V.draftOpen)return;V.draftOpen=false;V.draft=null;el('gaDraft').style.display='none';el('gaDraft').classList.remove('ga-more');if(silent)return;V.paused=false;window.__GS_TIMESCALE=V.speed;lockPointer();}
 function pickDraft(i,slot){const o=V.draft?.[i];if(!o||!(DRAFT_SLOTS[o.cls]||[]).includes(slot))return '선택 불가';
  if(!V.runKit||V.runKit.key!==V.heroKey)V.runKit={key:V.heroKey,skills:D.heroes[V.heroKey].skills.slice(),tune:BASE_TUNE[V.heroKey].map(x=>({...x}))};
  const key=D.heroes[V.heroKey].skills[slot].key,err=equipSkill(V.heroKey,slot,o.id,false,o.size||undefined,true);if(err){toast(err);return err;}
@@ -14404,7 +14406,7 @@ function updateHud(){const w=V.world;if(!w)return;const h=w.hero;tacticalHud();i
  hudT(el('gaWave'),V.mode==='trial'?'스킬 시험장 · '+(V.settings.cameraMode==='third'?'3인칭':'1인칭'):`WAVE ${String(w.wave).padStart(2,'0')} / ${D.waves.length}`);
  let alive=0;for(const e of w.enemies)if(e.hp>0)alive++;hudT(el('gaCount'),V.mode==='trial'?`정지 표적 ${w.enemies.length} · 자유 시전`:`남은 적 ${alive}${w.waveWait?' · 다음 웨이브 준비 중':''}`);
  {const v=V.mode==='trial'?'':w.waveWait?`다음 웨이브 ${Math.max(0,Math.ceil(w.waveWait-w.t))}초 뒤`:'',n=el('gaWaveWait');if(n.textContent!==v)n.textContent=v;}
- hudT(el('gaHpText'),`${Math.ceil(h.hp)} / ${h.hpMax}`);hudW(el('gaHp').firstElementChild,h.hp/h.hpMax*100);
+ hudT(el('gaHpText'),`${Math.ceil(h.hp)} / ${h.hpMax}`);hudW(el('gaHp').firstElementChild,h.hp/h.hpMax*100);{const low=h.hp>0&&h.hp<=h.hpMax*.3;if(low!==V.lowHp){V.lowHp=low;document.body.classList.toggle('ga-lowhp',low);}} /*@HUD low-HP edge pulse, class toggled on change only*/
  (updateHud.vit||(updateHud.vit=el('ga').querySelector('.vitals'))).classList.toggle('low',h.hp/h.hpMax<=.25);
  hudD(el('gaShield'),h.shield>0?'block':'none');hudD(el('gaShieldText'),h.shield>0?'block':'none');
  if(h.shield>0){hudW(el('gaShield').firstElementChild,Math.min(1,h.shield/h.hpMax)*100);hudT(el('gaShieldText'),`실드 ${Math.ceil(h.shield)} · ${h.shieldT.toFixed(1)}초`);}
@@ -14442,7 +14444,7 @@ function syncRigs(dt){const w=V.world;if(!w)return;renderEnemies.clear();for(con
   const local=worldPoint.sub(camera.position).applyQuaternion(threatInverse);
   let dx=local.z>0?-local.x:local.x,dy=local.z>0?local.y:-local.y;if(Math.abs(dx)+Math.abs(dy)<.01)dy=1;
   const mag=Math.max(Math.abs(dx),Math.abs(dy));dx/=mag;dy/=mag;
-  {const W=innerWidth,H=innerHeight,mx=(50+dx*44)*W/100;let my=(50+dy*38)*H/100;const reserve=TOUCH.on?(W-mx<235?250:0):110;if(reserve&&H-my<reserve)my=Math.max(40,H-reserve); /*@HUD marker clear of skill bar and touch buttons*/t.marker.style.left=mx+'px';t.marker.style.top=my+'px';}t.marker.style.display='block';
+  {const W=innerWidth,H=innerHeight,mx=(50+dx*44)*W/100;let my=(50+dy*38)*H/100;const reserve=TOUCH.on?(W-mx<235?250:0):(mx<300?140:110);if(reserve&&H-my<reserve)my=Math.max(40,H-reserve); /*@HUD marker clear of skill bar and touch buttons*/t.marker.style.left=mx+'px';t.marker.style.top=my+'px';}t.marker.style.display='block';
   t.marker.querySelector('b').style.transform=`rotate(${Math.atan2(dy,dx)*180/Math.PI+90}deg)`;
   t.marker.querySelector('span').textContent=Math.max(0,t.until-V.clock).toFixed(1)+'s';shownThreats++;
  }
@@ -62136,6 +62138,15 @@ body.ga-touch #gaUltText{display:none}
 #gaTouch button[data-cdn]:not([data-cdn=""]){align-content:center}
 #gaTStick::before{content:'이동';position:absolute;left:max(36px,10%);bottom:max(40px,14%);width:92px;height:92px;box-sizing:border-box;border:2px dashed #cfe6ee66;border-radius:50%;display:grid;place-items:center;color:#cfe6eeaa;font:600 12px system-ui;pointer-events:none}
 body.ga-stick-used #gaTStick::before{display:none}
+</style>
+<style id="gsHudPatch2">/* HUD C+D: draft scroll hint, reticle outline, enemy bar size, low-HP warning */
+#gaDraft.ga-more::after{content:'아래로 스크롤 ↓';position:fixed;left:50%;bottom:12px;transform:translateX(-50%);padding:5px 14px;border-radius:999px;background:#2d4a63;border:1px solid #7cb8cd88;color:#eaf4f6;font:600 12px system-ui;box-shadow:0 2px 12px #000a;pointer-events:none;z-index:7}
+#gaReticle{filter:drop-shadow(0 0 1px #000) drop-shadow(0 0 3px #000b)}
+#gaEnemyBars .enemy{width:84px;font-size:12px;text-shadow:0 1px 3px #000,0 0 6px #000}
+#gaEnemyBars .enemy i{height:6px}
+body.ga-lowhp.ga-on:not(.ga-trial) #ga::before{content:'';position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 110px 12px #d5203866;animation:gaLowHp 1.4s ease-in-out infinite}
+@keyframes gaLowHp{0%,100%{opacity:.35}50%{opacity:1}}
+@media(prefers-reduced-motion:reduce){body.ga-lowhp.ga-on:not(.ga-trial) #ga::before{animation:none;opacity:.7}}
 </style>
 <style id="gsSkillInfoStyle">.gs-skill-info{margin:18px 0;padding:16px;background:#101e2d;border:1px solid #365168;border-radius:14px;color:#dceaf6;font:12px/1.8 system-ui}.gs-skill-info h4{font-size:16px;margin:0 0 12px}.gs-skill-info h5{font-size:12px;margin:14px 0 6px}.gs-info-controls{display:flex;gap:8px}.gs-skill-info select{min-width:0;width:100%;min-height:44px;background:#1d3043;color:#e4f3ff;border:1px solid #4a647b;border-radius:8px;padding:8px}.gs-info-source{color:#95dfc8}.gs-skill-info dl{display:grid;grid-template-columns:84px 1fr;gap:8px;margin:14px 0}.gs-skill-info dt{color:#9eb4c9}.gs-skill-info dd{margin:0;overflow-wrap:anywhere}.gs-skill-info ul{padding-left:18px}.gs-info-note{font-size:11px;color:#a8bfd0}.gs-skill-info svg{display:block;width:100%;height:auto;background:#0a1722;border:1px solid #27445a;border-radius:10px;margin:14px 0}.gs-skill-info svg text{fill:#c4dce9;font:11px system-ui}.gs-info-scene{display:flex!important;align-items:center;gap:8px;min-height:44px}.gs-skill-info button{width:100%;min-height:44px;border-radius:9px;background:#265c4d!important;color:#e6fff5!important;border:1px solid #6aa38e!important;margin-top:12px;font:12px system-ui}.gs-skill-info table{width:100%;border-collapse:collapse}.gs-skill-info td{padding:8px 4px;border-bottom:1px solid #304459;font-size:11px}#gsTrialSkillDetail{margin-top:14px}#gsTrialSkillDetail>summary{min-height:44px;font-size:12px;cursor:pointer;color:#bcd1e4}@media(max-width:760px){.gs-skill-info{padding:12px}.gs-skill-info dl{grid-template-columns:72px 1fr}.gs-skill-info svg text{font-size:12px}}
 </style>
