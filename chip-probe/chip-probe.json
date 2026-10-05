@@ -1,0 +1,185 @@
+{
+ "rows": [
+  {
+   "run": 0,
+   "before": {
+    "draftOpen": false,
+    "count": 1,
+    "opacity": "0",
+    "inline": "0",
+    "text": "",
+    "top": 496,
+    "clock": 2.249999999999997
+   },
+   "at_open": {
+    "draftOpen": true,
+    "count": 1,
+    "opacity": "0",
+    "inline": "0",
+    "text": "",
+    "top": 496,
+    "clock": 2.3166666666666633
+   },
+   "after500": {
+    "draftOpen": true,
+    "count": 1,
+    "opacity": "0",
+    "inline": "0",
+    "text": "",
+    "top": 496,
+    "clock": 2.3166666666666633
+   }
+  },
+  {
+   "run": 1,
+   "before": {
+    "draftOpen": false,
+    "count": 1,
+    "opacity": "0",
+    "inline": "0",
+    "text": "",
+    "top": 496,
+    "clock": 3.4499999999999926
+   },
+   "at_open": {
+    "draftOpen": true,
+    "count": 1,
+    "opacity": "0",
+    "inline": "0",
+    "text": "",
+    "top": 496,
+    "clock": 3.5833333333333255
+   },
+   "after500": {
+    "draftOpen": true,
+    "count": 1,
+    "opacity": "0",
+    "inline": "0",
+    "text": "",
+    "top": 496,
+    "clock": 3.5833333333333255
+   }
+  },
+  {
+   "run": 2,
+   "before": {
+    "draftOpen": false,
+    "count": 1,
+    "opacity": "1",
+    "inline": "1",
+    "text": "\uba85\uc911",
+    "top": 496,
+    "clock": 1.0833333333333344
+   },
+   "at_open": {
+    "draftOpen": true,
+    "count": 1,
+    "opacity": "1",
+    "inline": "0",
+    "text": "\uba85\uc911",
+    "top": 496,
+    "clock": 1.1333333333333342
+   },
+   "after500": {
+    "draftOpen": true,
+    "count": 1,
+    "opacity": "0",
+    "inline": "0",
+    "text": "\uba85\uc911",
+    "top": 496,
+    "clock": 1.1333333333333342
+   }
+  },
+  {
+   "run": 3,
+   "before": {
+    "draftOpen": false,
+    "count": 1,
+    "opacity": "0",
+    "inline": "0",
+    "text": "\uba85\uc911",
+    "top": 496,
+    "clock": 1.6166666666666658
+   },
+   "at_open": {
+    "draftOpen": true,
+    "count": 1,
+    "opacity": "0",
+    "inline": "0",
+    "text": "\uba85\uc911",
+    "top": 496,
+    "clock": 1.6833333333333322
+   },
+   "after500": {
+    "draftOpen": true,
+    "count": 1,
+    "opacity": "0",
+    "inline": "0",
+    "text": "\uba85\uc911",
+    "top": 496,
+    "clock": 1.6833333333333322
+   }
+  },
+  {
+   "run": 4,
+   "before": {
+    "draftOpen": false,
+    "count": 1,
+    "opacity": "0",
+    "inline": "0",
+    "text": "\uba85\uc911",
+    "top": 496,
+    "clock": 3.7499999999999916
+   },
+   "at_open": {
+    "draftOpen": true,
+    "count": 1,
+    "opacity": "0",
+    "inline": "0",
+    "text": "\uba85\uc911",
+    "top": 496,
+    "clock": 3.816666666666658
+   },
+   "after500": {
+    "draftOpen": true,
+    "count": 1,
+    "opacity": "0",
+    "inline": "0",
+    "text": "\uba85\uc911",
+    "top": 496,
+    "clock": 3.816666666666658
+   }
+  },
+  {
+   "run": 5,
+   "before": {
+    "draftOpen": false,
+    "count": 1,
+    "opacity": "0",
+    "inline": "0",
+    "text": "\uba85\uc911",
+    "top": 496,
+    "clock": 1.949999999999998
+   },
+   "at_open": {
+    "draftOpen": true,
+    "count": 1,
+    "opacity": "0",
+    "inline": "0",
+    "text": "\uba85\uc911",
+    "top": 496,
+    "clock": 2.0166666666666644
+   },
+   "after500": {
+    "draftOpen": true,
+    "count": 1,
+    "opacity": "0",
+    "inline": "0",
+    "text": "\uba85\uc911",
+    "top": 496,
+    "clock": 2.0166666666666644
+   }
+  }
+ ],
+ "pageerrors": []
+}
