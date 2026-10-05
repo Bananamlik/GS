@@ -1,0 +1,48 @@
+{
+  "schema": "gs-evidence/1",
+  "note": "docs/cloud-runtime-8.md 에 적힌 수치를 옮긴 요약. 원시 로그(runtime-8-tests.log, runtime-8-low.json, runtime-8-auto.json, audit-all.json, audit-final-smoke.json, final-repeat.json)는 Codex 환경 /workspace/gs-onboarding/remaining/ 에만 있었고 이 repo에는 없음. 수치는 재측정하지 않았음.",
+  "environment": {
+    "browser": "Chromium + SwiftShader (CPU software rendering)",
+    "gpuApproved": false,
+    "physicalDeviceApproved": false,
+    "audioReviewed": false,
+    "meaning": "FPS는 실기기/GPU 성능이 아님. draw call, fill-rate 최적화 효과 판단 근거로 쓸 수 없음."
+  },
+  "builds": {
+    "main_v34": { "sha256": "c9e4da5639a1bd14ff2f636d22d9b476ad8d403a9f6f1e173f57b5dfa453614f", "commit": "76ddfb47a0adb04bc614b5812dce72db1ab9a043" },
+    "runtime7": { "sha256": "a540c3f8a1adb1b865687d5ee269a1342f90541d43e4741d32a4e2c098fb495c" },
+    "runtime8_final": { "sha256": "c4a1555b8dce092b6d950f49f462b9cad655b1267b6ec80f81e64faf74e2f19b", "md5": "f7d2ab883d7bc78fc05d9b046e45bf47", "commit": "953dd120d4d5cc7172e20a845249ebeb1431048d" }
+  },
+  "measurements": [
+    { "id": "baseline-60s", "build": "before 4-batch warm", "seconds": 60, "avgFps": 15.4, "prepareSeconds": 9.68, "source": "cloud-runtime-8.md 성능 판단" },
+    { "id": "four-batch-60s", "build": "4-batch warm candidate", "seconds": 60, "avgFps": 13.8, "prepareSeconds": 7.28, "longestWarmBatchSeconds": 2.5, "source": "cloud-runtime-8.md 성능 판단" },
+    { "id": "runtime7-240s-cap60-auto", "build": "runtime7", "seconds": 240, "prepareSeconds": 7.47, "avgFps": 12.5, "p95Ms": 227.6, "p99Ms": 378.7, "maxMs": 1127.7, "first60Fps": 14.6, "last60Fps": 14.7, "pageErrors": 0, "prepareFailures": 0, "jsHeapMB": { "min": 35.4, "max": 92.7, "last": 54.6 }, "gpuGeometries": { "max": 399, "last": 281 }, "gpuTextures": { "max": 21, "last": 13 }, "sceneRoots": 202, "fragmentBundlesMax": 58, "wavesCompleted": "6웨이브 1회 완주 후 다음 순환 웨이브 4까지", "frameBudgetMet": false },
+    { "id": "runtime8-60s-cap30-low", "build": "runtime8_final", "seconds": 60, "prepareSeconds": 7.50, "avgFps": 7.8, "p95Ms": 261.4, "p99Ms": 524.9, "maxMs": 666.1, "wave": 3, "pageErrors": 0, "priorSameSettingAvgFps": 8.1, "frameBudgetMet": false },
+    { "id": "runtime8-60s-cap60-auto", "build": "runtime8_final", "seconds": 60, "prepareSeconds": 7.31, "avgFps": 12.2, "p95Ms": 226.3, "p99Ms": 397.5, "maxMs": 1292.4, "wave": 3, "pageErrors": 0, "frameBudgetMet": false }
+  ],
+  "audit": {
+    "skills": 425,
+    "variants": 767,
+    "allVariantsShowPixelChange": true,
+    "castRejections": 0,
+    "shaderOrGlErrors": 0,
+    "nativeContactSignals": 172,
+    "estimatedContactApproved": false,
+    "soundEnabled": false,
+    "auditSourceSha256": "b40e56261a6dfdd00e48a2f2f7d945e9a83418c02bbcbd01fbc675b8b1643ab4",
+    "caveat": "이후 모듈 준비의 컨텍스트 취소·캐시 세대 처리가 보완됨. 네이티브 효과 생성·갱신·렌더 코드는 그 보완에서 변경 없음(문서 기재)."
+  },
+  "regressionTests": { "reportedPassing": 25, "note": "문서 기재. 이 evidence 작성 세션에서 재실행하지 않음." },
+  "reportedInConversationOnly": {
+    "note": "Codex 대화 공유 링크에만 있고 repo 문서에는 없는 주장. 미검증.",
+    "maxRenderCalls": { "before": 496, "after": 222 },
+    "tenMinuteRun": "6웨이브 3회 완주, 오류 없음",
+    "regressionChecksAtAeda957": 21
+  },
+  "unverified": [
+    "실제 GPU에서 30/60FPS 및 병렬 셰이더 컴파일 지속 성능",
+    "Galaxy S25+ 화면·음향·터치·앱 복귀·발열",
+    "연출 접촉/판정/음향의 감각 검토, 플레이 밸런스 승인",
+    "폭풍 배칭의 실제 게임 draw call 감소 (fixture·픽셀 비교만 있음)"
+  ]
+}
