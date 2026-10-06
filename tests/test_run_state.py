@@ -14,7 +14,7 @@ def runtime_blocks():
     run = re.search(r'<script id="gaRunState">(.*?)</script>', source, re.S)[1]
     # Each block runs in its own scope; module is hidden so the QA contract registers on window as in the page.
     wrap = lambda code: '(function(module){' + code + '\n})(undefined);'
-    return '\n'.join(wrap(code) for code in [pick('GS VFX validation contract'), pick('window.GA_SIM='), pick('window.GA_DATA='), pick('window.GA_SKILL_LIB='), run])
+    return '\n'.join(wrap(code) for code in [pick('GS VFX validation contract'), pick('window.GA_DRAFT_POLICY='), pick('window.GA_SIM='), pick('window.GA_DATA='), pick('window.GA_SKILL_LIB='), run])
 
 
 def node(body):
@@ -175,11 +175,50 @@ class MapTests(unittest.TestCase):
             for(let i=0;i<60*600&&!w.over;i++){const h=w.hero,alive=w.enemies.filter(e=>e.hp>0);
               if(alive.length){alive.sort((a,b)=>Math.hypot(a.x-h.x,a.z-h.z)-Math.hypot(b.x-h.x,b.z-h.z));const t=alive[0];
                 for(const slot of [4,5,1,0])if(w.cast(slot,{x:t.x,z:t.z}))break;const dx=t.x-h.x,dz=t.z-h.z,d=Math.hypot(dx,dz)||1;w.step(d>25?{mx:dx/d,mz:dz/d}:{});}else w.step({});}
-            assert.ok(w.over&&w.won,'battle '+n.id+' not won');run=R.finishEncounter(run,w,n);battles++;}
+            assert.ok(w.over&&w.won,'battle '+n.id+' not won');run=R.finishEncounter(run,w,n);battles++;
+            if(run.reward){const o=run.reward.offers[0];run=R.takeReward(run,o?{index:0,slot:o.slots?.[0]}:null);}}
           else run=R.visitNode(run,n.id);
           assert.ok(R.validateRun(run),'invalid after '+n.id);}
         assert.equal(run.status,'won');assert.equal(run.act,3);assert.equal(run.history.length,18);
-        assert.ok(battles>=6);assert.ok(run.history.filter(h=>h.kind==='boss').length===3);
+        assert.ok(battles>=6);assert.ok(run.history.filter(h=>h.kind==='boss').length===3);assert.ok(run.gold>0);assert.equal(run.reward,null);
+        """)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+
+WIN = """
+const win=(run,n)=>{const w=R.startEncounter(run,n);w.hero.invuln=1e9;for(let i=0;i<60*600&&!w.over;i++){for(const e of w.enemies)if(e.hp>0){e.hp=0;e.state='dead';}w.step({});}assert.ok(w.won);return R.finishEncounter(run,w,n);};
+"""
+
+
+class RewardTests(unittest.TestCase):
+    def test_battle_reward_offers_and_skill_swap(self):
+        result = node(WIN + """
+        const run=R.createRun('bolt',31),n=R.availableNodes(run)[0];const a=win(run,n),b=win(run,n);
+        assert.deepEqual(a.reward,b.reward);assert.ok(a.reward.gold>=15&&a.reward.gold<=25);assert.equal(a.reward.offers.length,3);
+        assert.deepEqual(R.availableNodes(a),[]);assert.throws(()=>R.startEncounter(a,R.mapNode(a,a.map.a1.find(x=>x.floor===1).id)),/not reachable/);
+        const kitIds=new Set(R.resolveKit(a).map(s=>s.id));
+        for(const o of a.reward.offers){assert.equal(o.type,'skill');assert.ok(GA_SKILL_LIB[o.id].rating>=3);assert.ok(!kitIds.has(o.id));assert.ok(o.slots.length>0);}
+        assert.deepEqual(a.reward.offers.map(o=>o.cls).map(c=>c==='guard'?'skill':c),['basic','skill','skill']);
+        const o=a.reward.offers[1];assert.throws(()=>R.takeReward(a,{index:1,slot:2}),/Invalid slot/);
+        const t=R.takeReward(a,{index:1,slot:o.slots[0]});assert.equal(t.gold,a.reward.gold);assert.equal(t.reward,null);assert.ok(R.validateRun(t));
+        assert.deepEqual(t.kit[o.slots[0]],{src:'lib',id:o.id,size:o.size});assert.ok(R.availableNodes(t).length>0);
+        const next=R.availableNodes(t).find(x=>['battle','elite'].includes(x.kind));if(next)assert.equal(R.encounterData(t,next).heroes.bolt.skills[o.slots[0]].id,o.id);
+        const skip=R.takeReward(a,null);assert.equal(skip.gold,a.reward.gold);assert.deepEqual(skip.kit,a.kit);
+        const bad=JSON.parse(JSON.stringify(a));bad.reward.offers[0].id='nope';assert.equal(R.validateRun(bad),false);
+        """)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_passives_change_only_combat_copies(self):
+        result = node("""
+        const run=R.createRun('bolt',8);run.reward={nodeId:'x',kind:'elite',gold:40,offers:[{type:'passive',id:'dmg',name:'',text:''},{type:'passive',id:'cd',name:'',text:''}]};
+        assert.ok(R.validateRun(run));let t=R.takeReward(run,{index:0});assert.deepEqual(t.passives,[{id:'dmg',stacks:1}]);
+        t.reward=run.reward;t=R.takeReward(t,{index:0});assert.deepEqual(t.passives,[{id:'dmg',stacks:2}]);
+        t.reward=run.reward;t=R.takeReward(t,{index:1});assert.equal(t.passives.length,2);
+        const node={id:'n',kind:'battle',waves:[{minion:1}]},base=GA_DATA.heroes.bolt.skills,kit=R.encounterData(t,node).heroes.bolt.skills;
+        assert.equal(kit[3].damage,Math.round(base[3].damage*1.2));assert.equal(kit[3].cd,+(base[3].cd*0.92).toFixed(2));
+        assert.equal(base[3].damage,90);assert.ok(kit.every(s=>GA_VFX_QA.validateSkill({...s}).ok));
+        const bad=JSON.parse(JSON.stringify(t));bad.passives.push({id:'ghost',stacks:1});assert.equal(R.validateRun(bad),false);
+        const dup=JSON.parse(JSON.stringify(t));dup.passives.push({id:'dmg',stacks:1});assert.equal(R.validateRun(dup),false);
         """)
         self.assertEqual(result.returncode, 0, result.stderr)
 

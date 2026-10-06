@@ -1,4 +1,4 @@
-"""Run mode in the game view (S3): map overlay, a battle node through GA_RUN, back on the map with the result saved."""
+"""Run mode in the game view (S3, S4): map overlay, a battle node through GA_RUN, reward choice, back on the map with the result saved."""
 import test_performance_measurement as performance
 
 
@@ -22,6 +22,14 @@ class RunUi(performance.BrowserSession):
         self.page.wait_for_function('''() => {const w=GS_ACTION.sim;if(w)for(const e of w.enemies)if(e.hp>0){e.hp=0;e.state='dead';}return GS_ACTION.run.mapOpen;}''',
                                     timeout=60000, polling=250)
         state = self.page.evaluate('GS_ACTION.run.state')
+        self.assertIsNotNone(state['reward'])
+        self.assertEqual(self.page.locator('#gaRunFloors .ga-run-offer').count(), len(state['reward']['offers']))
+        offer = state['reward']['offers'][0]
+        self.page.locator(f'#gaRunFloors .ga-run-node[data-offer="0"][data-slot="{offer["slots"][0]}"]').click()
+        state = self.page.evaluate('GS_ACTION.run.state')
+        self.assertIsNone(state['reward'])
+        self.assertEqual(state['kit'][offer['slots'][0]]['id'], offer['id'])
+        self.assertGreater(state['gold'], 0)
         self.assertEqual(state['nodeId'], node)
         self.assertEqual(state['floor'], 1)
         self.assertEqual(state['history'][-1]['result'], 'won')
