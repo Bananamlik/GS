@@ -39,3 +39,23 @@ class RunUi(performance.BrowserSession):
         reachable = self.page.evaluate('''() => [...document.querySelectorAll('#gaRunFloors .ga-run-node[data-state="open"]')].map(b=>b.dataset.id)''')
         self.assertEqual(sorted(reachable), sorted(next(n for n in state['map']['a1'] if n['id'] == node)['next']))
         self.assertLessEqual(self.page.evaluate('document.documentElement.scrollWidth'), 390)
+
+    def test_run_shop_buy_and_leave(self):
+        node = self.page.evaluate('''() => {const R=GA_RUN;for(let s=1;s<400;s++){const r=R.createRun('bolt',s);const n=r.map.a1.find(x=>x.kind==='shop'&&x.floor===1);
+          if(!n)continue;r.nodeId=r.map.a1.find(x=>x.floor===0&&x.next.includes(n.id)).id;r.floor=1;r.gold=100;r.hero.hp=100;if(!R.saveRun(r).ok)throw Error('save');return n.id;}throw Error('no shop');}''')
+        self.assertTrue(self.page.evaluate('GS_ACTION.run.continue()'))
+        self.page.locator(f'#gaRunFloors .ga-run-node[data-id="{node}"]').click()
+        state = self.page.evaluate('GS_ACTION.run.state')
+        self.assertEqual(state['stop']['kind'], 'shop')
+        heal = next(i for i, o in enumerate(state['stop']['options']) if 'hp' in o['fx'])
+        self.page.locator(f'#gaRunFloors .ga-run-node[data-option="{heal}"]').click()
+        state = self.page.evaluate('GS_ACTION.run.state')
+        self.assertEqual(state['gold'], 70)
+        self.assertGreater(state['hero']['hp'], 100)
+        self.assertTrue(self.page.locator(f'#gaRunFloors .ga-run-node[data-option="{heal}"]').is_disabled())
+        self.assertLessEqual(self.page.evaluate('document.documentElement.scrollWidth'), 390)
+        self.page.locator('#gaRunLeave').click()
+        state = self.page.evaluate('GS_ACTION.run.state')
+        self.assertIsNone(state['stop'])
+        self.assertEqual((state['nodeId'], state['floor']), (node, 2))
+        self.assertEqual(self.page.evaluate('JSON.parse(localStorage.getItem("gs-run-1")).floor'), 2)

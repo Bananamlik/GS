@@ -163,7 +163,8 @@ class MapTests(unittest.TestCase):
         assert.throws(()=>R.visitNode(run,f0.id),/needs an encounter/);
         const r1=JSON.parse(JSON.stringify(run));r1.nodeId=f0.id;r1.floor=1;assert.ok(R.validateRun(r1));
         const quiet=R.availableNodes(r1).find(n=>!['battle','elite','boss'].includes(n.kind));
-        if(quiet){const r2=R.visitNode(r1,quiet.id);assert.equal(r2.nodeId,quiet.id);assert.equal(r2.floor,2);assert.equal(r2.history.at(-1).result,'visited');assert.ok(R.validateRun(r2));}
+        if(quiet){const r2=R.visitNode(r1,quiet.id);assert.equal(r2.stop.nodeId,quiet.id);assert.deepEqual(R.availableNodes(r2),[]);assert.ok(R.validateRun(r2));
+          const r3=quiet.kind==='shop'?R.chooseStop(r2,null):R.chooseStop(r2,0,undefined);assert.equal(r3.nodeId,quiet.id);assert.equal(r3.floor,2);assert.equal(r3.stop,null);assert.ok(R.validateRun(r3));}
         """)
         self.assertEqual(result.returncode, 0, result.stderr)
 
@@ -177,7 +178,7 @@ class MapTests(unittest.TestCase):
                 for(const slot of [4,5,1,0])if(w.cast(slot,{x:t.x,z:t.z}))break;const dx=t.x-h.x,dz=t.z-h.z,d=Math.hypot(dx,dz)||1;w.step(d>25?{mx:dx/d,mz:dz/d}:{});}else w.step({});}
             assert.ok(w.over&&w.won,'battle '+n.id+' not won');run=R.finishEncounter(run,w,n);battles++;
             if(run.reward){const o=run.reward.offers[0];run=R.takeReward(run,o?{index:0,slot:o.slots?.[0]}:null);}}
-          else run=R.visitNode(run,n.id);
+          else{run=R.visitNode(run,n.id);run=R.chooseStop(run,run.stop.kind==='shop'?null:run.stop.kind==='rest'?0:run.stop.options.length-1);}
           assert.ok(R.validateRun(run),'invalid after '+n.id);}
         assert.equal(run.status,'won');assert.equal(run.act,3);assert.equal(run.history.length,18);
         assert.ok(battles>=6);assert.ok(run.history.filter(h=>h.kind==='boss').length===3);assert.ok(run.gold>0);assert.equal(run.reward,null);
@@ -219,6 +220,42 @@ class RewardTests(unittest.TestCase):
         assert.equal(base[3].damage,90);assert.ok(kit.every(s=>GA_VFX_QA.validateSkill({...s}).ok));
         const bad=JSON.parse(JSON.stringify(t));bad.passives.push({id:'ghost',stacks:1});assert.equal(R.validateRun(bad),false);
         const dup=JSON.parse(JSON.stringify(t));dup.passives.push({id:'dmg',stacks:1});assert.equal(R.validateRun(dup),false);
+        """)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+
+STOP = """
+const stopAt=(kind,seed=1)=>{for(let s=seed;s<seed+400;s++){const r=R.createRun('bolt',s);for(const n of r.map.a1)if(n.kind===kind&&n.floor===1){const f0=r.map.a1.find(x=>x.floor===0&&x.next.includes(n.id));r.nodeId=f0.id;r.floor=1;return {r,n};}}throw Error('no '+kind);};
+"""
+
+
+class StopTests(unittest.TestCase):
+    def test_shop_buy_and_leave(self):
+        result = node(STOP + """
+        const {r,n}=stopAt('shop');r.gold=100;const a=R.visitNode(r,n.id),b=R.visitNode(r,n.id);assert.deepEqual(a.stop,b.stop);assert.equal(a.stop.kind,'shop');
+        assert.ok(R.validateRun(a));const heal=a.stop.options.findIndex(o=>o.fx.hp);a.hero.hp=100;
+        let t=R.chooseStop(a,heal);assert.equal(t.gold,70);assert.equal(t.hero.hp,100+Math.round(.3*t.hero.hpMax));assert.ok(t.stop.options[heal].sold);
+        assert.throws(()=>R.chooseStop(t,heal),/Sold out/);
+        const sk=t.stop.options.findIndex(o=>o.fx.skill);const o=t.stop.options[sk];t.gold=o.price-1;assert.throws(()=>R.chooseStop(t,sk,o.fx.skill.slots[0]),/Not enough gold/);
+        t.gold=200;assert.throws(()=>R.chooseStop(t,sk,2),/Invalid slot/);t=R.chooseStop(t,sk,o.fx.skill.slots[0]);assert.equal(t.kit[o.fx.skill.slots[0]].id,o.fx.skill.id);assert.equal(t.gold,200-o.price);
+        assert.deepEqual(R.availableNodes(t),[]);const out=R.chooseStop(t,null);assert.equal(out.stop,null);assert.equal(out.nodeId,n.id);assert.equal(out.floor,2);assert.ok(R.validateRun(out));
+        assert.ok(R.availableNodes(out).length>0);
+        """)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_event_and_rest(self):
+        result = node(STOP + """
+        const e=stopAt('event');e.r.gold=0;const ev=R.visitNode(e.r,e.n.id);assert.equal(ev.stop.kind,'event');assert.ok(R.EVENTS.some(x=>x.title===ev.stop.title));
+        assert.throws(()=>R.chooseStop(ev,null),/Choose/);
+        const pay=ev.stop.options.findIndex(o=>o.fx.gold<0);if(pay>=0)assert.throws(()=>R.chooseStop(ev,pay),/Not enough gold/);
+        const done=R.chooseStop(ev,ev.stop.options.length-1);assert.equal(done.stop,null);assert.equal(done.floor,2);assert.equal(done.history.at(-1).result,ev.stop.options.at(-1).label);assert.ok(R.validateRun(done));
+        const z=stopAt('rest');z.r.kit[3]={src:'lib',id:'FX-06',size:'M'};z.r.hero.hp=1;const rs=R.visitNode(z.r,z.n.id);
+        const up=rs.stop.options.findIndex(o=>o.fx.upgrade?.slot===3);assert.ok(up>0);assert.equal(rs.stop.options[up].fx.upgrade.size,'L');
+        const u=R.chooseStop(rs,up);assert.equal(u.kit[3].size,'L');assert.equal(u.hero.hp,1);const nn={id:'q',kind:'battle',waves:[{minion:1}]};
+        assert.equal(R.encounterData(u,nn).heroes.bolt.skills[3].radius,GA_SKILL_LIB['FX-06'].variants.L.skill.radius);
+        const h=R.chooseStop(rs,0);assert.equal(h.hero.hp,1+Math.round(.3*h.hero.hpMax));
+        const bad=JSON.parse(JSON.stringify(rs));bad.stop.options[0].fx={hp:5};assert.equal(R.validateRun(bad),false);
+        const bad2=JSON.parse(JSON.stringify(rs));bad2.stop.options[0].fx={teleport:1};assert.equal(R.validateRun(bad2),false);
         """)
         self.assertEqual(result.returncode, 0, result.stderr)
 
