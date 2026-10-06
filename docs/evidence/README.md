@@ -11,7 +11,7 @@
 | `gs-gpu-measurement_v1_261005-2028.md` | `00631745408de10569c080c264b1e918` | 사용자 PC 실제 GPU 측정 해석 | 빌드 파일 해시 미확인. main v34 비교 없음. 1대·1회. |
 | `gs-ci-results_v1_261005-2359.md` | `45ac8eca41a81cd1168ac5fa202ef937` | GitHub Actions 테스트 25개 결과 (D 25/25, BC 24/25, A 11/25) | 각 1회, SwiftShader. 예상된 실패 포함. |
 | `gs-ci-results_v2_261006-0240.md` | `7a02c090453b514a596a390237f95e10` | 병합 후 테스트 25개 결과(main 포함), HUD 캡처 요약, `명중` 칩 진단 | 각 1회, SwiftShader. 칩 원인은 추정. |
-| `gs-sfx-loudness_v1_261006-1230.md` | `2340064749b21306827a3a828ceaadff` | SFX 음량 측정 분석(효과 501개)과 정규화 제안 | 순간 음량은 가중치 없는 RMS. LUFS 아님. Lab 미리보기 1회. |
+| `gs-sfx-loudness_v1_261006-1230.md` | `d5423987972e4b00afeefc3468e99ced` | SFX 음량 측정 분석(효과 501개)과 정규화 제안 | 순간 음량은 가중치 없는 RMS. LUFS 아님. Lab 미리보기 1회. |
 | `gs-sfx-loudness-raw_v1_261006-1230.json` | `c7c0ba5850b701272593e05ce30fba86` | SFX 음량 측정 원자료(효과별 피크·RMS·순간 음량) | 위 문서와 같은 한계. |
 | `gs-sfx-gain-proposal_v1_261006-1230.csv` | `6699370b75accbb52ead37b99643ea7d` | 효과별 보정 게인 초안(목표 중앙값, ±12 dB, 피크 -3 dBFS) | 제안값. 적용 전 재측정·청취 필요. |
 
