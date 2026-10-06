@@ -21,6 +21,7 @@
 | `gs-lab-metrics-before-raw_v1_261006-2107.json` | `895925313b010483804e1db8bc3e217a` | 랩 면적 원자료(전, `claude/probe-lab-before`) | 위 문서와 같은 한계. |
 | `gs-lab-metrics-after-raw_v1_261006-2107.json` | `9845839d63f0ca4dc4987d64b530e8cb` | 랩 면적 원자료(후, `claude/probe-lab-after`) | 위 문서와 같은 한계. |
 | `gs-hud-hier-capture-log_v1_261006-2107.txt` | `d46f8fd818d9e0b45a0fd8a4dc2ec7d8` | HUD 위계 캡처 로그(`claude/probe-hud-hier`) | 이미지는 브랜치에만 있음. |
+| `gs-skill-theme_v1_261006-2147.md` | `45c5d930e098fc71d6f15d7c91c3185b` | 평점 3 이상 243개 효과·피해·상태이상 점검과 주제 기반 상태 21개 추가 근거(PR #21) | 매핑은 이름·시각 기준 판단. 밸런스 체감 UNVERIFIED. |
 
 ## 한계
 
