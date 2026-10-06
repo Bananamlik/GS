@@ -14,6 +14,8 @@
 | `gs-sfx-loudness_v1_261006-1230.md` | `d5423987972e4b00afeefc3468e99ced` | SFX 음량 측정 분석(효과 501개)과 정규화 제안 | 순간 음량은 가중치 없는 RMS. LUFS 아님. Lab 미리보기 1회. |
 | `gs-sfx-loudness-raw_v1_261006-1230.json` | `c7c0ba5850b701272593e05ce30fba86` | SFX 음량 측정 원자료(효과별 피크·RMS·순간 음량) | 위 문서와 같은 한계. |
 | `gs-sfx-gain-proposal_v1_261006-1230.csv` | `6699370b75accbb52ead37b99643ea7d` | 효과별 보정 게인 초안(목표 중앙값, ±12 dB, 피크 -3 dBFS) | 제안값. 적용 전 재측정·청취 필요. |
+| `gs-sfx-loudness-after_v1_261006-1305.md` | `2e26290bfedbf4726f817658704c7501` | 정규화(#17) 후 재측정: 폭 26.3→9.0 dB, 최대 피크 -0.6 dBFS | 전과 같은 방법·한계. Lab 단일 효과 1회. 청감·겹침 UNVERIFIED. |
+| `gs-sfx-loudness-after-raw_v1_261006-1305.json` | `e7025a2206bcacd42ad33e40041e4886` | 정규화 후 측정 원자료 | 위 문서와 같은 한계. |
 
 ## 한계
 

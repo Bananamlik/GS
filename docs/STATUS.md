@@ -46,7 +46,7 @@
 | HUD 화면 확인 | 3개 화면 × 10장면 캡처를 눈으로 확인. 개선 항목 확인됨. | SwiftShader, 배율 1배 |
 | `명중` 칩과 보상 창 | 6회 반복에서 지속 결함 재현 안 됨(페이드 중 캡처로 추정) | SwiftShader |
 | 클라우드 세션 브라우저 실행 | **UNVERIFIED** (`cdn.jsdelivr.net` 차단) | 클라우드 세션 |
-| SFX 음량 편차 | 측정함(p5–p95 26.1 dB, 400ms 순간 음량 비가중). 실제 스피커 청감은 **UNVERIFIED**. `docs/evidence/gs-sfx-loudness_v1_261006-1230.md` | SwiftShader, 오디오 탭 |
+| SFX 음량 편차 | 정규화 전 p5–p95 26.1 dB → 후 9.0 dB (400ms 순간 음량 비가중). 실제 스피커 청감은 **UNVERIFIED**. `docs/evidence/gs-sfx-loudness_v1_261006-1230.md`, `gs-sfx-loudness-after_v1_261006-1305.md` | SwiftShader, 오디오 탭 |
 | 실제 GPU / Galaxy S25+ 터치 느낌 / 소리 / 발열 / 랩 시트 핸들 조작 | 아래 §3 외 **UNVERIFIED**. HUD 개선은 GPU 측정 이후 변경. | |
 
 ## 3. 실제 GPU 측정 (사용자 PC 1대, HUD 개선 이전 빌드)
@@ -84,7 +84,7 @@ AMD Radeon 내장, ANGLE/D3D11, Chrome 154, 1920×922, 품질 auto, 설정 60 �
 2. 현재 빌드 60초 측정 후 결과 JSON(`phaseTotals`, `phaseSpans`, `longTasks`)을 `docs/evidence/`에 저장. 끊김 원인 좁히기. 품질 `낮음` 1회.
 3. D 프레임당 할당 줄이기 (코드 변경, GPU 확인 후).
 4. HUD 미착수: 색약 대응, 패널 색 통일. 메뉴 제목이 아직 `GS ACTION · v34`.
-   SFX 음량 정규화는 #17로 적용됨. 정규화 후 재측정(`claude/probe-sfx-after`)과 실기기 청취는 UNVERIFIED.
+   SFX 음량 정규화는 #17로 적용됨. Lab 재측정: 폭 26.3→9.0 dB, 최대 피크 +0.4→-0.6 dBFS (`gs-sfx-loudness-after_v1_261006-1305.md`). 실기기 청취, 전투 겹침은 UNVERIFIED.
 5. 조작감 후보 미착수: 터치 보조 조준, 스틱 데드존·반경, 마우스·터치 감도 분리, 진동 피드백.
 6. Galaxy S25+ 화면·소리·터치·발열, HUD 터치 느낌 (사용자 직접).
 7. 장시간·메모리·복구 재검증 (GPU 환경).
