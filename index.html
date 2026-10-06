@@ -13531,10 +13531,28 @@ window.GA_RUN=(function(){
  /* Combat-ready skill objects for a run's kit: hero slots keep their authored key; library skills take the slot's key. */
  function resolveKit(r,data,lib){data=dataOf(data);lib=libOf(lib);const base=data.heroes[r.heroKey].skills;
   return r.kit.map((k,i)=>{if(k.src==='hero')return copy(base[k.slot]);const L=lib[k.id],v=k.size?L.variants[k.size]:L;return {...copy(v.skill),id:k.id,name:L.name,key:base[i].key,sizeTier:k.size};});}
+ /* @S2 Encounter: one node = one GA_SIM run. The combat core is untouched; the run supplies a data copy (kit, scaled enemies, short waves) and carries hp and stats across nodes. */
+ const NODE_KINDS=Object.freeze(['battle','elite','boss']);
+ function validNode(n,data){return !!n&&typeof n.id==='string'&&n.id.length>0&&n.id.length<=64&&NODE_KINDS.includes(n.kind)&&Array.isArray(n.waves)&&n.waves.length>=1&&n.waves.length<=3&&
+  n.waves.every(w=>w&&typeof w==='object'&&Object.keys(w).length>0&&Object.entries(w).every(([k,c])=>Object.hasOwn(data.enemies,k)&&isInt(c,1,20)));}
+ function enemyScale(r){const i=r.act-1,d=1+r.difficulty*CONFIG.difficultyStep;return {hp:CONFIG.actScale.hp[i]*d,damage:CONFIG.actScale.damage[i]*d};}
+ function encounterData(r,node,data,lib){data=dataOf(data);lib=libOf(lib);if(!validateRun(r,data,lib)||r.status!=='active')throw Error('Run is not active and valid');if(!validNode(node,data))throw Error('Invalid node');
+  const k=enemyScale(r),enemies={};
+  for(const [key,e] of Object.entries(data.enemies)){const c=copy(e);c.hp=Math.round(e.hp*k.hp);c.damage=Math.round(e.damage*k.damage*10)/10;
+   if(c.attacks)for(const a of Object.values(c.attacks))if(Number.isFinite(a.damage))a.damage=Math.round(a.damage*k.damage*10)/10;enemies[key]=c;}
+  const heroes={...data.heroes,[r.heroKey]:{...data.heroes[r.heroKey],skills:resolveKit(r,data,lib)}};
+  return {...data,heroes,enemies,waves:copy(node.waves)};}
+ function startEncounter(r,node,options={}){const sim=options.sim||window.GA_SIM,d=encounterData(r,node,options.data,options.lib),seed=encounterSeed(r,node.id),w=sim.create(d,r.heroKey,seed,seed);
+  w.hero.hp=Math.min(w.hero.hpMax,r.hero.hp);w.start();return w;}
+ function finishEncounter(r,w,node){if(!w||!w.over)throw Error('Encounter is not over');const n=copy(r),s=w.stats;
+  n.stats.kills+=s.kills;n.stats.damage+=s.damage;n.stats.taken+=s.taken;n.stats.time+=w.t;n.stats.nodes+=1;n.nodeId=node.id;
+  if(w.won){n.hero.hp=Math.max(1,Math.min(n.hero.hpMax,w.hero.hp));n.history.push({nodeId:node.id,kind:node.kind,result:'won'});}
+  else{n.hero.hp=0;n.status='lost';n.history.push({nodeId:node.id,kind:node.kind,result:'lost'});}
+  return n;}
  function storage(s){try{return s||window.localStorage;}catch{return null;}}
  function write(key,value,s){const st=storage(s);if(!st)return {ok:false,reason:'storage unavailable'};try{st.setItem(key,JSON.stringify(value));return {ok:true};}catch(e){return {ok:false,reason:String(e&&e.name||e)};}}
  function read(key,check,s){const st=storage(s);if(!st)return {value:null,reason:'storage unavailable'};try{const raw=st.getItem(key);if(raw===null)return {value:null,reason:'empty'};const v=JSON.parse(raw);return check(v)?{value:v,reason:null}:{value:null,reason:'invalid'};}catch{return {value:null,reason:'invalid'};}}
- return Object.freeze({CONTRACT,META_CONTRACT,RUN_KEY,META_KEY,CONFIG,hash,rng,encounterSeed,createMeta,validateMeta,createRun,validateRun,resolveKit,
+ return Object.freeze({CONTRACT,META_CONTRACT,RUN_KEY,META_KEY,CONFIG,hash,rng,encounterSeed,createMeta,validateMeta,createRun,validateRun,resolveKit,NODE_KINDS,validNode,enemyScale,encounterData,startEncounter,finishEncounter,
   saveRun:(r,s)=>validateRun(r)?write(RUN_KEY,r,s):{ok:false,reason:'invalid'},loadRun:s=>read(RUN_KEY,v=>validateRun(v),s),
   clearRun:s=>{const st=storage(s);try{st&&st.removeItem(RUN_KEY);return true;}catch{return false;}},
   saveMeta:(m,s)=>validateMeta(m)?write(META_KEY,m,s):{ok:false,reason:'invalid'},loadMeta:s=>read(META_KEY,v=>validateMeta(v),s)});
