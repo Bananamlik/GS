@@ -59,3 +59,15 @@ class RunUi(performance.BrowserSession):
         self.assertIsNone(state['stop'])
         self.assertEqual((state['nodeId'], state['floor']), (node, 2))
         self.assertEqual(self.page.evaluate('JSON.parse(localStorage.getItem("gs-run-1")).floor'), 2)
+
+    def test_unlock_screen_buys_a_hero(self):
+        self.page.evaluate('''() => {const m=GA_RUN.createMeta();m.shards=70;m.maxDifficulty=1;GA_RUN.saveMeta(m);}''')
+        self.assertTrue(self.page.evaluate('GS_ACTION.run.unlocks()'))
+        self.assertEqual(self.page.locator('#gaRunFloors [data-diff]').count(), 2)
+        self.assertTrue(self.page.locator('#gaRunFloors [data-unlock="hero:stone"]').is_disabled())
+        self.page.locator('#gaRunFloors [data-unlock="hero:flame"]').click()
+        meta = self.page.evaluate('GA_RUN.loadMeta().value')
+        self.assertIn('flame', meta['unlocked']['heroes'])
+        self.assertEqual(meta['shards'], 10)
+        self.assertTrue(self.page.locator('#gaRunFloors [data-unlock="hero:flame"]').is_disabled())
+        self.assertLessEqual(self.page.evaluate('document.documentElement.scrollWidth'), 390)
