@@ -6,8 +6,9 @@
 
 | 항목 | 값 |
 |---|---|
-| main | `a8df602`. `index.html` = `GS_Action_v34_runtime.html`, md5 `f239381cb8f1ab9107ac1325db821e24` (v35 + HUD 개선 + HUD 위계 + 랩 모바일) |
+| main | `b43914e`. `index.html` = `GS_Action_v34_runtime.html`, md5 `8558fefd4fe5ee410fed3f4a8e1be54f` (v35 + HUD 개선 + HUD 위계 + 랩 모바일 + SFX 음량 정규화) |
 | v35 파일 | `GS_Action_v35_261005-2000.html`, md5 `f7d2ab883d7bc78fc05d9b046e45bf47` = PR #3 최종본. HUD 개선 이전 빌드. 수정하지 않음. |
+| 랩 모바일까지(#15 시점) | main `a8df602`의 `index.html`, md5 `f239381cb8f1ab9107ac1325db821e24` |
 | HUD 개선만(#11 시점) | main `a503a7e`의 `index.html`, md5 `5c7263984c75c6c44346abee821b4b88` |
 | 이전 v34 | main `76ddfb4`의 `index.html`, md5 `d8cb70f2d1876a0386740b73b2d6ecb9` |
 
@@ -25,6 +26,7 @@
 | [#14](https://github.com/Bananamlik/GS/pull/14) | 스킬 SFX 음량 측정 문서·원자료·보정안 CSV (코드 변경 없음) | `7d22d4c` |
 | [#13](https://github.com/Bananamlik/GS/pull/13) | 게임 HUD 위계: 터치 성능 표시 좌하단 이동, 상단 스킬 줄 터치 기본 숨김(설정 `스킬 이름 줄`), 목표 칩 완료·실패 후 페이드 | `4729a7d` |
 | [#15](https://github.com/Bananamlik/GS/pull/15) | 랩 모바일: 압축 미리보기 바, 하단 시트(peek 30dvh / tall 80dvh), 카메라 뷰를 남은 영역 중앙으로 이동, 가로 모드 배치 | `a8df602` |
+| [#17](https://github.com/Bananamlik/GS/pull/17) | SFX 음량 정규화: 효과별 보정(±12 dB, 495개), 공통 음량 슬라이더(랩 `#vSfxVol`, 게임 설정 `#gaSfxVol`), 리미터 | `b43914e` |
 
 - 닫음: [#4](https://github.com/Bananamlik/GS/pull/4) (권한 확인용).
 - 열려 있음: [#3](https://github.com/Bananamlik/GS/pull/3) (분할 전 원본. 내용이 `main`에 들어가 중복 상태. 닫을지는 사용자 결정), [#1](https://github.com/Bananamlik/GS/pull/1) (v14, 별개).
@@ -34,8 +36,9 @@
 
 | 항목 | 결과 | 환경 |
 |---|---|---|
-| `main` md5, `cmp index.html GS_Action_v34_runtime.html` | 두 파일 `f239381c…`, 동일 | 클라우드 세션 |
+| `main` md5, `cmp index.html GS_Action_v34_runtime.html` | 두 파일 `8558fefd…`, 동일 | 클라우드 세션 |
 | `node --check` `<script>` 247개 (importmap JSON 제외) | 병합 단계마다 0 실패 | 클라우드 세션 |
+| 브라우저 테스트 25개, PR #17 헤드 `9117e99` (병합 전) | **통과** (run 15) | GitHub 러너, SwiftShader, 1회 |
 | 브라우저 테스트 25개, `main` `a8df602` (`workflow_dispatch`, run 13) | **통과** (워크플로 conclusion success) | GitHub 러너, SwiftShader, 1회 |
 | 브라우저 테스트 25개, `main` `a503a7e` | 25/25 통과 | GitHub 러너, SwiftShader, 1회 |
 | 브라우저 테스트 25개, 단계별 | A 11/25, BC 24/25는 예상된 실패(BC·D 기능 요구). D 25/25. HUD A+B, C+D 헤드 모두 25/25. | GitHub 러너. `docs/evidence/gs-ci-results_v1_261005-2359.md`, `v2_261006-0240.md` |
@@ -81,7 +84,7 @@ AMD Radeon 내장, ANGLE/D3D11, Chrome 154, 1920×922, 품질 auto, 설정 60 �
 2. 현재 빌드 60초 측정 후 결과 JSON(`phaseTotals`, `phaseSpans`, `longTasks`)을 `docs/evidence/`에 저장. 끊김 원인 좁히기. 품질 `낮음` 1회.
 3. D 프레임당 할당 줄이기 (코드 변경, GPU 확인 후).
 4. HUD 미착수: 색약 대응, 패널 색 통일. 메뉴 제목이 아직 `GS ACTION · v34`.
-   SFX 음량 정규화(효과별 게인 표 `gs-sfx-gain-proposal_v1_261006-1230.csv`, 음량 슬라이더, 리미터): 보정안만 있고 코드 미적용.
+   SFX 음량 정규화는 #17로 적용됨. 정규화 후 재측정(`claude/probe-sfx-after`)과 실기기 청취는 UNVERIFIED.
 5. 조작감 후보 미착수: 터치 보조 조준, 스틱 데드존·반경, 마우스·터치 감도 분리, 진동 피드백.
 6. Galaxy S25+ 화면·소리·터치·발열, HUD 터치 느낌 (사용자 직접).
 7. 장시간·메모리·복구 재검증 (GPU 환경).
