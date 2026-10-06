@@ -14,12 +14,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [0]
+        shard: [0, 1, 2, 3, 4, 5]
     env:
       SHARD: ${{ matrix.shard }}
-      SHARDS: '1'
-      LIMIT: '14'
-      PLAY_S: '4.0'
+      SHARDS: '6'
+      LIMIT: '0'
+      PLAY_S: '5.5'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
