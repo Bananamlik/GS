@@ -260,5 +260,25 @@ class StopTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
 
 
+class MetaTests(unittest.TestCase):
+    def test_settle_unlock_traits_and_difficulty(self):
+        result = node("""
+        let m=R.createMeta();const lost=R.createRun('bolt',4);lost.status='lost';lost.hero.hp=0;lost.act=2;lost.stats.kills=20;lost.stats.time=300;
+        lost.history.push({nodeId:'a1-f5-n0',kind:'boss',result:'won'});
+        assert.equal(R.shardsFor(lost),Math.round((10+4+20)*0.5));let s=R.settleRun(m,lost);assert.equal(s.shards,17);m=s.meta;
+        assert.ok(R.validateMeta(m));assert.deepEqual(m.best.bolt,{act:1,time:300,won:false});assert.equal(m.runs,1);assert.equal(m.maxDifficulty,0);
+        assert.throws(()=>R.settleRun(m,R.createRun('bolt',5)),/still active/);
+        const won=R.createRun('rain',6);won.status='won';won.act=3;won.stats.kills=50;won.stats.time=1500;for(let i=0;i<3;i++)won.history.push({nodeId:'b'+i,kind:'boss',result:'won'});
+        s=R.settleRun(m,won);assert.equal(s.shards,20+10+60+50);m=s.meta;assert.equal(m.wins,1);assert.equal(m.maxDifficulty,1);assert.deepEqual(m.best.rain,{act:3,time:1500,won:true});
+        assert.throws(()=>R.createRun('flame',1,{meta:m}),/locked/);
+        m=R.unlock(m,'hero:flame');assert.ok(m.unlocked.heroes.includes('flame'));assert.equal(m.shards,17+140-60);assert.ok(R.createRun('flame',1,{meta:m}));
+        assert.throws(()=>R.unlock(m,'hero:flame'),/Already/);assert.throws(()=>R.unlock(m,'nope'),/Unknown/);
+        m=R.unlock(m,'trait:gold');assert.equal(m.shards,57);assert.throws(()=>R.unlock(m,'trait:edge'),/Not enough/);m.shards+=80;m=R.unlock(m,'trait:edge');
+        const r=R.createRun('bolt',9,{meta:m,difficulty:1});assert.equal(r.gold,40);assert.deepEqual(r.passives,[{id:'dmg',stacks:1}]);assert.equal(r.difficulty,1);assert.ok(R.validateRun(r));
+        assert.throws(()=>R.createRun('bolt',9,{meta:m,difficulty:2}),/Difficulty/);
+        """)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+
 if __name__ == '__main__':
     unittest.main()
