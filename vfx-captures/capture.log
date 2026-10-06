@@ -1,0 +1,1011 @@
+15:12:32 ok   lab play CH:tidal
+15:12:34 ok   shot A-lab-CH_tidal
+15:12:34 ok   lab stop CH:tidal
+15:12:35 ok   lab play CH:storm
+15:12:37 ok   shot A-lab-CH_storm
+15:12:37 ok   lab stop CH:storm
+15:12:37 ok   trial
+15:12:39 ok   start
+15:12:39 ok   unpaused
+15:12:45 ok   warm
+15:12:45 ok   invuln
+15:12:45 ok   hide ui
+15:12:45 ok   camera override
+15:12:45 ok   wings home
+15:12:45 ok   wings cast
+15:12:47 ok   shot B-wings-0
+15:12:47 ok   wings move
+15:12:48 ok   shot B-wings-1
+15:12:49 ok   shot B-wings-2
+15:12:49 ok   wings stop
+15:12:49 ok   shield home
+15:12:50 ok   shield cast
+15:12:51 ok   shot B-shield-0
+15:12:51 ok   shield move
+15:12:52 ok   shot B-shield-1
+15:12:53 ok   shot B-shield-2
+15:12:53 ok   shield stop
+15:12:53 ok   violet home
+15:12:53 ok   violet cast
+15:12:54 ok   shot B-violet-0
+15:12:55 ok   shot B-violet-1
+15:12:55 ok   violet stop
+15:12:55 ok   fissure home
+15:12:56 ok   fissure cast
+15:12:57 ok   shot B-fissure-0
+15:12:58 ok   shot B-fissure-1
+15:12:58 ok   fissure stop
+15:12:58 sheet 243 effects
+15:12:58 ok   C 0 FX-06 cast
+15:12:59 ok   C 0 shot
+15:13:00 ok   C 0 top
+15:13:00 ok   C 0 stop
+15:13:00 ok   C 1 FX-13 cast
+15:13:02 ok   C 1 shot
+15:13:03 ok   C 1 top
+15:13:03 ok   C 1 stop
+15:13:03 ok   C 2 FX-18 cast
+15:13:04 ok   C 2 shot
+15:13:04 ok   C 2 top
+15:13:04 ok   C 2 stop
+15:13:04 ok   C 3 FX-29 cast
+15:13:06 ok   C 3 shot
+15:13:06 ok   C 3 top
+15:13:06 ok   C 3 stop
+15:13:07 ok   C 4 FX-30 cast
+15:13:08 ok   C 4 shot
+15:13:08 ok   C 4 top
+15:13:08 ok   C 4 stop
+15:13:08 ok   C 5 FX-12 cast
+15:13:11 ok   C 5 shot
+15:13:11 ok   C 5 top
+15:13:11 ok   C 5 stop
+15:13:11 ok   C 6 FX-25 cast
+15:13:15 ok   C 6 shot
+15:13:16 ok   C 6 top
+15:13:16 ok   C 6 stop
+15:13:16 ok   C 7 FX-10 cast
+15:13:18 ok   C 7 shot
+15:13:19 ok   C 7 top
+15:13:19 ok   C 7 stop
+15:13:19 ok   C 8 FX-17 cast
+15:13:20 ok   C 8 shot
+15:13:20 ok   C 8 top
+15:13:20 ok   C 8 stop
+15:13:21 ok   C 9 FX-08 cast
+15:13:24 ok   C 9 shot
+15:13:25 ok   C 9 top
+15:13:25 ok   C 9 stop
+15:13:25 ok   C 10 FX-09 cast
+15:13:26 ok   C 10 shot
+15:13:26 ok   C 10 top
+15:13:26 ok   C 10 stop
+15:13:26 ok   C 11 SC-01 cast
+15:13:29 ok   C 11 shot
+15:13:29 ok   C 11 top
+15:13:29 ok   C 11 stop
+15:13:29 ok   C 12 SC-04 cast
+15:13:31 ok   C 12 shot
+15:13:32 ok   C 12 top
+15:13:32 ok   C 12 stop
+15:13:32 ok   C 13 AS-02 cast
+15:13:33 ok   C 13 shot
+15:13:33 ok   C 13 top
+15:13:33 ok   C 13 stop
+15:13:34 ok   C 14 AS-10 cast
+15:13:36 ok   C 14 shot
+15:13:36 ok   C 14 top
+15:13:36 ok   C 14 stop
+15:13:36 ok   C 15 ARC-04 cast
+15:13:37 ok   C 15 shot
+15:13:38 ok   C 15 top
+15:13:38 ok   C 15 stop
+15:13:38 ok   C 16 ARC-09 cast
+15:13:41 ok   C 16 shot
+15:13:42 ok   C 16 top
+15:13:42 ok   C 16 stop
+15:13:42 ok   C 17 FX-14 cast
+15:13:43 ok   C 17 shot
+15:13:43 ok   C 17 top
+15:13:43 ok   C 17 stop
+15:13:44 ok   C 18 FX-21 cast
+15:13:45 ok   C 18 shot
+15:13:46 ok   C 18 top
+15:13:46 ok   C 18 stop
+15:13:46 ok   C 19 FX-22 cast
+15:13:47 ok   C 19 shot
+15:13:47 ok   C 19 top
+15:13:47 ok   C 19 stop
+15:13:48 ok   C 20 FX-34 cast
+15:13:50 ok   C 20 shot
+15:13:50 ok   C 20 top
+15:13:50 ok   C 20 stop
+15:13:50 ok   C 21 ARC-02 cast
+15:13:53 ok   C 21 shot
+15:13:53 ok   C 21 top
+15:13:53 ok   C 21 stop
+15:13:53 ok   C 22 ARC-07 cast
+15:13:56 ok   C 22 shot
+15:13:56 ok   C 22 top
+15:13:56 ok   C 22 stop
+15:13:56 ok   C 23 ARC-08 cast
+15:13:58 ok   C 23 shot
+15:13:58 ok   C 23 top
+15:13:58 ok   C 23 stop
+15:13:59 ok   C 24 MC-01 cast
+15:14:01 ok   C 24 shot
+15:14:02 ok   C 24 top
+15:14:02 ok   C 24 stop
+15:14:02 ok   C 25 MC-02 cast
+15:14:04 ok   C 25 shot
+15:14:04 ok   C 25 top
+15:14:04 ok   C 25 stop
+15:14:04 ok   C 26 MC-04 cast
+15:14:05 ok   C 26 shot
+15:14:06 ok   C 26 top
+15:14:06 ok   C 26 stop
+15:14:06 ok   C 27 AC-01 cast
+15:14:09 ok   C 27 shot
+15:14:10 ok   C 27 top
+15:14:10 ok   C 27 stop
+15:14:10 ok   C 28 AC-02 cast
+15:14:11 ok   C 28 shot
+15:14:12 ok   C 28 top
+15:14:12 ok   C 28 stop
+15:14:12 ok   C 29 AS-03 cast
+15:14:13 ok   C 29 shot
+15:14:13 ok   C 29 top
+15:14:13 ok   C 29 stop
+15:14:14 ok   C 30 AS-04 cast
+15:14:15 ok   C 30 shot
+15:14:16 ok   C 30 top
+15:14:16 ok   C 30 stop
+15:14:16 ok   C 31 AS-06 cast
+15:14:17 ok   C 31 shot
+15:14:18 ok   C 31 top
+15:14:18 ok   C 31 stop
+15:14:18 ok   C 32 INT-01 cast
+15:14:19 ok   C 32 shot
+15:14:19 ok   C 32 top
+15:14:19 ok   C 32 stop
+15:14:20 ok   C 33 INT-02 cast
+15:14:21 ok   C 33 shot
+15:14:21 ok   C 33 top
+15:14:21 ok   C 33 stop
+15:14:22 ok   C 34 INT-03 cast
+15:14:22 ok   C 34 shot
+15:14:23 ok   C 34 top
+15:14:23 ok   C 34 stop
+15:14:23 ok   C 35 INT-04 cast
+15:14:24 ok   C 35 shot
+15:14:24 ok   C 35 top
+15:14:24 ok   C 35 stop
+15:14:25 ok   C 36 INT-05 cast
+15:14:26 ok   C 36 shot
+15:14:26 ok   C 36 top
+15:14:26 ok   C 36 stop
+15:14:26 ok   C 37 INT-08 cast
+15:14:28 ok   C 37 shot
+15:14:29 ok   C 37 top
+15:14:29 ok   C 37 stop
+15:14:29 ok   C 38 INT-10 cast
+15:14:32 ok   C 38 shot
+15:14:32 ok   C 38 top
+15:14:32 ok   C 38 stop
+15:14:32 ok   C 39 SC-03 cast
+15:14:35 ok   C 39 shot
+15:14:36 ok   C 39 top
+15:14:36 ok   C 39 stop
+15:14:36 ok   C 40 SC-02 cast
+15:14:37 ok   C 40 shot
+15:14:37 ok   C 40 top
+15:14:37 ok   C 40 stop
+15:14:37 ok   C 41 NV-03 cast
+15:14:39 ok   C 41 shot
+15:14:39 ok   C 41 top
+15:14:39 ok   C 41 stop
+15:14:39 ok   C 42 NV-06 cast
+15:14:42 ok   C 42 shot
+15:14:42 ok   C 42 top
+15:14:42 ok   C 42 stop
+15:14:42 ok   C 43 NV-07 cast
+15:14:44 ok   C 43 shot
+15:14:44 ok   C 43 top
+15:14:44 ok   C 43 stop
+15:14:45 ok   C 44 V5-06 cast
+15:14:46 ok   C 44 shot
+15:14:46 ok   C 44 top
+15:14:46 ok   C 44 stop
+15:14:46 ok   C 45 V5-03 cast
+15:14:49 ok   C 45 shot
+15:14:50 ok   C 45 top
+15:14:50 ok   C 45 stop
+15:14:50 ok   C 46 V5-05 cast
+15:14:52 ok   C 46 shot
+15:14:52 ok   C 46 top
+15:14:52 ok   C 46 stop
+15:14:53 ok   C 47 INT-08-P cast
+15:14:54 ok   C 47 shot
+15:14:54 ok   C 47 top
+15:14:54 ok   C 47 stop
+15:14:54 ok   C 48 FX-10-C cast
+15:14:56 ok   C 48 shot
+15:14:57 ok   C 48 top
+15:14:57 ok   C 48 stop
+15:14:57 ok   C 49 FX-10-O cast
+15:14:59 ok   C 49 shot
+15:15:00 ok   C 49 top
+15:15:00 ok   C 49 stop
+15:15:00 ok   C 50 INT-08-O cast
+15:15:01 ok   C 50 shot
+15:15:01 ok   C 50 top
+15:15:01 ok   C 50 stop
+15:15:01 ok   C 51 ARC-21 cast
+15:15:02 ok   C 51 shot
+15:15:03 ok   C 51 top
+15:15:03 ok   C 51 stop
+15:15:03 ok   C 52 FX-101 cast
+15:15:06 ok   C 52 shot
+15:15:06 ok   C 52 top
+15:15:06 ok   C 52 stop
+15:15:07 ok   C 53 FX-146 cast
+15:15:08 ok   C 53 shot
+15:15:09 ok   C 53 top
+15:15:09 ok   C 53 stop
+15:15:09 ok   C 54 FX-140 cast
+15:15:11 ok   C 54 shot
+15:15:12 ok   C 54 top
+15:15:12 ok   C 54 stop
+15:15:12 ok   C 55 FX-150 cast
+15:15:14 ok   C 55 shot
+15:15:14 ok   C 55 top
+15:15:14 ok   C 55 stop
+15:15:14 ok   C 56 FX-125 cast
+15:15:17 ok   C 56 shot
+15:15:18 ok   C 56 top
+15:15:18 ok   C 56 stop
+15:15:18 ok   C 57 FX-141 cast
+15:15:19 ok   C 57 shot
+15:15:19 ok   C 57 top
+15:15:19 ok   C 57 stop
+15:15:19 ok   C 58 NX-05 cast
+15:15:22 ok   C 58 shot
+15:15:22 ok   C 58 top
+15:15:22 ok   C 58 stop
+15:15:22 ok   C 59 FX-126 cast
+15:15:23 ok   C 59 shot
+15:15:24 ok   C 59 top
+15:15:24 ok   C 59 stop
+15:15:24 ok   C 60 FX-142 cast
+15:15:25 ok   C 60 shot
+15:15:26 ok   C 60 top
+15:15:26 ok   C 60 stop
+15:15:26 ok   C 61 FX-152 cast
+15:15:27 ok   C 61 shot
+15:15:28 ok   C 61 top
+15:15:28 ok   C 61 stop
+15:15:28 ok   C 62 FX-155 cast
+15:15:29 ok   C 62 shot
+15:15:30 ok   C 62 top
+15:15:30 ok   C 62 stop
+15:15:30 ok   C 63 FX-157 cast
+15:15:32 ok   C 63 shot
+15:15:33 ok   C 63 top
+15:15:33 ok   C 63 stop
+15:15:33 ok   C 64 NX-08 cast
+15:15:34 ok   C 64 shot
+15:15:34 ok   C 64 top
+15:15:34 ok   C 64 stop
+15:15:34 ok   C 65 NX-10 cast
+15:15:35 ok   C 65 shot
+15:15:36 ok   C 65 top
+15:15:36 ok   C 65 stop
+15:15:36 ok   C 66 ARC-22 cast
+15:15:37 ok   C 66 shot
+15:15:38 ok   C 66 top
+15:15:38 ok   C 66 stop
+15:15:38 ok   C 67 ARC-24 cast
+15:15:41 ok   C 67 shot
+15:15:41 ok   C 67 top
+15:15:41 ok   C 67 stop
+15:15:41 ok   C 68 ARC-27 cast
+15:15:43 ok   C 68 shot
+15:15:43 ok   C 68 top
+15:15:43 ok   C 68 stop
+15:15:44 ok   C 69 FX-130 cast
+15:15:46 ok   C 69 shot
+15:15:47 ok   C 69 top
+15:15:47 ok   C 69 stop
+15:15:47 ok   C 70 ARC-25 cast
+15:15:49 ok   C 70 shot
+15:15:50 ok   C 70 top
+15:15:50 ok   C 70 stop
+15:15:50 ok   C 71 FX-108 cast
+15:15:52 ok   C 71 shot
+15:15:53 ok   C 71 top
+15:15:53 ok   C 71 stop
+15:15:53 ok   C 72 WTR-1 cast
+15:15:54 ok   C 72 shot
+15:15:54 ok   C 72 top
+15:15:54 ok   C 72 stop
+15:15:54 ok   C 73 ARC-32 cast
+15:15:56 ok   C 73 shot
+15:15:56 ok   C 73 top
+15:15:56 ok   C 73 stop
+15:15:57 ok   C 74 MYTH-01 cast
+15:16:00 ok   C 74 shot
+15:16:01 ok   C 74 top
+15:16:01 ok   C 74 stop
+15:16:01 ok   C 75 FX-121 cast
+15:16:02 ok   C 75 shot
+15:16:03 ok   C 75 top
+15:16:03 ok   C 75 stop
+15:16:03 ok   C 76 CURSE-01 cast
+15:16:07 ok   C 76 shot
+15:16:08 ok   C 76 top
+15:16:08 ok   C 76 stop
+15:16:09 ok   C 77 GS-aurora9 cast
+15:16:12 ok   C 77 shot
+15:16:13 ok   C 77 top
+15:16:13 ok   C 77 stop
+15:16:13 ok   C 78 GS-vortexring cast
+15:16:17 ok   C 78 shot
+15:16:17 ok   C 78 top
+15:16:17 ok   C 78 stop
+15:16:18 ok   C 79 GS-sedov cast
+15:16:19 ok   C 79 shot
+15:16:19 ok   C 79 top
+15:16:19 ok   C 79 stop
+15:16:19 ok   C 80 GS-miura cast
+15:16:20 ok   C 80 shot
+15:16:21 ok   C 80 top
+15:16:21 ok   C 80 stop
+15:16:21 ok   C 81 GS-requiem cast
+15:16:25 ok   C 81 shot
+15:16:25 ok   C 81 top
+15:16:25 ok   C 81 stop
+15:16:26 ok   C 82 GS-nuke cast
+15:16:27 ok   C 82 shot
+15:16:28 ok   C 82 top
+15:16:28 ok   C 82 stop
+15:16:28 ok   C 83 GS-sonic cast
+15:16:31 ok   C 83 shot
+15:16:31 ok   C 83 top
+15:16:31 ok   C 83 stop
+15:16:31 ok   C 84 GS-helix cast
+15:16:35 ok   C 84 shot
+15:16:35 ok   C 84 top
+15:16:35 ok   C 84 stop
+15:16:36 ok   C 85 GS-vacuum cast
+15:16:38 ok   C 85 shot
+15:16:38 ok   C 85 top
+15:16:38 ok   C 85 stop
+15:16:39 ok   C 86 GS-thermo cast
+15:16:40 ok   C 86 shot
+15:16:41 ok   C 86 top
+15:16:41 ok   C 86 stop
+15:16:41 ok   C 87 GS-mirv cast
+15:16:44 ok   C 87 shot
+15:16:45 ok   C 87 top
+15:16:45 ok   C 87 stop
+15:16:45 ok   C 88 GS-aegis cast
+15:16:46 ok   C 88 shot
+15:16:47 ok   C 88 top
+15:16:47 ok   C 88 stop
+15:16:47 ok   C 89 GS-rod cast
+15:16:48 ok   C 89 shot
+15:16:49 ok   C 89 top
+15:16:49 ok   C 89 stop
+15:16:49 ok   C 90 GS-cannon cast
+15:16:50 ok   C 90 shot
+15:16:51 ok   C 90 top
+15:16:51 ok   C 90 stop
+15:16:51 ok   C 91 GS-dynamite cast
+15:16:53 ok   C 91 shot
+15:16:54 ok   C 91 top
+15:16:54 ok   C 91 stop
+15:16:54 ok   C 92 GS-shuriken cast
+15:16:55 ok   C 92 shot
+15:16:56 ok   C 92 top
+15:16:56 ok   C 92 stop
+15:16:56 ok   C 93 GS-talisman cast
+15:16:58 ok   C 93 shot
+15:16:59 ok   C 93 top
+15:16:59 ok   C 93 stop
+15:16:59 ok   C 94 GS-bell cast
+15:17:00 ok   C 94 shot
+15:17:01 ok   C 94 top
+15:17:01 ok   C 94 stop
+15:17:01 ok   C 95 GS-fan cast
+15:17:02 ok   C 95 shot
+15:17:03 ok   C 95 top
+15:17:03 ok   C 95 stop
+15:17:03 ok   C 96 GS-frost cast
+15:17:04 ok   C 96 shot
+15:17:05 ok   C 96 top
+15:17:05 ok   C 96 stop
+15:17:05 ok   C 97 GS-arsenal cast
+15:17:09 ok   C 97 shot
+15:17:09 ok   C 97 top
+15:17:09 ok   C 97 stop
+15:17:10 ok   C 98 GS-railgun cast
+15:17:13 ok   C 98 shot
+15:17:14 ok   C 98 top
+15:17:14 ok   C 98 stop
+15:17:14 ok   C 99 GS-nanite cast
+15:17:18 ok   C 99 shot
+15:17:18 ok   C 99 top
+15:17:18 ok   C 99 stop
+15:17:19 ok   C 100 GS-tokamak cast
+15:17:22 ok   C 100 shot
+15:17:23 ok   C 100 top
+15:17:23 ok   C 100 stop
+15:17:23 ok   C 101 GS-web cast
+15:17:27 ok   C 101 shot
+15:17:27 ok   C 101 top
+15:17:27 ok   C 101 stop
+15:17:28 ok   C 102 GS-lance cast
+15:17:30 ok   C 102 shot
+15:17:31 ok   C 102 top
+15:17:31 ok   C 102 stop
+15:17:31 ok   C 103 GS-hammer cast
+15:17:33 ok   C 103 shot
+15:17:34 ok   C 103 top
+15:17:34 ok   C 103 stop
+15:17:34 ok   C 104 GS-meteor cast
+15:17:38 ok   C 104 shot
+15:17:39 ok   C 104 top
+15:17:39 ok   C 104 stop
+15:17:39 ok   C 105 GS-tsunami cast
+15:17:43 ok   C 105 shot
+15:17:43 ok   C 105 top
+15:17:43 ok   C 105 stop
+15:17:44 ok   C 106 GS-horizon cast
+15:17:48 ok   C 106 shot
+15:17:48 ok   C 106 top
+15:17:48 ok   C 106 stop
+15:17:48 ok   C 107 GS-ferro cast
+15:17:52 ok   C 107 shot
+15:17:53 ok   C 107 top
+15:17:53 ok   C 107 stop
+15:17:53 ok   C 108 GS-murmur cast
+15:17:57 ok   C 108 shot
+15:17:57 ok   C 108 top
+15:17:57 ok   C 108 stop
+15:17:57 ok   C 109 GS-bloom cast
+15:18:01 ok   C 109 shot
+15:18:02 ok   C 109 top
+15:18:02 ok   C 109 stop
+15:18:02 ok   C 110 GS-aurora cast
+15:18:06 ok   C 110 shot
+15:18:06 ok   C 110 top
+15:18:06 ok   C 110 stop
+15:18:06 ok   C 111 GS-fractal cast
+15:18:10 ok   C 111 shot
+15:18:12 ok   C 111 top
+15:18:12 ok   C 111 stop
+15:18:12 ok   C 112 GS-abyss cast
+15:18:16 ok   C 112 shot
+15:18:16 ok   C 112 top
+15:18:16 ok   C 112 stop
+15:18:16 ok   C 113 GS-dune cast
+15:18:20 ok   C 113 shot
+15:18:20 ok   C 113 top
+15:18:20 ok   C 113 stop
+15:18:21 ok   C 114 GS-chrono cast
+15:18:24 ok   C 114 shot
+15:18:25 ok   C 114 top
+15:18:25 ok   C 114 stop
+15:18:25 ok   C 115 GS-mycel cast
+15:18:29 ok   C 115 shot
+15:18:29 ok   C 115 top
+15:18:30 ok   C 115 stop
+15:18:30 ok   C 116 GS-tempest cast
+15:18:34 ok   C 116 shot
+15:18:35 ok   C 116 top
+15:18:35 ok   C 116 stop
+15:18:35 ok   C 117 GS-silk cast
+15:18:39 ok   C 117 shot
+15:18:39 ok   C 117 top
+15:18:39 ok   C 117 stop
+15:18:39 ok   C 118 GS-rift cast
+15:18:42 ok   C 118 shot
+15:18:42 ok   C 118 top
+15:18:42 ok   C 118 stop
+15:18:42 ok   C 119 GS-judge cast
+15:18:45 ok   C 119 shot
+15:18:45 ok   C 119 top
+15:18:45 ok   C 119 stop
+15:18:46 ok   C 120 GS-digital cast
+15:18:49 ok   C 120 shot
+15:18:50 ok   C 120 top
+15:18:50 ok   C 120 stop
+15:18:50 ok   C 121 GS-polytope cast
+15:18:54 ok   C 121 shot
+15:18:54 ok   C 121 top
+15:18:54 ok   C 121 stop
+15:18:55 ok   C 122 CH:prism cast
+15:18:57 ok   C 122 shot
+15:18:57 ok   C 122 top
+15:18:57 ok   C 122 stop
+15:18:57 ok   C 123 CH:rupture cast
+15:19:00 ok   C 123 shot
+15:19:00 ok   C 123 top
+15:19:00 ok   C 123 stop
+15:19:00 ok   C 124 CH:void cast
+15:19:02 ok   C 124 shot
+15:19:03 ok   C 124 top
+15:19:03 ok   C 124 stop
+15:19:03 ok   C 125 CH:glacier cast
+15:19:06 ok   C 125 shot
+15:19:06 ok   C 125 top
+15:19:06 ok   C 125 stop
+15:19:06 ok   C 126 CH:solar cast
+15:19:09 ok   C 126 shot
+15:19:09 ok   C 126 top
+15:19:09 ok   C 126 stop
+15:19:09 ok   C 127 CH:aurora cast
+15:19:11 ok   C 127 shot
+15:19:12 ok   C 127 top
+15:19:12 ok   C 127 stop
+15:19:12 ok   C 128 CH:storm cast
+15:19:14 ok   C 128 shot
+15:19:15 ok   C 128 top
+15:19:15 ok   C 128 stop
+15:19:15 ok   C 129 CH:kintsugi cast
+15:19:17 ok   C 129 shot
+15:19:18 ok   C 129 top
+15:19:18 ok   C 129 stop
+15:19:18 ok   C 130 CH:coral cast
+15:19:20 ok   C 130 shot
+15:19:21 ok   C 130 top
+15:19:21 ok   C 130 stop
+15:19:21 ok   C 131 CH:tidal cast
+15:19:23 ok   C 131 shot
+15:19:23 ok   C 131 top
+15:19:23 ok   C 131 stop
+15:19:24 ok   C 132 CH:glitch cast
+15:19:26 ok   C 132 shot
+15:19:26 ok   C 132 top
+15:19:26 ok   C 132 stop
+15:19:26 ok   C 133 CH:collapse cast
+15:19:28 ok   C 133 shot
+15:19:29 ok   C 133 top
+15:19:29 ok   C 133 stop
+15:19:29 ok   C 134 CH:comic cast
+15:19:31 ok   C 134 shot
+15:19:32 ok   C 134 top
+15:19:32 ok   C 134 stop
+15:19:32 ok   C 135 CH:jade cast
+15:19:34 ok   C 135 shot
+15:19:34 ok   C 135 top
+15:19:34 ok   C 135 stop
+15:19:35 ok   C 136 CH:dokkaebi cast
+15:19:37 ok   C 136 shot
+15:19:37 ok   C 136 top
+15:19:37 ok   C 136 stop
+15:19:38 ok   C 137 CH:matrix cast
+15:19:41 ok   C 137 shot
+15:19:42 ok   C 137 top
+15:19:42 ok   C 137 stop
+15:19:42 ok   C 138 CH:cathedral cast
+15:19:45 ok   C 138 shot
+15:19:45 ok   C 138 top
+15:19:45 ok   C 138 stop
+15:19:45 ok   C 139 CH:ferro cast
+15:19:48 ok   C 139 shot
+15:19:49 ok   C 139 top
+15:19:49 ok   C 139 stop
+15:19:49 ok   C 140 CH:seraph cast
+15:19:51 ok   C 140 shot
+15:19:52 ok   C 140 top
+15:19:52 ok   C 140 stop
+15:19:52 ok   C 141 CH:mycelium cast
+15:19:55 ok   C 141 shot
+15:19:55 ok   C 141 top
+15:19:55 ok   C 141 stop
+15:19:56 ok   C 142 CH:chronos cast
+15:19:58 ok   C 142 shot
+15:19:59 ok   C 142 top
+15:19:59 ok   C 142 stop
+15:19:59 ok   C 143 CH:loom cast
+15:20:02 ok   C 143 shot
+15:20:02 ok   C 143 top
+15:20:02 ok   C 143 stop
+15:20:03 ok   C 144 CH:leviathan cast
+15:20:05 ok   C 144 shot
+15:20:06 ok   C 144 top
+15:20:06 ok   C 144 stop
+15:20:06 ok   C 145 CH:requiem cast
+15:20:08 ok   C 145 shot
+15:20:09 ok   C 145 top
+15:20:09 ok   C 145 stop
+15:20:09 ok   C 146 CH:prominence cast
+15:20:12 ok   C 146 shot
+15:20:12 ok   C 146 top
+15:20:12 ok   C 146 stop
+15:20:12 ok   C 147 CH:manta cast
+15:20:15 ok   C 147 shot
+15:20:16 ok   C 147 top
+15:20:16 ok   C 147 stop
+15:20:16 ok   C 148 CH:ssitgim cast
+15:20:20 ok   C 148 shot
+15:20:20 ok   C 148 top
+15:20:20 ok   C 148 stop
+15:20:20 ok   C 149 CH:obang cast
+15:20:23 ok   C 149 shot
+15:20:24 ok   C 149 top
+15:20:24 ok   C 149 stop
+15:20:24 ok   C 150 CH:chladni cast
+15:20:28 ok   C 150 shot
+15:20:28 ok   C 150 top
+15:20:28 ok   C 150 stop
+15:20:28 ok   C 151 CH:emille cast
+15:20:31 ok   C 151 shot
+15:20:32 ok   C 151 top
+15:20:32 ok   C 151 stop
+15:20:32 ok   C 152 CH:tomo cast
+15:20:36 ok   C 152 shot
+15:20:36 ok   C 152 top
+15:20:36 ok   C 152 stop
+15:20:36 ok   C 153 CH:lazy cast
+15:20:40 ok   C 153 shot
+15:20:41 ok   C 153 top
+15:20:41 ok   C 153 stop
+15:20:41 ok   C 154 CH:brimstone cast
+15:20:43 ok   C 154 shot
+15:20:44 ok   C 154 top
+15:20:44 ok   C 154 stop
+15:20:44 ok   C 155 CH:voltspear cast
+15:20:45 ok   C 155 shot
+15:20:46 ok   C 155 top
+15:20:46 ok   C 155 stop
+15:20:46 ok   C 156 CH:crane cast
+15:20:50 ok   C 156 shot
+15:20:50 ok   C 156 top
+15:20:50 ok   C 156 stop
+15:20:51 ok   C 157 CH:relay cast
+15:20:53 ok   C 157 shot
+15:20:53 ok   C 157 top
+15:20:53 ok   C 157 stop
+15:20:54 ok   C 158 CH:bubble cast
+15:20:57 ok   C 158 shot
+15:20:58 ok   C 158 top
+15:20:58 ok   C 158 stop
+15:20:58 ok   C 159 CH:spiral cast
+15:21:01 ok   C 159 shot
+15:21:01 ok   C 159 top
+15:21:01 ok   C 159 stop
+15:21:01 ok   C 160 CH:galaxy cast
+15:21:05 ok   C 160 shot
+15:21:06 ok   C 160 top
+15:21:06 ok   C 160 stop
+15:21:06 ok   C 161 CH:twin cast
+15:21:09 ok   C 161 shot
+15:21:09 ok   C 161 top
+15:21:09 ok   C 161 stop
+15:21:10 ok   C 162 CH:opal cast
+15:21:13 ok   C 162 shot
+15:21:14 ok   C 162 top
+15:21:14 ok   C 162 stop
+15:21:14 ok   C 163 CH:marey cast
+15:21:17 ok   C 163 shot
+15:21:17 ok   C 163 top
+15:21:17 ok   C 163 stop
+15:21:17 ok   C 164 CH:gaze cast
+15:21:21 ok   C 164 shot
+15:21:22 ok   C 164 top
+15:21:22 ok   C 164 stop
+15:21:22 ok   C 165 FX-04 cast
+15:21:24 ok   C 165 shot
+15:21:24 ok   C 165 top
+15:21:24 ok   C 165 stop
+15:21:24 ok   C 166 V5-01 cast
+15:21:25 ok   C 166 shot
+15:21:26 ok   C 166 top
+15:21:26 ok   C 166 stop
+15:21:26 ok   C 167 INT-03-G cast
+15:21:27 ok   C 167 shot
+15:21:27 ok   C 167 top
+15:21:27 ok   C 167 stop
+15:21:27 ok   C 168 FX-158 cast
+15:21:29 ok   C 168 shot
+15:21:29 ok   C 168 top
+15:21:29 ok   C 168 stop
+15:21:30 ok   C 169 FX-88 cast
+15:21:32 ok   C 169 shot
+15:21:32 ok   C 169 top
+15:21:32 ok   C 169 stop
+15:21:33 ok   C 170 C:FB_STRUCT:myco cast
+15:21:34 ok   C 170 shot
+15:21:35 ok   C 170 top
+15:21:35 ok   C 170 stop
+15:21:35 ok   C 171 D:STRUCT:obelisk cast
+15:21:39 ok   C 171 shot
+15:21:39 ok   C 171 top
+15:21:39 ok   C 171 stop
+15:21:39 ok   C 172 D:STRUCT:fountain cast
+15:21:43 ok   C 172 shot
+15:21:43 ok   C 172 top
+15:21:43 ok   C 172 stop
+15:21:43 ok   C 173 D:STRUCT:ward cast
+15:21:45 ok   C 173 shot
+15:21:46 ok   C 173 top
+15:21:46 ok   C 173 stop
+15:21:46 ok   C 174 D:STRUCT:tree cast
+15:21:47 ok   C 174 shot
+15:21:48 ok   C 174 top
+15:21:48 ok   C 174 stop
+15:21:48 ok   C 175 D:STRUCT:belfry cast
+15:21:51 ok   C 175 shot
+15:21:52 ok   C 175 top
+15:21:52 ok   C 175 stop
+15:21:52 ok   C 176 D:STRUCT:altar cast
+15:21:56 ok   C 176 shot
+15:21:56 ok   C 176 top
+15:21:56 ok   C 176 stop
+15:21:56 ok   C 177 D:STRUCT:lunar cast
+15:21:59 ok   C 177 shot
+15:22:00 ok   C 177 top
+15:22:00 ok   C 177 stop
+15:22:00 ok   C 178 D:STRUCT:sanctum cast
+15:22:01 ok   C 178 shot
+15:22:02 ok   C 178 top
+15:22:02 ok   C 178 stop
+15:22:02 ok   C 179 D:STRUCT:spire cast
+15:22:06 ok   C 179 shot
+15:22:06 ok   C 179 top
+15:22:06 ok   C 179 stop
+15:22:06 ok   C 180 D:STRUCT:pylon cast
+15:22:10 ok   C 180 shot
+15:22:10 ok   C 180 top
+15:22:10 ok   C 180 stop
+15:22:11 ok   C 181 D:STRUCT:portal cast
+15:22:14 ok   C 181 shot
+15:22:15 ok   C 181 top
+15:22:15 ok   C 181 stop
+15:22:15 ok   C 182 D:PROJ:lance cast
+15:22:17 ok   C 182 shot
+15:22:17 ok   C 182 top
+15:22:17 ok   C 182 stop
+15:22:17 ok   C 183 D:ULT:inkfall cast
+15:22:21 ok   C 183 shot
+15:22:21 ok   C 183 top
+15:22:21 ok   C 183 stop
+15:22:22 ok   C 184 D:ULT:issen cast
+15:22:24 ok   C 184 shot
+15:22:24 ok   C 184 top
+15:22:24 ok   C 184 stop
+15:22:25 ok   C 185 D:ULT:crystalcage cast
+15:22:27 ok   C 185 shot
+15:22:27 ok   C 185 top
+15:22:27 ok   C 185 stop
+15:22:28 ok   C 186 D:ULT:waltz cast
+15:22:31 ok   C 186 shot
+15:22:32 ok   C 186 top
+15:22:32 ok   C 186 stop
+15:22:32 ok   C 187 D:ULT:agwisasal cast
+15:22:35 ok   C 187 shot
+15:22:35 ok   C 187 top
+15:22:35 ok   C 187 stop
+15:22:35 ok   C 188 D:ULT:mugeonbu cast
+15:22:39 ok   C 188 shot
+15:22:39 ok   C 188 top
+15:22:39 ok   C 188 stop
+15:22:39 ok   C 189 C:F_PROJ:dat cast
+15:22:42 ok   C 189 shot
+15:22:43 ok   C 189 top
+15:22:43 ok   C 189 stop
+15:22:43 ok   C 190 C:F_PROJ:irn cast
+15:22:46 ok   C 190 shot
+15:22:46 ok   C 190 top
+15:22:46 ok   C 190 stop
+15:22:47 ok   C 191 C:F_PROJ:mtx cast
+15:22:49 ok   C 191 shot
+15:22:50 ok   C 191 top
+15:22:50 ok   C 191 stop
+15:22:50 ok   C 192 C:F_PROJ:gho cast
+15:22:53 ok   C 192 shot
+15:22:53 ok   C 192 top
+15:22:53 ok   C 192 stop
+15:22:53 ok   C 193 C:F_PROJ:qnt cast
+15:22:56 ok   C 193 shot
+15:22:57 ok   C 193 top
+15:22:57 ok   C 193 stop
+15:22:57 ok   C 194 C:F_PROJ:lqm cast
+15:23:00 ok   C 194 shot
+15:23:01 ok   C 194 top
+15:23:01 ok   C 194 stop
+15:23:01 ok   C 195 C:F_PROJ:sing cast
+15:23:04 ok   C 195 shot
+15:23:04 ok   C 195 top
+15:23:04 ok   C 195 stop
+15:23:04 ok   C 196 C:F_PROJ:memo cast
+15:23:07 ok   C 196 shot
+15:23:08 ok   C 196 top
+15:23:08 ok   C 196 stop
+15:23:08 ok   C 197 C:F_PROJ:frost cast
+15:23:11 ok   C 197 shot
+15:23:12 ok   C 197 top
+15:23:12 ok   C 197 stop
+15:23:12 ok   C 198 C:F_PROJ:meteor cast
+15:23:15 ok   C 198 shot
+15:23:15 ok   C 198 top
+15:23:15 ok   C 198 stop
+15:23:15 ok   C 199 C:SF_PROJ:prs cast
+15:23:18 ok   C 199 shot
+15:23:19 ok   C 199 top
+15:23:19 ok   C 199 stop
+15:23:19 ok   C 200 C:SF_PROJ:eco cast
+15:23:22 ok   C 200 shot
+15:23:22 ok   C 200 top
+15:23:22 ok   C 200 stop
+15:23:22 ok   C 201 C:SF_PROJ:mtr cast
+15:23:25 ok   C 201 shot
+15:23:26 ok   C 201 top
+15:23:26 ok   C 201 stop
+15:23:26 ok   C 202 C:FB_PROJ:ori cast
+15:23:29 ok   C 202 shot
+15:23:29 ok   C 202 top
+15:23:29 ok   C 202 stop
+15:23:29 ok   C 203 C:FB_PROJ:bel cast
+15:23:32 ok   C 203 shot
+15:23:33 ok   C 203 top
+15:23:33 ok   C 203 stop
+15:23:33 ok   C 204 C:F_STRUCT:bismuth cast
+15:23:34 ok   C 204 shot
+15:23:35 ok   C 204 top
+15:23:35 ok   C 204 stop
+15:23:35 ok   C 205 C:F_STRUCT:tectonic cast
+15:23:36 ok   C 205 shot
+15:23:36 ok   C 205 top
+15:23:36 ok   C 205 stop
+15:23:36 ok   C 206 C:F_STRUCT:talisman cast
+15:23:37 ok   C 206 shot
+15:23:38 ok   C 206 top
+15:23:38 ok   C 206 stop
+15:23:38 ok   C 207 C:F_STRUCT:chain cast
+15:23:39 ok   C 207 shot
+15:23:39 ok   C 207 top
+15:23:39 ok   C 207 stop
+15:23:40 ok   C 208 C:F_STRUCT:gateway cast
+15:23:41 ok   C 208 shot
+15:23:42 ok   C 208 top
+15:23:42 ok   C 208 stop
+15:23:42 ok   C 209 C:F_STRUCT:icewall cast
+15:23:43 ok   C 209 shot
+15:23:44 ok   C 209 top
+15:23:44 ok   C 209 stop
+15:23:44 ok   C 210 C:F_STRUCT:turret cast
+15:23:45 ok   C 210 shot
+15:23:45 ok   C 210 top
+15:23:45 ok   C 210 stop
+15:23:45 ok   C 211 C:F_STRUCT:siphon cast
+15:23:48 ok   C 211 shot
+15:23:48 ok   C 211 top
+15:23:48 ok   C 211 stop
+15:23:49 ok   C 212 C:SF_STRUCT:pct cast
+15:23:50 ok   C 212 shot
+15:23:50 ok   C 212 top
+15:23:50 ok   C 212 stop
+15:23:50 ok   C 213 C:SF_STRUCT:chr cast
+15:23:51 ok   C 213 shot
+15:23:51 ok   C 213 top
+15:23:51 ok   C 213 stop
+15:23:52 ok   C 214 C:SF_STRUCT:nfn cast
+15:23:53 ok   C 214 shot
+15:23:53 ok   C 214 top
+15:23:53 ok   C 214 stop
+15:23:53 ok   C 215 C:SF_STRUCT:snt cast
+15:23:54 ok   C 215 shot
+15:23:55 ok   C 215 top
+15:23:55 ok   C 215 stop
+15:23:55 ok   C 216 C:SF_STRUCT:hcb cast
+15:23:56 ok   C 216 shot
+15:23:56 ok   C 216 top
+15:23:56 ok   C 216 stop
+15:23:57 ok   C 217 C:SF_STRUCT:ora cast
+15:23:57 ok   C 217 shot
+15:23:58 ok   C 217 top
+15:23:58 ok   C 217 stop
+15:23:58 ok   C 218 C:SF_STRUCT:shd cast
+15:23:59 ok   C 218 shot
+15:24:00 ok   C 218 top
+15:24:00 ok   C 218 stop
+15:24:00 ok   C 219 C:SF_STRUCT:tsl cast
+15:24:01 ok   C 219 shot
+15:24:01 ok   C 219 top
+15:24:01 ok   C 219 stop
+15:24:02 ok   C 220 C:SF_STRUCT:obl cast
+15:24:05 ok   C 220 shot
+15:24:05 ok   C 220 top
+15:24:05 ok   C 220 stop
+15:24:06 ok   C 221 C:SF_STRUCT:msd cast
+15:24:06 ok   C 221 shot
+15:24:07 ok   C 221 top
+15:24:07 ok   C 221 stop
+15:24:07 ok   C 222 C:SF_STRUCT:hlx cast
+15:24:08 ok   C 222 shot
+15:24:08 ok   C 222 top
+15:24:08 ok   C 222 stop
+15:24:08 ok   C 223 C:FB_STRUCT:pagoda cast
+15:24:09 ok   C 223 shot
+15:24:10 ok   C 223 top
+15:24:10 ok   C 223 stop
+15:24:10 ok   C 224 C:FB_STRUCT:astro cast
+15:24:11 ok   C 224 shot
+15:24:12 ok   C 224 top
+15:24:12 ok   C 224 stop
+15:24:12 ok   C 225 C:FB_STRUCT:loom cast
+15:24:15 ok   C 225 shot
+15:24:15 ok   C 225 top
+15:24:15 ok   C 225 stop
+15:24:16 ok   C 226 C:FB_STRUCT:organ cast
+15:24:18 ok   C 226 shot
+15:24:18 ok   C 226 top
+15:24:18 ok   C 226 stop
+15:24:18 ok   C 227 C:EXT_STRUCT:reactor cast
+15:24:20 ok   C 227 shot
+15:24:21 ok   C 227 top
+15:24:21 ok   C 227 stop
+15:24:21 ok   C 228 C:EXT_STRUCT:graphene cast
+15:24:22 ok   C 228 shot
+15:24:23 ok   C 228 top
+15:24:23 ok   C 228 stop
+15:24:23 ok   C 229 C:EXT_STRUCT:hologram cast
+15:24:24 ok   C 229 shot
+15:24:25 ok   C 229 top
+15:24:25 ok   C 229 stop
+15:24:25 ok   C 230 C:EXT_STRUCT:chiral cast
+15:24:26 ok   C 230 shot
+15:24:27 ok   C 230 top
+15:24:27 ok   C 230 stop
+15:24:27 ok   C 231 C:EXT_STRUCT:anchor cast
+15:24:29 ok   C 231 shot
+15:24:29 ok   C 231 top
+15:24:29 ok   C 231 stop
+15:24:29 ok   C 232 C:EXT_STRUCT:rift cast
+15:24:30 ok   C 232 shot
+15:24:31 ok   C 232 top
+15:24:31 ok   C 232 stop
+15:24:31 ok   C 233 C:EXT_STRUCT:bio cast
+15:24:33 ok   C 233 shot
+15:24:33 ok   C 233 top
+15:24:33 ok   C 233 stop
+15:24:33 ok   C 234 C:EXT_STRUCT:beacon cast
+15:24:35 ok   C 234 shot
+15:24:35 ok   C 234 top
+15:24:35 ok   C 234 stop
+15:24:35 ok   C 235 C:EXT_STRUCT:auroraCurtain cast
+15:24:37 ok   C 235 shot
+15:24:37 ok   C 235 top
+15:24:37 ok   C 235 stop
+15:24:37 ok   C 236 C:EXT_STRUCT:auroraAltar cast
+15:24:39 ok   C 236 shot
+15:24:39 ok   C 236 top
+15:24:39 ok   C 236 stop
+15:24:39 ok   C 237 C:EXT_STRUCT:organ cast
+15:24:42 ok   C 237 shot
+15:24:42 ok   C 237 top
+15:24:42 ok   C 237 stop
+15:24:42 ok   C 238 D:PROJ:chain cast
+15:24:43 ok   C 238 shot
+15:24:44 ok   C 238 top
+15:24:44 ok   C 238 stop
+15:24:44 ok   C 239 C:FB_PROJ:koi cast
+15:24:46 ok   C 239 shot
+15:24:46 ok   C 239 top
+15:24:46 ok   C 239 stop
+15:24:46 ok   C 240 D:ULT:zenith cast
+15:24:49 ok   C 240 shot
+15:24:50 ok   C 240 top
+15:24:50 ok   C 240 stop
+15:24:50 ok   C 241 D:PROJ:fissure cast
+15:24:51 ok   C 241 shot
+15:24:52 ok   C 241 top
+15:24:52 ok   C 241 stop
+15:24:52 ok   C 242 D:ULT:upheaval cast
+15:24:53 ok   C 242 shot
+15:24:54 ok   C 242 top
+15:24:54 ok   C 242 stop
+15:24:54 pageerrors 0 []
