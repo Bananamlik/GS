@@ -91,6 +91,8 @@ AMD Radeon 내장, ANGLE/D3D11, Chrome 154, 1920×922, 품질 auto, 설정 60 �
 
 ## 6. 남은 작업
 
+0. 게임 뼈대: 로그라이트 런 구조로 결정(2026-10-06). 설계안 `docs/design/gs-run-skeleton_v1_261006-2213.md`, 승인 전. 단계 S1~S8.
+
 1. 같은 PC·같은 조건으로 main v34(`76ddfb4`)와 현재 `main`을 3회씩 측정 (보류 중).
 2. 현재 빌드 60초 측정 후 결과 JSON(`phaseTotals`, `phaseSpans`, `longTasks`)을 `docs/evidence/`에 저장. 끊김 원인 좁히기. 품질 `낮음` 1회.
 3. D 프레임당 할당 줄이기 (코드 변경, GPU 확인 후).
