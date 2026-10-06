@@ -46,7 +46,7 @@ with sync_playwright() as p:
 
     # A. Lab beam length
     for bid in ['CH:tidal', 'CH:storm']:
-        step(f'lab play {bid}', lambda: page.evaluate('id=>labPlay(id)', bid))
+        step(f'lab play {bid}', lambda: page.evaluate('id=>GS_STUDIO.select(id,{play:true})', bid))
         page.wait_for_timeout(1600)
         shot('A-lab-' + bid.replace(':', '_'))
         step(f'lab stop {bid}', lambda: page.evaluate('id=>VFX_COMBAT.stop(id)', bid))
@@ -59,6 +59,14 @@ with sync_playwright() as p:
     step('warm', lambda: page.wait_for_function('GS_ACTION.vfxWarmStatus?.ids && GS_ACTION.warmStatus.queued===0', timeout=120000))
     step('invuln', lambda: page.evaluate("GS_ACTION.sim.hero.invuln=1e9;GS_ACTION.sim.enemies.forEach(e=>{e.cd=1e9})"))
     home = "GS_ACTION.sim.hero.x=0;GS_ACTION.sim.hero.z=0;"
+    step('hide ui', lambda: page.add_style_tag(content='#gaTrialBar,#gaSkills,#gaHint,#gaInputHint,#ga .top,#gaMenuOpen,#gaExit,#gaTouch,#gaEnemyBars,#gaThreats{display:none!important}'))
+    CAM = {'side': ([34, 14, -12], [0, 6, -12]), 'top': ([0, 46, 20], [0, 0, -12])}
+    step('camera override', lambda: page.evaluate("""()=>{const H=STAGE3D.host,cam=H.controls.object,orig=H.composer.render;
+      H.composer.render=function(...a){const c=window.__probeCam;if(c){cam.position.set(...c.p);cam.lookAt(...c.t);cam.updateMatrixWorld();}return orig.apply(this,a);};}"""))
+    def cam(name):
+        p, t = CAM[name]
+        page.evaluate('([p,t])=>{window.__probeCam={p,t}}', [p, t])
+        page.wait_for_timeout(120)
 
     # B. Anchoring scenes
     def scene(tag, fid, kind, aim, waits, move=None):
@@ -73,6 +81,7 @@ with sync_playwright() as p:
                 page.wait_for_timeout(400)
             shot(f'B-{tag}-{i}')
         step(f'{tag} stop', lambda: page.evaluate('id=>VFX_COMBAT.stop(id)', fid))
+    cam('side')
     scene('wings', 'D:ULT:ascend', 'dash', (0, -25), [700, 500, 600], move='GS_ACTION.sim.hero.x+=10')
     scene('shield', 'ARC-04', 'shield', (0, -20), [600, 400, 600], move='GS_ACTION.sim.hero.x+=10')
     scene('violet', 'VA:violet_fault', 'beam', (0, -30), [900, 500])
@@ -88,7 +97,10 @@ with sync_playwright() as p:
         wait = min(3.2, max(0.5, (r['first'] or 0.6) + 0.15))
         page.wait_for_timeout(int(wait * 1000))
         fn = fid.replace(':', '_').replace('/', '_')
-        step(f'C {i} shot', lambda: page.screenshot(path=str(OUT / 'sheet' / f'{fn}.jpg'), type='jpeg', quality=55))
+        cam('side')
+        step(f'C {i} shot', lambda: page.screenshot(path=str(OUT / 'sheet' / f'{fn}__side.jpg'), type='jpeg', quality=55))
+        cam('top')
+        step(f'C {i} top', lambda: page.screenshot(path=str(OUT / 'sheet' / f'{fn}__top.jpg'), type='jpeg', quality=55))
         results[fid] = {'cast': res, 'wait': wait, **r}
         step(f'C {i} stop', lambda: page.evaluate('id=>{VFX_COMBAT.stop(id)}', fid))
         page.wait_for_timeout(150)
