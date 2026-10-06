@@ -1018,8 +1018,8 @@ async function main(){
   let previewChromaId=null;
   function playChromaPreview(){
     if(!armed||!['CH:','VA:','RJ:'].some(prefix=>armed.startsWith(prefix)))return;
-    const y=armed.startsWith('CH:')?2:0;
-    const result=window.VFX_COMBAT.cast({id:armed,origin:{x:-6,y,z:0},target:{x:6,y,z:0}});
+    const y=armed.startsWith('CH:')?2:0,h=window.labBeamHalf?.(armed)??6;
+    const result=window.VFX_COMBAT.cast({id:armed,origin:{x:-h,y,z:0},target:{x:h,y,z:0}});
     if(!result.ok){document.getElementById('armedTag').textContent='재생 실패: '+result.reason;return;}
     previewChromaId=armed;
   }
@@ -13426,6 +13426,8 @@ const GA_SKILLS={
 };
 window.__GS_SEEK1=new Set(["GS-vortexring", "GS-requiem", "GS-sonic", "GS-helix", "GS-vacuum", "GS-mirv", "GS-dynamite", "GS-talisman", "GS-arsenal", "GS-railgun", "GS-tokamak", "GS-web", "GS-lance", "GS-hammer", "GS-meteor", "GS-tsunami", "GS-horizon", "GS-ferro", "GS-murmur", "GS-bloom", "GS-aurora", "GS-fractal", "GS-dune", "GS-chrono", "GS-mycel", "GS-silk", "GS-judge", "GS-digital", "GS-polytope"]); /*@V5 GS effects whose tick is a pure function of elapsed time*/
 window.__VFX_ANCHOR_Y=Object.freeze({'FX-33':-10}); /*@V5 host target.y so authored +16 slash lands at chest height*/
+window.__FX_GROUND=new Set(['VA:violet_fault','D:PROJ:fissure']); /*@V36 ground fissures: start at the caster's feet and run along the floor, not from the hand*/
+window.__FX_FOLLOW=new Set(['D:ULT:ascend']); /*@V36 stays on the caster like every self-form effect (wings, shields)*/
 window.GA_DATA=Object.freeze({
  arena:110,
  heroes:{
@@ -13894,6 +13896,8 @@ function poseFor(entry){
  const dir=entry.dir||{x:0,z:-1},yHand=hand?.y??(entry.caster==='hero'?7.2:4),yChest=chest?.y??(entry.caster==='hero'?6:3.5);
  const heroCast=entry.caster==='hero'||entry.caster==='test'||entry.caster==='trial',chroma=/^CH:/.test(id),raijin=/^RJ:/.test(id);
  const base={form,direction:{x:dir.x,y:0,z:dir.z},pending:form==='unknown'};
+ if(heroCast&&window.__FX_GROUND?.has(id))return {...base,form:'beam',origin:{x:ox,y:0,z:oz},target:{x:tx,y:0,z:tz},hold:entry.hold||2.8,size:entry.size||'L'}; /*@V36*/
+ if(heroCast&&window.__FX_FOLLOW?.has(id))return {...base,form:'self',follow:true,origin:{x:ox,y:yChest,z:oz},target:{x:ox,y:0,z:oz},hold:entry.hold||4,size:entry.size||'M'}; /*@V36*/
  if(heroCast&&(form==='beam'||chroma||form==='flight')){
   const m=muzzleOf(),aim3={x:tx,y:Number.isFinite(entry.target?.y)?entry.target.y:m.y,z:tz},tgt=alongLook(m,.001,aim3); // Authored flights must terminate at the selected near target.
   return {...base,form:form==='flight'?'flight':'beam',origin:{x:m.x,y:m.y,z:m.z},target:tgt,direction:{x:m.f.x,y:m.f.y,z:m.f.z},hold:entry.hold||(form==='flight'?2.4:2.8),size:entry.size||(form==='flight'?'M':'L')};
@@ -13904,7 +13908,7 @@ function poseFor(entry){
  }
  if(form==='flight')return {...base,origin:{x:ox,y:yHand,z:oz},target:{x:tx,y:yChest*.55,z:tz},hold:entry.hold||2.4,size:entry.size||'M'};
  if(form==='beam')return {...base,origin:{x:ox,y:yHand,z:oz},target:{x:tx,y:yHand,z:tz},hold:entry.hold||2.8,size:entry.size||'L'};
- if(form==='self')return {...base,origin:{x:ox,y:yChest,z:oz},target:{x:ox,y:0,z:oz},hold:entry.hold||4,size:entry.size||'M'};
+ if(form==='self')return {...base,follow:heroCast,origin:{x:ox,y:yChest,z:oz},target:{x:ox,y:0,z:oz},hold:entry.hold||4,size:entry.size||'M'};
  if(form==='unknown')return {...base,origin:{x:ox,y:5,z:oz},target:{x:tx,y:0,z:tz},hold:entry.hold||2,size:entry.size||'S'};
  return {...base,origin:{x:ox,y:yHand,z:oz},target:{x:tx,y:0,z:tz},hold:entry.hold||2.2,size:entry.size||'M'};
 }
@@ -13926,16 +13930,24 @@ function fx(entry){const phaseStart=benchPhaseStart();try{const id=entry.id,key=
   const priority=entry.caster==='hero'||entry.caster==='trial'?3:D.enemies[V.world?.enemies.find(e=>e.id===entry.caster)?.kind]?.name==='두억시니'?3:1;const active=[...V.pool.values()].flat().filter(q=>q!==x&&!q.deployOnly&&q.size===size&&q.until>V.clock).sort((a,b)=>(a.priority||1)-(b.priority||1)||a.until-b.until);x.priority=priority;
   while(active.length>=budget){const old=active.shift();if(old.i===0)VFX_COMBAT.stop(old.id);else old.mod?.stop?.();old.until=0;}
  }
- const origin=posed.origin,target=posed.target,direction=posed.direction;
+ const origin=posed.origin,target=posed.target,direction=posed.direction;followStop(x); /*@V36*/
  try{
   const payload={id:key,target,origin,direction,chainPoints:entry.chainPoints,chainHopDur:entry.chainHopDur,startAt,flightTime,scale,yaw};
   if(x.i===0){let res=VFX_COMBAT.cast(payload);if(!res?.ok){try{VFX_COMBAT.stop(key);}catch{}res=VFX_COMBAT.cast(payload);}if(!res?.ok){console.warn('[GS Action VFX]',key,res?.reason);return {ok:false,id:key,reason:res?.reason||'cast-failed',form:posed.form};}}
   else{const fire=()=>{const ctx={origin:new T.Vector3(origin.x,origin.y,origin.z),direction:new T.Vector3(direction.x,direction.y||0,direction.z),chainPoints:entry.chainPoints,chainHopDur:entry.chainHopDur,playAudio:true,startAt,flightTime,scale,yaw,seek1:!!window.__GS_SEEK1?.has(key)};window.__GS_ASHIFT=startAt>0?startAt:0;const r=x.mod?.trigger(new T.Vector3(target.x,target.y,target.z),ctx);if(r!==false&&startAt>0&&!ctx.__seeked){const n=window.__FX_SEEK1?.has(key)?1:Math.min(80,Math.ceil(startAt*20)),d=startAt/n;for(let i=0;i<n;i++){window.__GS_ASHIFT=startAt-i*d;x.mod?.update?.(d);}window.__GS_ASHIFT=startAt;}return r;};try{x.mod?.stop?.();let trig=fire();if(trig===false){x.mod?.stop?.();trig=fire();}if(trig===false)return {ok:false,id:key,reason:'busy',form:posed.form};if(startAt>0&&key.startsWith('GS-'))window.GS_AUDIO.seek(key.slice(3),startAt);if(window.playSfxFor&&!key.startsWith('D:')&&!['CH:','VA:','RJ:'].some(q=>key.startsWith(q)))window.playSfxFor(key);}finally{window.__GS_ASHIFT=0;}} /*@V14 second and later pool instances were silent*/
-  x.castId=entry.sk?._combat?.castId||(entry.caster!=='hero'?V.world?.enemies.find(e=>e.id===entry.caster)?.attack?._combat?.castId:null);x.until=V.clock+(skCast?Math.min(14,Math.max(1.6,(skCast.hitT||0)+(hold||1.6)+.6,entry.chainHopDur?entry.chainHopDur*4+1.1:0)):Math.max(hold||1.6,6.2));x.size=size; /*@V14 hero casts: busy for their own length, not a flat 6.2 s*/
+  x.castId=entry.sk?._combat?.castId||(entry.caster!=='hero'?V.world?.enemies.find(e=>e.id===entry.caster)?.attack?._combat?.castId:null);x.until=V.clock+(skCast?Math.min(14,Math.max(1.6,(skCast.hitT||0)+(hold||1.6)+.6,entry.chainHopDur?entry.chainHopDur*4+1.1:0)):Math.max(hold||1.6,6.2));x.size=size; /*@V14 hero casts: busy for their own length, not a flat 6.2 s*/if(posed.follow&&V.world?.hero)followStart(x); /*@V36*/
   if(entry.leadWindow>0)(V.ledFx||(V.ledFx=new Map())).set(entry.caster,{x,key,until:V.clock+entry.leadWindow});
   return {ok:true,id:key,instance:x.i,form:posed.form,pending:!!posed.pending};
  }catch(error){console.warn('[GS Action VFX]',key,error);return {ok:false,id:key,reason:String(error?.message||error),form:posed.form};}
 }finally{benchPhaseEnd('vfx.cast',phaseStart,{id:entry.id,caster:entry.caster});}}
+/*@V36 Effects that stay on the caster: each root moves by the caster's displacement since the cast; the offset is undone when the instance ends or is re-cast. No allocation per frame.*/
+const followJobs=[];
+function followRoots(x){const mod=x.i===0?STAGE3D.getEffect(x.id):x.mod;return mod?.__gsRoots||[];}
+function followUndo(j){for(let k=0;k<j.roots.length;k++){const r=j.roots[k];r.position.x-=j.ax;r.position.z-=j.az;}}
+function followStop(x){for(let i=followJobs.length-1;i>=0;i--){const j=followJobs[i];if(x&&j.x!==x)continue;followUndo(j);followJobs.splice(i,1);}}
+function followStart(x){const h=V.world.hero;followJobs.push({x,roots:followRoots(x).slice(),bx:h.rx??h.x,bz:h.rz??h.z,ax:0,az:0,until:x.until});}
+function followFx(){const h=V.world?.hero;for(let i=followJobs.length-1;i>=0;i--){const j=followJobs[i];if(!h||V.clock>=j.until||j.x.until!==j.until){followUndo(j);followJobs.splice(i,1);continue;}
+ const dx=(h.rx??h.x)-j.bx-j.ax,dz=(h.rz??h.z)-j.bz-j.az;if(dx===0&&dz===0)continue;for(let k=0;k<j.roots.length;k++){const r=j.roots[k];r.position.x+=dx;r.position.z+=dz;}j.ax+=dx;j.az+=dz;}}
 const timingEvents=[];
 const DEPLOY_ROLES={totem:{title:'피해 영역',color:0x75c9b5},turret:{title:'자동 포탑',color:0xf2bd68},wall:{title:'둔화 영역',color:0x85bfff},gate:{title:'가속 영역',color:0xe0a5ef}};
 const timingLabels={'zone:end':'영역 종료','windup':'범위 예고','fx:cast':'연출 시작','impact':'판정 종료','chain:hop':'연쇄 판정','hit':'피해 발생','telegraph:start':'적 예고','enemy:impact':'적 판정','zone:start':'영역 생성','trial:cast':'Beam 시험 시작','trial:impact':'Beam 시험 판정','trial:cue':'무피해 연출 표식'};
@@ -14182,7 +14194,9 @@ function showLabGuide(spec){clearLabGuide();if(V.active||!spec||spec.visualOnly)
 async function inspectSkillCast(spec){if(!spec||spec.visualOnly)return {ok:false,reason:'실전 판정 미정'};const hero=spec.hero||V.heroKey;if(!V.active||V.mode!=='trial'||spec.hero&&hero!==V.heroKey)startTrial(hero);const seq=V.loadSeq;clearLabGuide();const select=el('gaTrialFx');select.value=spec.id;select.dispatchEvent(new Event('change',{bubbles:true}));el('gaEquipSize').value=spec.variant||'';el('gaKeepJudge').checked=true;window.GS_CONTEXT_PANELS?.switchTrial('choose');document.body.classList.remove('ga-trial-min');
  let timeout;try{await Promise.race([STAGE3D.prepare(spec.id),new Promise((_,reject)=>timeout=setTimeout(()=>reject(Error('연출 준비 지연')),8000))]);if(seq!==V.loadSeq||!V.active||V.mode!=='trial')return {ok:false,reason:'모드 변경'};const ok=spec.source==='trial'?V.world.castTrialBeam(spec.id,aim()):['dash','dodge'].includes(spec.skill.kind)?V.world.dodge(Math.sin(V.yaw),-Math.cos(V.yaw)):V.world.castLib({...spec.skill},aim());setTrialStatus(ok?'상세 수치로 시험 시전 · 판정 표시 유지':'시전 대기 · 동작 종료 후 다시 시도',ok);return {ok:!!ok};}finally{clearTimeout(timeout);}}
 
-function labPlay(id){if(V.active||!id)return false;const y=/^CH:/.test(id)?2:0,res=VFX_COMBAT.cast({id,origin:{x:-6,y,z:0},target:{x:6,y,z:0}});const tag=document.getElementById('armedTag');if(tag)tag.textContent=(res?.ok?'재생 · ':'실패 · ')+(id)+(res?.ok?'':' · '+(res?.reason||''));return !!res?.ok;}
+/*@V36 Lab beams use the library range, so the preview length matches a full-range cast in the game (was a fixed 12).*/
+function labBeamHalf(id){const s=window.GA_SKILL_LIB?.[id]?.skill;return s?.kind==='beam'&&Number.isFinite(s.range)&&s.range>12?s.range/2:6;}window.labBeamHalf=labBeamHalf;
+function labPlay(id){if(V.active||!id)return false;const y=/^CH:/.test(id)?2:0,h=labBeamHalf(id),res=VFX_COMBAT.cast({id,origin:{x:-h,y,z:0},target:{x:h,y,z:0}});const tag=document.getElementById('armedTag');if(tag)tag.textContent=(res?.ok?'재생 · ':'실패 · ')+(id)+(res?.ok?'':' · '+(res?.reason||''));return !!res?.ok;}
 function labStep(dir){const ids=labCatalog().map(x=>x.id);if(!ids.length){el('gaLabFilterCount').textContent='이 분류에 항목이 없습니다.';return;}
  const cur=labArmed(),i=Math.max(0,ids.indexOf(cur)),next=ids[(i+dir+ids.length)%ids.length];
  const btn=[...document.querySelectorAll('#panel button[data-id]')].find(b=>b.dataset.id===next);
@@ -14619,7 +14633,7 @@ window.__GS_TICK=function(dt){
  if(V.fireHeld&&V.world.hero.cds[0]<=0&&V.world.hero.state!=='windup'&&V.world.hero.state!=='dodge')cast(0);
  if(V.bench?.on)benchBot(dt);
  {const a=Math.min(1,Math.max(0,V.acc/S.STEP)),h=V.world.hero;lerpEnt(h,a);const es=V.world.enemies;for(let i=0;i<es.length;i++)lerpEnt(es[i],a);} /*@V12 drawn position = previous step → current step by the leftover time*/
- let stageStart=benchPhaseStart();syncRigs(dt);benchPhaseEnd('rigs.sync',stageStart);stageStart=benchPhaseStart();updateHud();if(TOUCH.on)touchHud();benchPhaseEnd('hud.update',stageStart);
+ let stageStart=benchPhaseStart();syncRigs(dt);followFx();benchPhaseEnd('rigs.sync',stageStart);stageStart=benchPhaseStart();updateHud();if(TOUCH.on)touchHud();benchPhaseEnd('hud.update',stageStart);
 };
 window.__GS_TRACE_START=benchPhaseStart;window.__GS_TRACE_END=benchPhaseEnd;
 window.__GS_FRAME=function(frame){if(!V.active)return;const now=frame.now;
