@@ -2,7 +2,7 @@ name: sfx-measure
 
 on:
   push:
-    branches: ['claude/probe-sfx']
+    branches: ['claude/probe-sfx-after']
 
 permissions:
   contents: write
