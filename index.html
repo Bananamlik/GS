@@ -14753,8 +14753,9 @@ function runSave(){const r=window.GA_RUN.saveRun(V.run);if(!r.ok)el('gaRunNote')
 function refreshRunButtons(){const c=el('gaRunContinue');if(!c)return;let saved=null;try{saved=window.GA_RUN?.loadRun().value;}catch{}c.hidden=!(saved&&saved.status==='active');}
 function runStart(){const R=window.GA_RUN,meta=runMeta();
  if(!meta.unlocked.heroes.includes(V.heroKey)){showMenu('select',`${D.heroes[V.heroKey].name}은(는) 아직 잠겨 있습니다. 런은 ${meta.unlocked.heroes.map(k=>D.heroes[k].name).join('·')}로 시작합니다.`);return false;}
- V.run=R.createRun(V.heroKey,((Math.random()*0x7fffffff)|0)||1,{meta});runSave();openRunMap();return true;}
-function runContinue(){const r=window.GA_RUN.loadRun().value;if(!r||r.status!=='active')return false;V.run=r;selectHero(r.heroKey);openRunMap();return true;}
+ runEnterView();V.run=R.createRun(V.heroKey,((Math.random()*0x7fffffff)|0)||1,{meta});runSave();openRunMap();return true;}
+function runEnterView(){if(!V.active||V.mode!=='game'){V.loadSeq++;enterAction('game');clearActionWorld();}} /*@S3b the overlay lives in #ga, shown in game mode*/
+function runContinue(){const r=window.GA_RUN.loadRun().value;if(!r||r.status!=='active')return false;runEnterView();V.run=r;selectHero(r.heroKey);openRunMap();return true;}
 function openRunMap(note=''){const R=window.GA_RUN,run=V.run;if(!run)return false;V.paused=true;document.exitPointerLock?.();el('gaMenu').style.display='none';el('gaResult').style.display='none';
  el('gaRunMap').hidden=false;const hero=D.heroes[run.heroKey];
  el('gaRunTitle').textContent=`ACT ${run.act} / ${R.CONFIG.acts}`;
