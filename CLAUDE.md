@@ -33,6 +33,6 @@ GS Action: 단일 HTML 게임/VFX 스튜디오. 현재 상태는 `docs/STATUS.md
 
 ## PR 구조
 
-- 분할 PR #5~#7, CI #9, HUD #10·#11·#13, 랩 모바일 #15, SFX 측정 문서 #14, SFX 음량 정규화 #17은 모두 `main`에 병합됨(상세는 `docs/STATUS.md`).
+- 분할 PR #5~#7, CI #9, HUD #10·#11·#13, 랩 모바일 #15, SFX 측정 문서 #14, SFX 음량 정규화 #17, 문서 #16·#18은 모두 `main`에 병합됨(상세는 `docs/STATUS.md`).
 - 새 변경은 `main`에서 브랜치를 만든다. 코드 PR은 `index.html`과 `GS_Action_v34_runtime.html`을 함께 바꾸고 25개 테스트 통과를 확인한다.
 - 화면 확인이 필요하면 결과 수집용 브랜치(`claude/probe-*`)처럼 캡처 워크플로를 별도 브랜치에 얹어 실행한다. `main`에 넣지 않는다.

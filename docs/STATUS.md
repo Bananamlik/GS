@@ -1,12 +1,12 @@
 # STATUS
 
-갱신: 2026-10-06 12:45 KST. 근거: `docs/evidence/`. 검증하지 못한 항목은 UNVERIFIED.
+갱신: 2026-10-06 21:07 KST. 근거: `docs/evidence/`. 검증하지 못한 항목은 UNVERIFIED.
 
 ## 1. 코드 상태
 
 | 항목 | 값 |
 |---|---|
-| main | `b43914e`. `index.html` = `GS_Action_v34_runtime.html`, md5 `8558fefd4fe5ee410fed3f4a8e1be54f` (v35 + HUD 개선 + HUD 위계 + 랩 모바일 + SFX 음량 정규화) |
+| main | `9c0f648` (코드는 `b43914e`와 같음, 이후 docs만). `index.html` = `GS_Action_v34_runtime.html`, md5 `8558fefd4fe5ee410fed3f4a8e1be54f` (v35 + HUD 개선 + HUD 위계 + 랩 모바일 + SFX 음량 정규화) |
 | v35 파일 | `GS_Action_v35_261005-2000.html`, md5 `f7d2ab883d7bc78fc05d9b046e45bf47` = PR #3 최종본. HUD 개선 이전 빌드. 수정하지 않음. |
 | 랩 모바일까지(#15 시점) | main `a8df602`의 `index.html`, md5 `f239381cb8f1ab9107ac1325db821e24` |
 | HUD 개선만(#11 시점) | main `a503a7e`의 `index.html`, md5 `5c7263984c75c6c44346abee821b4b88` |
@@ -27,22 +27,26 @@
 | [#13](https://github.com/Bananamlik/GS/pull/13) | 게임 HUD 위계: 터치 성능 표시 좌하단 이동, 상단 스킬 줄 터치 기본 숨김(설정 `스킬 이름 줄`), 목표 칩 완료·실패 후 페이드 | `4729a7d` |
 | [#15](https://github.com/Bananamlik/GS/pull/15) | 랩 모바일: 압축 미리보기 바, 하단 시트(peek 30dvh / tall 80dvh), 카메라 뷰를 남은 영역 중앙으로 이동, 가로 모드 배치 | `a8df602` |
 | [#17](https://github.com/Bananamlik/GS/pull/17) | SFX 음량 정규화: 효과별 보정(±12 dB, 495개), 공통 음량 슬라이더(랩 `#vSfxVol`, 게임 설정 `#gaSfxVol`), 리미터 | `b43914e` |
+| [#16](https://github.com/Bananamlik/GS/pull/16) | 문서: md5·병합 이력 갱신 | `a7df8f0` |
+| [#18](https://github.com/Bananamlik/GS/pull/18) | 문서: SFX 정규화 후 재측정 | `9c0f648` |
 
 - 닫음: [#4](https://github.com/Bananamlik/GS/pull/4) (권한 확인용).
 - 열려 있음: [#3](https://github.com/Bananamlik/GS/pull/3) (분할 전 원본. 내용이 `main`에 들어가 중복 상태. 닫을지는 사용자 결정), [#1](https://github.com/Bananamlik/GS/pull/1) (v14, 별개).
-- 결과 수집용 브랜치(PR·병합 대상 아님, 삭제해도 됨): `claude/ci-probe-a`, `claude/ci-probe-bc`, `claude/probe-hud-capture`, `claude/probe-hud-capture-after`, `claude/probe-hud-capture-cd`, `claude/probe-hud-capture-cd2`, `claude/probe-chip`.
+- 결과 수집용 브랜치(PR·병합 대상 아님, 삭제해도 됨) 12개: `claude/ci-probe-a`, `claude/ci-probe-bc`, `claude/probe-hud-capture`, `claude/probe-hud-capture-after`, `claude/probe-hud-capture-cd`, `claude/probe-hud-capture-cd2`, `claude/probe-chip`, `claude/probe-hud-hier`, `claude/probe-lab-before`, `claude/probe-lab-after`, `claude/probe-sfx`, `claude/probe-sfx-after`. 랩·HUD 위계 수치는 `docs/evidence/`로 옮김(`gs-lab-hud-capture_v1_261006-2107.md`). 캡처 JPG는 브랜치에만 있음.
+- 병합 끝난 PR 헤드 브랜치 15개와 `codex/gs-v25…v34-*` 10개도 남아 있음. 삭제는 사용자 결정.
 
 ## 2. 검증 상태
 
 | 항목 | 결과 | 환경 |
 |---|---|---|
 | `main` md5, `cmp index.html GS_Action_v34_runtime.html` | 두 파일 `8558fefd…`, 동일 | 클라우드 세션 |
-| `node --check` `<script>` 247개 (importmap JSON 제외) | 병합 단계마다 0 실패 | 클라우드 세션 |
+| `node --check` `<script>` JS 248개 (importmap JSON 1개 별도 `json.loads`) | 0 실패 (`9c0f648`, 2026-10-06 21:00 재확인). 이전 기록의 247은 #17 이전 값 | 클라우드 세션 |
+| 브라우저 테스트 25개, `main` `a7df8f0` (#17 코드 포함, `workflow_dispatch`, run 17) | **통과** (conclusion success) | GitHub 러너, SwiftShader, 1회 |
 | 브라우저 테스트 25개, PR #17 헤드 `9117e99` (병합 전) | **통과** (run 15) | GitHub 러너, SwiftShader, 1회 |
 | 브라우저 테스트 25개, `main` `a8df602` (`workflow_dispatch`, run 13) | **통과** (워크플로 conclusion success) | GitHub 러너, SwiftShader, 1회 |
 | 브라우저 테스트 25개, `main` `a503a7e` | 25/25 통과 | GitHub 러너, SwiftShader, 1회 |
 | 브라우저 테스트 25개, 단계별 | A 11/25, BC 24/25는 예상된 실패(BC·D 기능 요구). D 25/25. HUD A+B, C+D 헤드 모두 25/25. | GitHub 러너. `docs/evidence/gs-ci-results_v1_261005-2359.md`, `v2_261006-0240.md` |
-| 랩 뷰 면적 (`viewVisiblePct`, 16×24 격자 중 캔버스 비율) | 세로 21→46%, 17→50%, 가로 12→33%, 데스크톱 변화 없음 | SwiftShader 캡처 |
+| 랩 뷰 면적 (`viewVisiblePct`, 16×24 격자 중 캔버스 비율) | 세로 21→46%, 17→50%, 가로 12→33%, 데스크톱 변화 없음. 후 측정은 #15 최종 헤드 1커밋 전(`e491d02`). `07-play` 상태는 이동 실패로 측정 안 됨. `gs-lab-hud-capture_v1_261006-2107.md` | SwiftShader 캡처 |
 | HUD 화면 확인 | 3개 화면 × 10장면 캡처를 눈으로 확인. 개선 항목 확인됨. | SwiftShader, 배율 1배 |
 | `명중` 칩과 보상 창 | 6회 반복에서 지속 결함 재현 안 됨(페이드 중 캡처로 추정) | SwiftShader |
 | 클라우드 세션 브라우저 실행 | **UNVERIFIED** (`cdn.jsdelivr.net` 차단) | 클라우드 세션 |
@@ -70,13 +74,17 @@ AMD Radeon 내장, ANGLE/D3D11, Chrome 154, 1920×922, 품질 auto, 설정 60 �
 ## 4. 병합 경위와 위험
 
 - BC와 D는 이전 권고(main v34 비교 3회, 실제 GPU 프레임 시간 개선 확인)를 거치지 않고 사용자 지시로 병합했다. 이득은 입증되지 않음. 문제가 있으면 병합 커밋 `744f093`(BC), `74b7b6a`(D)를 되돌릴 수 있다.
-- D의 프레임당 메모리 할당(`barriers`, `{z,order,group}`, `Map`, `filter/map/sort`, 임시 배열)은 그대로다.
+- D의 프레임당 메모리 할당(`barriers`, `{z,order,group}`, `Map`, `filter/map/sort`, 임시 배열)은 그대로다 (`index.html` `syncStormBatches`, 1366줄 부근).
+- D 해제 누락 가능성: storm 배치 `dispose()`가 `b.mesh.dispose()`만 부른다. `geometry.clone()`·`material.clone()` 해제가 안 보인다 (1381–1408줄 부근). 런타임 확인 안 함 → 추정.
+- SFX 보정은 효과별이 아니다: `#gsSfxLevel`의 `note(id)`가 최근 2.5초 안 효과 중 가장 작은 보정을 AudioContext 공통 `trim`에 건다(62–98줄 부근, 주석에 의도로 적힘). 단독 재생 측정(Lab)에서는 안 드러난다. 겹치면 조용한 효과(+보정)가 큰 효과(−보정)와 같이 깎여 더 묻히고, +보정 효과 재생 중에는 같은 컨텍스트의 다른 소리도 같이 커진다. 청감 영향 UNVERIFIED.
+  효과별로 바꾸려면 엔진마다(CH 427줄, PORT 59369줄, 35228줄, 61809줄, 효과 모듈 자체 엔진 20여 곳) 효과 버스에 게인을 넣어야 해 범위가 크다. 착수 전 설계 결정 필요.
 
 ## 5. 결정 대기
 
 1. 예산 기준: 설정 60 vs pacing 목표 72.5. 현재 72.5.
 2. 밸런스 승인: 설치물 46종만 승인, 나머지 379종은 제안값(`gs-cloud-handoff`).
 3. PR #3 닫기, 결과 수집용 브랜치 삭제.
+4. SFX 효과별 보정 구조(§4): 엔진별 버스 게인 삽입(범위 큼) vs 현 방식 유지 vs 겹침 규칙만 조정.
 
 ## 6. 남은 작업
 
