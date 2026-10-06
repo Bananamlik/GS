@@ -13482,6 +13482,62 @@ window.GA_VFX_CONTRACT=function(id){
  return {id,scale,scaleMode:scale===null?'native':id.startsWith('CH:')?'final':'additional',roles,measuredRadius:null,visualMatch:'unverified',units:'game',bodyRadiusIncluded:true};
 };
 </script>
+<script id="gaRunState">/* @S1 Roguelite run and meta state (docs/design/gs-run-skeleton_v1_261006-2213.md). Pure data: no DOM, no Three.js, no combat changes.
+   Run = one attempt (hero, kit, hp, gold, position). Meta = account (unlocks, shards, best). Saved at node boundaries; validated like the wave checkpoint. */
+window.GA_RUN=(function(){
+ const CONTRACT='gs-run-1',META_CONTRACT='gs-meta-1',RUN_KEY='gs-run-1',META_KEY='gs-meta-1',SIZES=['S','M','L','XL'];
+ const CONFIG=Object.freeze({acts:3,floors:6,startHeroes:Object.freeze(['bolt','rain']),hpCarry:true,deathShardKeep:.5,passiveSlots:12,
+  actScale:Object.freeze({hp:Object.freeze([1,1.6,2.4]),damage:Object.freeze([1,1.3,1.6])}),difficultyStep:.15,maxDifficulty:10});
+ const copy=x=>JSON.parse(JSON.stringify(x)),isInt=(x,lo,hi)=>Number.isInteger(x)&&x>=lo&&x<=hi,isNum=(x,lo,hi)=>typeof x==='number'&&Number.isFinite(x)&&x>=lo&&x<=hi;
+ const dataOf=d=>d||window.GA_DATA,libOf=l=>l||window.GA_SKILL_LIB||{};
+ /* FNV-1a over a string, then the same LCG the combat core uses: deterministic seeds per node. */
+ function hash(s){let h=2166136261>>>0;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}return h>>>0;}
+ function rng(seed){let s=(seed>>>0)||1;return ()=>{s=(1664525*s+1013904223)>>>0;return s/4294967296;};}
+ const encounterSeed=(run,nodeId)=>hash(run.seed+':'+run.act+':'+String(nodeId))||1;
+ function createMeta(){return {schema:1,contract:META_CONTRACT,shards:0,unlocked:{heroes:[...CONFIG.startHeroes],skills:[],traits:[]},best:{},maxDifficulty:0,runs:0,wins:0};}
+ function validateMeta(m,data){try{data=dataOf(data);
+  if(!m||m.schema!==1||m.contract!==META_CONTRACT||JSON.stringify(m).length>200000)return false;
+  if(!isInt(m.shards,0,1e9)||!isInt(m.maxDifficulty,0,CONFIG.maxDifficulty)||!isInt(m.runs,0,1e9)||!isInt(m.wins,0,m.runs))return false;
+  const u=m.unlocked;if(!u||!['heroes','skills','traits'].every(k=>Array.isArray(u[k])&&u[k].length<=1000&&u[k].every(x=>typeof x==='string')&&new Set(u[k]).size===u[k].length))return false;
+  if(!u.heroes.length||u.heroes.some(h=>!Object.hasOwn(data.heroes,h)))return false;
+  if(!m.best||typeof m.best!=='object'||Array.isArray(m.best))return false;
+  for(const [h,b] of Object.entries(m.best))if(!Object.hasOwn(data.heroes,h)||!b||!isInt(b.act,0,CONFIG.acts)||!isNum(b.time,0,1e7)||typeof b.won!=='boolean')return false;
+  return true;}catch{return false;}}
+ /* Kit entry: {src:'hero',slot} keeps the hero's authored skill; {src:'lib',id,size} is a drafted library skill (size ''|S|M|L|XL). */
+ function createRun(heroKey,seed,options={}){const data=dataOf(options.data),meta=options.meta||null,def=data.heroes[heroKey];
+  if(!def)throw Error('Unknown hero '+heroKey);if(meta&&!meta.unlocked.heroes.includes(heroKey))throw Error('Hero locked '+heroKey);
+  const difficulty=options.difficulty??0;if(!isInt(difficulty,0,meta?meta.maxDifficulty:CONFIG.maxDifficulty))throw Error('Difficulty out of range');
+  return {schema:1,contract:CONTRACT,seed:(seed>>>0)||1,heroKey,difficulty,act:1,floor:0,nodeId:null,map:{},
+   hero:{hp:def.hp,hpMax:def.hp},kit:def.skills.map((_,slot)=>({src:'hero',slot})),passives:[],gold:0,
+   stats:{kills:0,damage:0,taken:0,nodes:0,time:0},history:[],status:'active'};}
+ function validKitEntry(k,slot,def,lib){if(!k||typeof k!=='object')return false;
+  if(k.src==='hero')return k.slot===slot&&Object.keys(k).length===2;
+  if(k.src!=='lib'||typeof k.id!=='string'||typeof k.size!=='string'||Object.keys(k).length!==3)return false;
+  const L=lib[k.id];if(!L)return false;if(k.size==='')return !L.variants;return SIZES.includes(k.size)&&!!L.variants?.[k.size];}
+ function validateRun(r,data,lib){try{data=dataOf(data);lib=libOf(lib);
+  if(!r||r.schema!==1||r.contract!==CONTRACT||JSON.stringify(r).length>200000)return false;
+  if(!isInt(r.seed,1,4294967295)||!Object.hasOwn(data.heroes,r.heroKey)||!isInt(r.difficulty,0,CONFIG.maxDifficulty))return false;
+  if(!isInt(r.act,1,CONFIG.acts)||!isInt(r.floor,0,CONFIG.floors)||!(r.nodeId===null||typeof r.nodeId==='string'&&r.nodeId.length<=64))return false;
+  if(!['active','won','lost'].includes(r.status)||!r.map||typeof r.map!=='object'||Array.isArray(r.map))return false;
+  const def=data.heroes[r.heroKey],h=r.hero;if(!h||h.hpMax!==def.hp||!isNum(h.hp,0,h.hpMax)||(r.status==='active'&&h.hp<=0))return false;
+  if(!Array.isArray(r.kit)||r.kit.length!==def.skills.length||!r.kit.every((k,i)=>validKitEntry(k,i,def,lib)))return false;
+  if(!Array.isArray(r.passives)||r.passives.length>CONFIG.passiveSlots||r.passives.some(p=>!p||typeof p.id!=='string'||!isInt(p.stacks,1,99)))return false;
+  if(!isInt(r.gold,0,1e9))return false;
+  const s=r.stats;if(!s||!['kills','damage','taken','nodes','time'].every(k=>isNum(s[k],0,1e12)))return false;
+  if(!Array.isArray(r.history)||r.history.length>500||r.history.some(x=>!x||typeof x.nodeId!=='string'||typeof x.kind!=='string'||typeof x.result!=='string'))return false;
+  return true;}catch{return false;}}
+ /* Combat-ready skill objects for a run's kit: hero slots keep their authored key; library skills take the slot's key. */
+ function resolveKit(r,data,lib){data=dataOf(data);lib=libOf(lib);const base=data.heroes[r.heroKey].skills;
+  return r.kit.map((k,i)=>{if(k.src==='hero')return copy(base[k.slot]);const L=lib[k.id],v=k.size?L.variants[k.size]:L;return {...copy(v.skill),id:k.id,name:L.name,key:base[i].key,sizeTier:k.size};});}
+ function storage(s){try{return s||window.localStorage;}catch{return null;}}
+ function write(key,value,s){const st=storage(s);if(!st)return {ok:false,reason:'storage unavailable'};try{st.setItem(key,JSON.stringify(value));return {ok:true};}catch(e){return {ok:false,reason:String(e&&e.name||e)};}}
+ function read(key,check,s){const st=storage(s);if(!st)return {value:null,reason:'storage unavailable'};try{const raw=st.getItem(key);if(raw===null)return {value:null,reason:'empty'};const v=JSON.parse(raw);return check(v)?{value:v,reason:null}:{value:null,reason:'invalid'};}catch{return {value:null,reason:'invalid'};}}
+ return Object.freeze({CONTRACT,META_CONTRACT,RUN_KEY,META_KEY,CONFIG,hash,rng,encounterSeed,createMeta,validateMeta,createRun,validateRun,resolveKit,
+  saveRun:(r,s)=>validateRun(r)?write(RUN_KEY,r,s):{ok:false,reason:'invalid'},loadRun:s=>read(RUN_KEY,v=>validateRun(v),s),
+  clearRun:s=>{const st=storage(s);try{st&&st.removeItem(RUN_KEY);return true;}catch{return false;}},
+  saveMeta:(m,s)=>validateMeta(m)?write(META_KEY,m,s):{ok:false,reason:'invalid'},loadMeta:s=>read(META_KEY,v=>validateMeta(v),s)});
+})();
+</script>
 <script>
 window.GA_INPUT_BUFFER=function(lifetimeMs=150){let pending=null;return {
  push(command,now){pending={...command,expires:now+lifetimeMs};},
