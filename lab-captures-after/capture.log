@@ -1,116 +1,116 @@
-03:04:10 ok   p412x676 shot 01-load
-03:04:10 ok   p412x676 measure 01-load
-03:04:11 ok   p412x676 open browse
-03:04:12 ok   p412x676 shot 02-browse
-03:04:12 ok   p412x676 measure 02-browse
-03:04:12 ok   p412x676 ids
-03:04:12 ok   p412x676 select GS-requiem
-03:04:15 ok   p412x676 shot 03-preview-playing
-03:04:15 ok   p412x676 measure 03-preview-playing
-03:04:16 ok   p412x676 sheet tall
-03:04:17 ok   p412x676 shot 03b-sheet-tall
-03:04:17 ok   p412x676 measure 03b-sheet-tall
-03:04:17 ok   p412x676 sheet peek
-03:04:18 ok   p412x676 shot 03c-sheet-peek-again
-03:04:18 ok   p412x676 measure 03c-sheet-peek-again
-03:04:18 ok   p412x676 collapse list
-03:04:19 ok   p412x676 shot 04-list-collapsed
-03:04:20 ok   p412x676 measure 04-list-collapsed
-03:04:20 ok   p412x676 info
-03:04:21 ok   p412x676 shot 05-info
-03:04:21 ok   p412x676 measure 05-info
-03:04:22 ok   p412x676 nav 시험장
-03:04:27 ok   p412x676 shot 06-trial
-03:04:27 ok   p412x676 measure 06-trial
-03:04:31 FAIL p412x676 nav 플레이: Locator.click: Timeout 4000ms exceeded.
-03:04:34 ok   p412x676 shot 07-play
-03:04:34 ok   p412x676 measure 07-play
-03:04:34 p412x676 pageerrors 0 []
-03:04:34 ok   viewport p412x676
-03:04:38 ok   l915x360 shot 01-load
-03:04:38 ok   l915x360 measure 01-load
-03:04:38 ok   l915x360 open browse
-03:04:39 ok   l915x360 shot 02-browse
-03:04:39 ok   l915x360 measure 02-browse
-03:04:40 ok   l915x360 ids
-03:04:40 ok   l915x360 select GS-requiem
-03:04:42 ok   l915x360 shot 03-preview-playing
-03:04:42 ok   l915x360 measure 03-preview-playing
-03:04:43 ok   l915x360 sheet tall
-03:04:44 ok   l915x360 shot 03b-sheet-tall
-03:04:44 ok   l915x360 measure 03b-sheet-tall
-03:04:44 ok   l915x360 sheet peek
-03:04:45 ok   l915x360 shot 03c-sheet-peek-again
-03:04:45 ok   l915x360 measure 03c-sheet-peek-again
-03:04:45 ok   l915x360 collapse list
-03:04:46 ok   l915x360 shot 04-list-collapsed
-03:04:46 ok   l915x360 measure 04-list-collapsed
-03:04:46 ok   l915x360 info
-03:04:47 ok   l915x360 shot 05-info
-03:04:47 ok   l915x360 measure 05-info
-03:04:48 ok   l915x360 nav 시험장
-03:04:52 ok   l915x360 shot 06-trial
-03:04:52 ok   l915x360 measure 06-trial
-03:04:56 FAIL l915x360 nav 플레이: Locator.click: Timeout 4000ms exceeded.
-03:04:59 ok   l915x360 shot 07-play
-03:04:59 ok   l915x360 measure 07-play
-03:04:59 l915x360 pageerrors 0 []
-03:04:59 ok   viewport l915x360
-03:05:02 ok   p360x640 shot 01-load
-03:05:02 ok   p360x640 measure 01-load
-03:05:02 ok   p360x640 open browse
-03:05:04 ok   p360x640 shot 02-browse
-03:05:04 ok   p360x640 measure 02-browse
-03:05:04 ok   p360x640 ids
-03:05:04 ok   p360x640 select GS-requiem
-03:05:07 ok   p360x640 shot 03-preview-playing
-03:05:07 ok   p360x640 measure 03-preview-playing
-03:05:07 ok   p360x640 sheet tall
-03:05:08 ok   p360x640 shot 03b-sheet-tall
-03:05:08 ok   p360x640 measure 03b-sheet-tall
-03:05:08 ok   p360x640 sheet peek
-03:05:09 ok   p360x640 shot 03c-sheet-peek-again
-03:05:09 ok   p360x640 measure 03c-sheet-peek-again
-03:05:10 ok   p360x640 collapse list
-03:05:11 ok   p360x640 shot 04-list-collapsed
-03:05:11 ok   p360x640 measure 04-list-collapsed
-03:05:11 ok   p360x640 info
-03:05:12 ok   p360x640 shot 05-info
-03:05:12 ok   p360x640 measure 05-info
-03:05:12 ok   p360x640 nav 시험장
-03:05:16 ok   p360x640 shot 06-trial
-03:05:16 ok   p360x640 measure 06-trial
-03:05:20 FAIL p360x640 nav 플레이: Locator.click: Timeout 4000ms exceeded.
-03:05:23 ok   p360x640 shot 07-play
-03:05:23 ok   p360x640 measure 07-play
-03:05:23 p360x640 pageerrors 0 []
-03:05:23 ok   viewport p360x640
-03:05:27 ok   d1280x720 shot 01-load
-03:05:28 ok   d1280x720 measure 01-load
-03:05:28 ok   d1280x720 open browse
-03:05:29 ok   d1280x720 shot 02-browse
-03:05:29 ok   d1280x720 measure 02-browse
-03:05:30 ok   d1280x720 ids
-03:05:30 ok   d1280x720 select GS-requiem
-03:05:33 ok   d1280x720 shot 03-preview-playing
-03:05:33 ok   d1280x720 measure 03-preview-playing
-03:05:33 ok   d1280x720 sheet tall
-03:05:35 ok   d1280x720 shot 03b-sheet-tall
-03:05:35 ok   d1280x720 measure 03b-sheet-tall
-03:05:35 ok   d1280x720 sheet peek
-03:05:36 ok   d1280x720 shot 03c-sheet-peek-again
-03:05:36 ok   d1280x720 measure 03c-sheet-peek-again
-03:05:37 ok   d1280x720 collapse list
-03:05:38 ok   d1280x720 shot 04-list-collapsed
-03:05:38 ok   d1280x720 measure 04-list-collapsed
-03:05:38 ok   d1280x720 info
-03:05:40 ok   d1280x720 shot 05-info
-03:05:40 ok   d1280x720 measure 05-info
-03:05:41 ok   d1280x720 nav 시험장
-03:05:46 ok   d1280x720 shot 06-trial
-03:05:46 ok   d1280x720 measure 06-trial
-03:05:50 FAIL d1280x720 nav 플레이: Locator.click: Timeout 4000ms exceeded.
-03:05:53 ok   d1280x720 shot 07-play
-03:05:53 ok   d1280x720 measure 07-play
-03:05:53 d1280x720 pageerrors 0 []
-03:05:53 ok   viewport d1280x720
+03:15:12 ok   p412x676 shot 01-load
+03:15:12 ok   p412x676 measure 01-load
+03:15:12 ok   p412x676 open browse
+03:15:13 ok   p412x676 shot 02-browse
+03:15:14 ok   p412x676 measure 02-browse
+03:15:14 ok   p412x676 ids
+03:15:14 ok   p412x676 select GS-requiem
+03:15:16 ok   p412x676 shot 03-preview-playing
+03:15:16 ok   p412x676 measure 03-preview-playing
+03:15:17 ok   p412x676 sheet tall
+03:15:18 ok   p412x676 shot 03b-sheet-tall
+03:15:18 ok   p412x676 measure 03b-sheet-tall
+03:15:18 ok   p412x676 sheet peek
+03:15:19 ok   p412x676 shot 03c-sheet-peek-again
+03:15:19 ok   p412x676 measure 03c-sheet-peek-again
+03:15:19 ok   p412x676 collapse list
+03:15:20 ok   p412x676 shot 04-list-collapsed
+03:15:20 ok   p412x676 measure 04-list-collapsed
+03:15:20 ok   p412x676 info
+03:15:21 ok   p412x676 shot 05-info
+03:15:21 ok   p412x676 measure 05-info
+03:15:22 ok   p412x676 nav 시험장
+03:15:27 ok   p412x676 shot 06-trial
+03:15:27 ok   p412x676 measure 06-trial
+03:15:31 FAIL p412x676 nav 플레이: Locator.click: Timeout 4000ms exceeded.
+03:15:34 ok   p412x676 shot 07-play
+03:15:34 ok   p412x676 measure 07-play
+03:15:34 p412x676 pageerrors 0 []
+03:15:34 ok   viewport p412x676
+03:15:38 ok   l915x360 shot 01-load
+03:15:38 ok   l915x360 measure 01-load
+03:15:38 ok   l915x360 open browse
+03:15:39 ok   l915x360 shot 02-browse
+03:15:39 ok   l915x360 measure 02-browse
+03:15:39 ok   l915x360 ids
+03:15:40 ok   l915x360 select GS-requiem
+03:15:42 ok   l915x360 shot 03-preview-playing
+03:15:42 ok   l915x360 measure 03-preview-playing
+03:15:42 ok   l915x360 sheet tall
+03:15:43 ok   l915x360 shot 03b-sheet-tall
+03:15:44 ok   l915x360 measure 03b-sheet-tall
+03:15:44 ok   l915x360 sheet peek
+03:15:45 ok   l915x360 shot 03c-sheet-peek-again
+03:15:45 ok   l915x360 measure 03c-sheet-peek-again
+03:15:45 ok   l915x360 collapse list
+03:15:46 ok   l915x360 shot 04-list-collapsed
+03:15:46 ok   l915x360 measure 04-list-collapsed
+03:15:46 ok   l915x360 info
+03:15:47 ok   l915x360 shot 05-info
+03:15:47 ok   l915x360 measure 05-info
+03:15:47 ok   l915x360 nav 시험장
+03:15:50 ok   l915x360 shot 06-trial
+03:15:50 ok   l915x360 measure 06-trial
+03:15:54 FAIL l915x360 nav 플레이: Locator.click: Timeout 4000ms exceeded.
+03:15:57 ok   l915x360 shot 07-play
+03:15:57 ok   l915x360 measure 07-play
+03:15:57 l915x360 pageerrors 0 []
+03:15:57 ok   viewport l915x360
+03:16:01 ok   p360x640 shot 01-load
+03:16:01 ok   p360x640 measure 01-load
+03:16:01 ok   p360x640 open browse
+03:16:02 ok   p360x640 shot 02-browse
+03:16:02 ok   p360x640 measure 02-browse
+03:16:02 ok   p360x640 ids
+03:16:02 ok   p360x640 select GS-requiem
+03:16:05 ok   p360x640 shot 03-preview-playing
+03:16:05 ok   p360x640 measure 03-preview-playing
+03:16:05 ok   p360x640 sheet tall
+03:16:06 ok   p360x640 shot 03b-sheet-tall
+03:16:06 ok   p360x640 measure 03b-sheet-tall
+03:16:06 ok   p360x640 sheet peek
+03:16:07 ok   p360x640 shot 03c-sheet-peek-again
+03:16:07 ok   p360x640 measure 03c-sheet-peek-again
+03:16:08 ok   p360x640 collapse list
+03:16:09 ok   p360x640 shot 04-list-collapsed
+03:16:09 ok   p360x640 measure 04-list-collapsed
+03:16:09 ok   p360x640 info
+03:16:10 ok   p360x640 shot 05-info
+03:16:10 ok   p360x640 measure 05-info
+03:16:10 ok   p360x640 nav 시험장
+03:16:13 ok   p360x640 shot 06-trial
+03:16:13 ok   p360x640 measure 06-trial
+03:16:17 FAIL p360x640 nav 플레이: Locator.click: Timeout 4000ms exceeded.
+03:16:20 ok   p360x640 shot 07-play
+03:16:20 ok   p360x640 measure 07-play
+03:16:20 p360x640 pageerrors 0 []
+03:16:20 ok   viewport p360x640
+03:16:24 ok   d1280x720 shot 01-load
+03:16:24 ok   d1280x720 measure 01-load
+03:16:24 ok   d1280x720 open browse
+03:16:26 ok   d1280x720 shot 02-browse
+03:16:26 ok   d1280x720 measure 02-browse
+03:16:26 ok   d1280x720 ids
+03:16:26 ok   d1280x720 select GS-requiem
+03:16:29 ok   d1280x720 shot 03-preview-playing
+03:16:29 ok   d1280x720 measure 03-preview-playing
+03:16:29 ok   d1280x720 sheet tall
+03:16:30 ok   d1280x720 shot 03b-sheet-tall
+03:16:30 ok   d1280x720 measure 03b-sheet-tall
+03:16:30 ok   d1280x720 sheet peek
+03:16:32 ok   d1280x720 shot 03c-sheet-peek-again
+03:16:32 ok   d1280x720 measure 03c-sheet-peek-again
+03:16:32 ok   d1280x720 collapse list
+03:16:33 ok   d1280x720 shot 04-list-collapsed
+03:16:33 ok   d1280x720 measure 04-list-collapsed
+03:16:33 ok   d1280x720 info
+03:16:34 ok   d1280x720 shot 05-info
+03:16:34 ok   d1280x720 measure 05-info
+03:16:35 ok   d1280x720 nav 시험장
+03:16:39 ok   d1280x720 shot 06-trial
+03:16:39 ok   d1280x720 measure 06-trial
+03:16:43 FAIL d1280x720 nav 플레이: Locator.click: Timeout 4000ms exceeded.
+03:16:46 ok   d1280x720 shot 07-play
+03:16:46 ok   d1280x720 measure 07-play
+03:16:46 d1280x720 pageerrors 0 []
+03:16:46 ok   viewport d1280x720
