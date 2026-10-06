@@ -14,7 +14,7 @@ def runtime_blocks():
     run = re.search(r'<script id="gaRunState">(.*?)</script>', source, re.S)[1]
     # Each block runs in its own scope; module is hidden so the QA contract registers on window as in the page.
     wrap = lambda code: '(function(module){' + code + '\n})(undefined);'
-    return '\n'.join(wrap(code) for code in [pick('GS VFX validation contract'), pick('window.GA_DATA='), pick('window.GA_SKILL_LIB='), run])
+    return '\n'.join(wrap(code) for code in [pick('GS VFX validation contract'), pick('window.GA_SIM='), pick('window.GA_DATA='), pick('window.GA_SKILL_LIB='), run])
 
 
 def node(body):
@@ -78,6 +78,60 @@ class RunStateTests(unittest.TestCase):
         assert.equal(kit[3].damage,GA_SKILL_LIB['FX-06'].variants.M.skill.damage);
         assert.ok(GA_VFX_QA.validateSkill(kit[3]).ok);
         kit[3].damage=1;assert.notEqual(GA_SKILL_LIB['FX-06'].variants.M.skill.damage,1);
+        """)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+
+# Simple deterministic auto-player: nearest enemy, first ready attack, close in when far.
+AUTOPLAY = """
+const play=(run,node,maxSteps=60*240,idle=false)=>{const w=R.startEncounter(run,node);let i=0;
+ for(;i<maxSteps&&!w.over;i++){const h=w.hero,alive=w.enemies.filter(e=>e.hp>0);
+  if(alive.length&&!idle){alive.sort((a,b)=>Math.hypot(a.x-h.x,a.z-h.z)-Math.hypot(b.x-h.x,b.z-h.z));const t=alive[0];
+   for(const slot of [4,3,5,1,0])if(w.cast(slot,{x:t.x,z:t.z}))break;
+   const dx=t.x-h.x,dz=t.z-h.z,d=Math.hypot(dx,dz)||1;w.step(d>30?{mx:dx/d,mz:dz/d}:{});}else w.step({});}
+ return w;};
+const NODE={id:'a1-n0',kind:'battle',waves:[{minion:3},{minion:2,archer:1}]};
+"""
+
+
+class EncounterTests(unittest.TestCase):
+    def test_encounter_is_deterministic_and_carries_hp_and_stats(self):
+        result = node(AUTOPLAY + """
+        const run=R.createRun('bolt',11);
+        const a=play(run,NODE),b=play(run,NODE);
+        assert.ok(a.over&&a.won);assert.equal(a.wave,2);
+        assert.equal(JSON.stringify(a.stats),JSON.stringify(b.stats));assert.equal(a.hero.hp,b.hero.hp);assert.equal(a.t,b.t);
+        const next=R.finishEncounter(run,a,NODE);assert.ok(R.validateRun(next));
+        assert.equal(next.status,'active');assert.equal(next.hero.hp,a.hero.hp);assert.equal(next.stats.kills,6);assert.equal(next.stats.nodes,1);
+        assert.deepEqual(next.history,[{nodeId:'a1-n0',kind:'battle',result:'won'}]);assert.equal(run.stats.nodes,0);
+        run.hero.hp=50;assert.equal(R.startEncounter(run,NODE).hero.hp,50);
+        assert.throws(()=>R.finishEncounter(run,R.startEncounter(run,NODE),NODE),/not over/);
+        """)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_loss_ends_the_run(self):
+        result = node(AUTOPLAY + """
+        const run=R.createRun('rain',3);run.hero.hp=1;
+        const w=play(run,{id:'a1-n1',kind:'elite',waves:[{elite:2,archer:2}]},60*120,true);
+        assert.ok(w.over);assert.equal(w.won,false);
+        const next=R.finishEncounter(run,w,{id:'a1-n1',kind:'elite',waves:[{elite:2,archer:2}]});
+        assert.equal(next.status,'lost');assert.equal(next.hero.hp,0);assert.ok(R.validateRun(next));
+        assert.throws(()=>R.startEncounter(next,NODE),/not active/);
+        """)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_enemy_scaling_kit_and_node_validation(self):
+        result = node("""
+        const run=R.createRun('bolt',9),node={id:'n',kind:'battle',waves:[{minion:1}]};
+        const d1=R.encounterData(run,node);assert.equal(d1.enemies.minion.hp,GA_DATA.enemies.minion.hp);assert.deepEqual(d1.waves,[{minion:1}]);
+        run.act=3;run.difficulty=2;const d3=R.encounterData(run,node);
+        assert.equal(d3.enemies.minion.hp,Math.round(GA_DATA.enemies.minion.hp*2.4*1.3));
+        assert.equal(d3.enemies.boss.attacks.gaze.damage,Math.round(GA_DATA.enemies.boss.attacks.gaze.damage*1.6*1.3*10)/10);
+        assert.equal(GA_DATA.enemies.minion.hp,60);
+        run.kit[3]={src:'lib',id:'GS-web',size:''};assert.equal(R.encounterData(run,node).heroes.bolt.skills[3].id,'GS-web');
+        for(const bad of [{id:'',kind:'battle',waves:[{minion:1}]},{id:'x',kind:'shop',waves:[{minion:1}]},{id:'x',kind:'battle',waves:[]},
+          {id:'x',kind:'battle',waves:[{ghost:1}]},{id:'x',kind:'battle',waves:[{minion:0}]},{id:'x',kind:'battle',waves:[{minion:1},{minion:1},{minion:1},{minion:1}]}])
+          assert.throws(()=>R.encounterData(run,bad),/Invalid node/);
         """)
         self.assertEqual(result.returncode, 0, result.stderr)
 
