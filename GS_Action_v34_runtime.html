@@ -62102,6 +62102,41 @@ body{color:var(--st-text);color-scheme:dark}button,input,select,textarea{font-fa
 @media(max-width:760px){#panel{max-height:46dvh!important}#panelBody{padding-bottom:28px}#panelHead{padding:8px 12px 4px}#panelViewTabs{padding:4px 12px}#gsPreviewDock{top:128px;bottom:auto;left:10px;right:10px;width:auto;padding:12px;max-height:calc(54dvh - 140px)}#gsPreviewDock .gs-preview-heading strong{font-size:13px}#gsPreviewStatus{margin:7px 0 0}#gsPreviewDock .gs-preview-transport{margin-top:8px}.gs-library-heading h2{font-size:14px}.gs-gallery-intro{font-size:10px;margin-bottom:8px}#gsReviewBackdrop{inset:64px 0 0;height:calc(100dvh - 64px)}#reviewDrawer{top:64px!important;left:0;right:0;width:100%;max-height:calc(100dvh - 64px);border-radius:16px 16px 0 0}#viewBar{top:72px}#gsGalleryStart,#gsGalleryRandom{padding:8px!important}#gsAxisMap .axisGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-height:540px) and (orientation:landscape){#panel{left:0;right:auto;width:42vw;max-height:calc(100dvh - 68px)!important;bottom:0}#gsPreviewDock{left:auto;right:8px;top:72px;width:44vw;max-height:calc(100dvh - 84px)}}
 </style>
+<style id="gsLabMobile">/* Lab on phones: compact preview bar, bottom sheet (peek/tall), camera view centred in the free band */
+body.gs-lab-phone>canvas{transform:translate(var(--lab-sx,0px),var(--lab-sy,0px));transition:transform .2s ease}
+@media(prefers-reduced-motion:reduce){body.gs-lab-phone>canvas{transition:none}}
+#gsSheetHandle{display:none}
+@media(max-width:760px),(max-height:540px) and (orientation:landscape){
+#panel #gsSheetHandle{display:block;flex:0 0 auto;width:100%;height:32px;min-height:32px;margin:0;padding:0;border:0;border-bottom:1px solid var(--st-line);border-radius:0;background:transparent;box-shadow:none;color:var(--st-text-2);font:600 12px/32px var(--st-font);text-align:center;cursor:pointer}
+#gsPreviewDock:not([hidden]){display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"head opts" "tr tr";gap:6px 8px;align-items:center;top:auto;overflow:visible;max-height:none;padding:8px 10px;border-radius:16px}
+#gsPreviewDock .gs-preview-heading{grid-area:head;min-width:0}
+#gsPreviewDock .gs-preview-heading strong{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#gsPreviewDock .gs-preview-heading small{display:none}
+#gsPreviewDock .gs-preview-transport{grid-area:tr;margin-top:0}
+#gsPreviewDock #gsPreviewOptions{grid-area:opts;margin:0;padding:0;border:0}
+#gsPreviewDock #gsPreviewOptions>summary{min-height:36px;display:flex;align-items:center;padding:0 8px;font-size:11px;white-space:nowrap}
+#gsPreviewDock:has(#gsPreviewOptions[open]){grid-template-areas:"head head" "tr tr" "opts opts"}
+#gsPreviewDock #gsPreviewStatus{display:none}
+body.gs-sheet-tall #gsPreviewDock{display:none!important}
+}
+@media(max-width:760px){
+#gsPreviewDock{left:8px;right:8px;width:auto;bottom:72px}
+body:has(#panel.open) #gsPreviewDock{bottom:calc(30dvh + 8px)}
+#panel{max-height:30dvh!important}
+body.gs-sheet-tall #panel{max-height:80dvh!important}
+}
+@media(max-height:540px) and (orientation:landscape){
+#gsStudioBar{height:48px;padding:0 14px;gap:10px}
+#gsStudioBar small{display:none}
+#gsStudioBar .brand-mark{width:26px;height:26px;border-radius:8px}
+#gsStudioNav button{min-height:34px;padding:5px 10px;font-size:12px}
+#viewBar{top:54px!important}
+#panel{top:48px;width:36vw;max-height:calc(100dvh - 48px)!important}
+body.gs-sheet-tall #panel{width:62vw}
+#gsPreviewDock{left:auto;right:8px;bottom:8px;width:calc(64vw - 16px)}
+body:not(:has(#panel.open)) #gsPreviewDock{left:8px;width:auto}
+}
+</style>
 <script id="gsPerformancePolicy">/* Frame budget follows the actual paced display interval; approval remains external. */
 window.GS_PERFORMANCE_POLICY=Object.freeze({
  createPacer(){let next=0,prior=0;return {reset(){next=0;prior=0;},allow(now,target=0){if(!Number.isFinite(now))return false;if(!(target>0)){next=0;prior=0;return true;}if(target!==prior){next=0;prior=target;}if(now<next-.25)return false;next=now+1000/target;return true;}};},
@@ -62351,7 +62386,30 @@ window.GS_SKILL_DATA=(function(){
   window.GS_CONTEXT_PANELS={switchTrial,get trial(){return Object.entries(pages).find(([,p])=>!p.hidden)?.[0];}};
  }
 
- setupPanels();setupGallery();showExplorer();window.GS_STUDIO={version:1,get state(){return JSON.parse(JSON.stringify(state));},get storageAvailable(){return storageOK;},get selection(){return selected;},open:gotoBrowse,select,showInformation,openReview,play:playSelected,next:()=>step(1),previous:()=>step(-1),randomBest,get navigation(){return navigation;},get previewResult(){return previewResult;},refresh:()=>{updateStats();render();},filteredIds:()=>filtered().map(x=>x.id),get workspace(){return workspace;},switchPanel:key=>switchWorkspace(key)};
+ setupPanels();setupGallery();showExplorer();(function labPhoneLayout(){ /*@LAB phone layout: keep the 3D view visible; bottom sheet peek/tall; camera view centred in the free band*/
+  const mq=matchMedia('(max-width:760px), (max-height:540px) and (orientation:landscape)'),body=document.body,panel=document.getElementById('panel'),dock=document.getElementById('gsPreviewDock'),bar=document.getElementById('gsStudioBar'),vbar=document.getElementById('viewBar'),toggle=document.getElementById('panelToggle');
+  if(!panel)return;let raf=0,timer=0;
+  const vis=e=>{if(!e||e.hidden)return null;const cs=getComputedStyle(e);if(cs.display==='none'||cs.visibility==='hidden')return null;const r=e.getBoundingClientRect();return r.width>8&&r.height>8?r:null;};
+  function apply(){raf=0;const st=body.style,on=mq.matches&&!body.classList.contains('ga-on');
+   if(!on){body.classList.remove('gs-lab-phone');st.setProperty('--lab-sx','0px');st.setProperty('--lab-sy','0px');return;}
+   body.classList.add('gs-lab-phone');const W=innerWidth,H=innerHeight;let l=0,t=0,r=W,b=H;
+   const B=vis(bar);if(B)t=Math.max(t,B.bottom);const V=vis(vbar);if(V&&V.top<H/2)t=Math.max(t,V.bottom);
+   const P=panel.classList.contains('open')?vis(panel):null;if(P){if(P.width>W*.7)b=Math.min(b,P.top);else if(P.left<W*.2)l=Math.max(l,P.right);}
+   const T=P?null:vis(toggle);if(T&&T.top>H/2)b=Math.min(b,T.top);
+   const D=vis(dock);if(D&&D.top>H/2&&D.height<H*.4)b=Math.min(b,D.top);
+   if(b-t<80||r-l<80){st.setProperty('--lab-sx','0px');st.setProperty('--lab-sy','0px');return;}
+   st.setProperty('--lab-sx',Math.round((l+r)/2-W/2)+'px');st.setProperty('--lab-sy',Math.round((t+b)/2-H/2)+'px');}
+  function sched(){if(!raf)raf=requestAnimationFrame(apply);clearTimeout(timer);timer=setTimeout(()=>{if(!raf)raf=requestAnimationFrame(apply);},320);}
+  const handle=document.createElement('button');handle.id='gsSheetHandle';handle.type='button';handle.setAttribute('aria-expanded','false');handle.textContent='▲ 목록 넓게';panel.insertBefore(handle,panel.firstChild);
+  function setTall(on){body.classList.toggle('gs-sheet-tall',on);handle.setAttribute('aria-expanded',String(on));handle.textContent=on?'▼ 효과 화면 보기':'▲ 목록 넓게';sched();}
+  handle.addEventListener('click',()=>setTall(!body.classList.contains('gs-sheet-tall')));
+  panel.addEventListener('click',e=>{if(e.target.closest('button[data-id]')&&body.classList.contains('gs-sheet-tall'))setTall(false);});
+  new MutationObserver(()=>{if(!panel.classList.contains('open')&&body.classList.contains('gs-sheet-tall'))setTall(false);sched();}).observe(panel,{attributes:true,attributeFilter:['class','style']});
+  if(dock){new MutationObserver(sched).observe(dock,{attributes:true,attributeFilter:['hidden','class','style']});if(window.ResizeObserver)new ResizeObserver(sched).observe(dock);}
+  new MutationObserver(sched).observe(body,{attributes:true,attributeFilter:['class']});
+  addEventListener('resize',sched);if(mq.addEventListener)mq.addEventListener('change',sched);sched();
+ })();
+ window.GS_STUDIO={version:1,get state(){return JSON.parse(JSON.stringify(state));},get storageAvailable(){return storageOK;},get selection(){return selected;},open:gotoBrowse,select,showInformation,openReview,play:playSelected,next:()=>step(1),previous:()=>step(-1),randomBest,get navigation(){return navigation;},get previewResult(){return previewResult;},refresh:()=>{updateStats();render();},filteredIds:()=>filtered().map(x=>x.id),get workspace(){return workspace;},switchPanel:key=>switchWorkspace(key)};
  try{const id=new URLSearchParams(location.hash.slice(1)).get('vfx');if(byId.has(id)){gotoBrowse();select(id,{play:false});showInformation();}}catch{}
  }
  boot();})();
