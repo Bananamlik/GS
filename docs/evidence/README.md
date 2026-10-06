@@ -16,6 +16,11 @@
 | `gs-sfx-gain-proposal_v1_261006-1230.csv` | `6699370b75accbb52ead37b99643ea7d` | 효과별 보정 게인 초안(목표 중앙값, ±12 dB, 피크 -3 dBFS) | 제안값. 적용 전 재측정·청취 필요. |
 | `gs-sfx-loudness-after_v1_261006-1305.md` | `2e26290bfedbf4726f817658704c7501` | 정규화(#17) 후 재측정: 폭 26.3→9.0 dB, 최대 피크 -0.6 dBFS | 전과 같은 방법·한계. Lab 단일 효과 1회. 청감·겹침 UNVERIFIED. |
 | `gs-sfx-loudness-after-raw_v1_261006-1305.json` | `e7025a2206bcacd42ad33e40041e4886` | 정규화 후 측정 원자료 | 위 문서와 같은 한계. |
+| `gs-status-report_v1_261006-2015.md` | `a6801aaf1bcaebcbc13bbc1ca5d9dce9` | 전체 현황 분석(상태, 목표 달성도, UNVERIFIED 목록, 리스크, 다음 작업) | 읽기·분석만. 리스크 R4·R5는 코드 판독, 런타임 확인 안 함. |
+| `gs-lab-hud-capture_v1_261006-2107.md` | `c4768b12e8ebda6c63aa9110a301c211` | 랩 모바일(#15) 면적·HUD 위계(#13) 캡처 결과를 probe 브랜치에서 이관 | SwiftShader 1회. 랩 후 측정은 최종 헤드 1커밋 전. `07-play` 측정 안 됨. |
+| `gs-lab-metrics-before-raw_v1_261006-2107.json` | `895925313b010483804e1db8bc3e217a` | 랩 면적 원자료(전, `claude/probe-lab-before`) | 위 문서와 같은 한계. |
+| `gs-lab-metrics-after-raw_v1_261006-2107.json` | `9845839d63f0ca4dc4987d64b530e8cb` | 랩 면적 원자료(후, `claude/probe-lab-after`) | 위 문서와 같은 한계. |
+| `gs-hud-hier-capture-log_v1_261006-2107.txt` | `d46f8fd818d9e0b45a0fd8a4dc2ec7d8` | HUD 위계 캡처 로그(`claude/probe-hud-hier`) | 이미지는 브랜치에만 있음. |
 
 ## 한계
 
