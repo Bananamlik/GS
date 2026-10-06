@@ -13507,7 +13507,7 @@ window.GA_RUN=(function(){
  function createRun(heroKey,seed,options={}){const data=dataOf(options.data),meta=options.meta||null,def=data.heroes[heroKey];
   if(!def)throw Error('Unknown hero '+heroKey);if(meta&&!meta.unlocked.heroes.includes(heroKey))throw Error('Hero locked '+heroKey);
   const difficulty=options.difficulty??0;if(!isInt(difficulty,0,meta?meta.maxDifficulty:CONFIG.maxDifficulty))throw Error('Difficulty out of range');
-  return {schema:1,contract:CONTRACT,seed:(seed>>>0)||1,heroKey,difficulty,act:1,floor:0,nodeId:null,map:{},
+  return {schema:1,contract:CONTRACT,seed:(seed>>>0)||1,heroKey,difficulty,act:1,floor:0,nodeId:null,map:generateMap((seed>>>0)||1),
    hero:{hp:def.hp,hpMax:def.hp},kit:def.skills.map((_,slot)=>({src:'hero',slot})),passives:[],gold:0,
    stats:{kills:0,damage:0,taken:0,nodes:0,time:0},history:[],status:'active'};}
  function validKitEntry(k,slot,def,lib){if(!k||typeof k!=='object')return false;
@@ -13518,7 +13518,7 @@ window.GA_RUN=(function(){
   if(!r||r.schema!==1||r.contract!==CONTRACT||JSON.stringify(r).length>200000)return false;
   if(!isInt(r.seed,1,4294967295)||!Object.hasOwn(data.heroes,r.heroKey)||!isInt(r.difficulty,0,CONFIG.maxDifficulty))return false;
   if(!isInt(r.act,1,CONFIG.acts)||!isInt(r.floor,0,CONFIG.floors)||!(r.nodeId===null||typeof r.nodeId==='string'&&r.nodeId.length<=64))return false;
-  if(!['active','won','lost'].includes(r.status)||!r.map||typeof r.map!=='object'||Array.isArray(r.map))return false;
+  if(!['active','won','lost'].includes(r.status)||!validMap(r.map,data))return false;if(r.nodeId!==null&&Object.keys(r.map).length&&!mapNode(r,r.nodeId))return false;
   const def=data.heroes[r.heroKey],h=r.hero;if(!h||h.hpMax!==def.hp||!isNum(h.hp,0,h.hpMax)||(r.status==='active'&&h.hp<=0))return false;
   if(!Array.isArray(r.kit)||r.kit.length!==def.skills.length||!r.kit.every((k,i)=>validKitEntry(k,i,def,lib)))return false;
   if(!Array.isArray(r.passives)||r.passives.length>CONFIG.passiveSlots||r.passives.some(p=>!p||typeof p.id!=='string'||!isInt(p.stacks,1,99)))return false;
@@ -13531,7 +13531,7 @@ window.GA_RUN=(function(){
   return r.kit.map((k,i)=>{if(k.src==='hero')return copy(base[k.slot]);const L=lib[k.id],v=k.size?L.variants[k.size]:L;return {...copy(v.skill),id:k.id,name:L.name,key:base[i].key,sizeTier:k.size};});}
  /* @S2 Encounter: one node = one GA_SIM run. The combat core is untouched; the run supplies a data copy (kit, scaled enemies, short waves) and carries hp and stats across nodes. */
  const NODE_KINDS=Object.freeze(['battle','elite','boss']);
- function validNode(n,data){return !!n&&typeof n.id==='string'&&n.id.length>0&&n.id.length<=64&&NODE_KINDS.includes(n.kind)&&Array.isArray(n.waves)&&n.waves.length>=1&&n.waves.length<=3&&
+ function validNode(n,data){data=dataOf(data);return !!n&&typeof n.id==='string'&&n.id.length>0&&n.id.length<=64&&NODE_KINDS.includes(n.kind)&&Array.isArray(n.waves)&&n.waves.length>=1&&n.waves.length<=3&&
   n.waves.every(w=>w&&typeof w==='object'&&Object.keys(w).length>0&&Object.entries(w).every(([k,c])=>Object.hasOwn(data.enemies,k)&&isInt(c,1,20)));}
  function enemyScale(r){const i=r.act-1,d=1+r.difficulty*CONFIG.difficultyStep;return {hp:CONFIG.actScale.hp[i]*d,damage:CONFIG.actScale.damage[i]*d};}
  function encounterData(r,node,data,lib){data=dataOf(data);lib=libOf(lib);if(!validateRun(r,data,lib)||r.status!=='active')throw Error('Run is not active and valid');if(!validNode(node,data))throw Error('Invalid node');
@@ -13540,17 +13540,54 @@ window.GA_RUN=(function(){
    if(c.attacks)for(const a of Object.values(c.attacks))if(Number.isFinite(a.damage))a.damage=Math.round(a.damage*k.damage*10)/10;enemies[key]=c;}
   const heroes={...data.heroes,[r.heroKey]:{...data.heroes[r.heroKey],skills:resolveKit(r,data,lib)}};
   return {...data,heroes,enemies,waves:copy(node.waves)};}
- function startEncounter(r,node,options={}){const sim=options.sim||window.GA_SIM,d=encounterData(r,node,options.data,options.lib),seed=encounterSeed(r,node.id),w=sim.create(d,r.heroKey,seed,seed);
+ function startEncounter(r,node,options={}){if(r.map&&mapNode(r,node?.id)&&!canEnter(r,node.id))throw Error('Node not reachable '+node.id);const sim=options.sim||window.GA_SIM,d=encounterData(r,node,options.data,options.lib),seed=encounterSeed(r,node.id),w=sim.create(d,r.heroKey,seed,seed);
   w.hero.hp=Math.min(w.hero.hpMax,r.hero.hp);w.start();return w;}
  function finishEncounter(r,w,node){if(!w||!w.over)throw Error('Encounter is not over');const n=copy(r),s=w.stats;
-  n.stats.kills+=s.kills;n.stats.damage+=s.damage;n.stats.taken+=s.taken;n.stats.time+=w.t;n.stats.nodes+=1;n.nodeId=node.id;
-  if(w.won){n.hero.hp=Math.max(1,Math.min(n.hero.hpMax,w.hero.hp));n.history.push({nodeId:node.id,kind:node.kind,result:'won'});}
+  n.stats.kills+=s.kills;n.stats.damage+=s.damage;n.stats.taken+=s.taken;n.stats.time+=w.t;n.stats.nodes+=1;
+  if(w.won){n.hero.hp=Math.max(1,Math.min(n.hero.hpMax,w.hero.hp));n.history.push({nodeId:node.id,kind:node.kind,result:'won'});if(mapNode(n,node.id))advance(n,node);}
   else{n.hero.hp=0;n.status='lost';n.history.push({nodeId:node.id,kind:node.kind,result:'lost'});}
   return n;}
+ /* @S3a Map: per act CONFIG.floors floors; every floor but the last holds 2-3 nodes, the last one boss. Deterministic from the run seed.
+    Combat nodes carry waves; shop, event and rest are visited without a battle (their content arrives in S5). */
+ const MAP_KINDS=Object.freeze(['battle','elite','shop','event','rest','boss']),COMBAT_KINDS=Object.freeze(['battle','elite','boss']),KIND_WEIGHTS=Object.freeze([['battle',45],['elite',15],['shop',10],['event',15],['rest',10]]);
+ const WAVE_TABLE=Object.freeze({
+  battle:[r=>({minion:3+(r()*3|0),archer:r()*2|0}),r=>({minion:2+(r()*3|0),witch:r()*2|0,mage:r()*2|0}),r=>({minion:3+(r()*3|0),archer:1,witch:1,mage:r()*2|0})],
+  elite:[()=>({elite:1,minion:2}),()=>({elite:1,witch:1,mage:1}),()=>({elite:2,archer:1,mage:1})],
+  boss:[()=>[{minion:4,archer:1},{elite:2,minion:2}],()=>[{witch:2,mage:2},{elite:2,mage:2}],()=>[{minion:4,elite:1},{boss:1}]]});
+ const clean=w=>Object.fromEntries(Object.entries(w).filter(([,c])=>c>0));
+ function wavesFor(kind,act,floor,r){if(kind==='boss')return WAVE_TABLE.boss[act-1](r).map(clean);if(kind==='elite')return [clean(WAVE_TABLE.elite[act-1](r))];
+  if(kind!=='battle')return null;const n=floor>=3?2:1,out=[];for(let i=0;i<n;i++)out.push(clean(WAVE_TABLE.battle[act-1](r)));return out;}
+ function pickKind(r,floor){if(floor===0)return 'battle';let total=0;for(const [k,w] of KIND_WEIGHTS)if(!(k==='elite'&&floor<2))total+=w;let x=r()*total;
+  for(const [k,w] of KIND_WEIGHTS){if(k==='elite'&&floor<2)continue;if((x-=w)<0)return k;}return 'battle';}
+ function generateAct(seed,act){const r=rng(hash(seed+':map:'+act)),F=CONFIG.floors,floors=[];
+  for(let f=0;f<F;f++){const w=f===F-1?1:2+(r()<.5?1:0),row=[];
+   for(let i=0;i<w;i++){const kind=f===F-1?'boss':pickKind(r,f),n={id:`a${act}-f${f}-n${i}`,act,floor:f,kind,next:[]},waves=wavesFor(kind,act,f,r);if(waves)n.waves=waves;row.push(n);}
+   floors.push(row);}
+  for(let f=0;f<F-1;f++){const a=floors[f],b=floors[f+1];
+   for(let i=0;i<a.length;i++){const j=b.length===1?0:Math.round(i*(b.length-1)/Math.max(1,a.length-1));a[i].next.push(b[j].id);
+    if(b.length>1&&r()<.35){const k=Math.min(b.length-1,Math.max(0,j+(r()<.5?-1:1)));if(!a[i].next.includes(b[k].id))a[i].next.push(b[k].id);}}
+   for(let j=0;j<b.length;j++)if(!a.some(n=>n.next.includes(b[j].id))){const i=Math.round(j*(a.length-1)/Math.max(1,b.length-1));a[i].next.push(b[j].id);}}
+  return floors.flat();}
+ function generateMap(seed){const map={};for(let a=1;a<=CONFIG.acts;a++)map['a'+a]=generateAct(seed,a);return map;}
+ function validMap(m,data){data=dataOf(data);if(!m||typeof m!=='object'||Array.isArray(m))return false;const keys=Object.keys(m);if(keys.length===0)return true;
+  if(keys.length!==CONFIG.acts)return false;
+  for(let a=1;a<=CONFIG.acts;a++){const nodes=m['a'+a];if(!Array.isArray(nodes)||nodes.length<CONFIG.floors||nodes.length>CONFIG.floors*3)return false;const ids=new Map(nodes.map(n=>[n?.id,n]));if(ids.size!==nodes.length)return false;
+   for(const n of nodes){if(!n||typeof n.id!=='string'||n.id.length>64||n.act!==a||!isInt(n.floor,0,CONFIG.floors-1)||!MAP_KINDS.includes(n.kind)||!Array.isArray(n.next))return false;
+    if((n.kind==='boss')!==(n.floor===CONFIG.floors-1))return false;if(n.floor<CONFIG.floors-1&&n.next.length===0)return false;
+    if(n.next.some(id=>ids.get(id)?.floor!==n.floor+1))return false;if(COMBAT_KINDS.includes(n.kind)!==!!n.waves)return false;if(n.waves&&!validNode(n,data))return false;}}
+  return true;}
+ const mapNode=(r,id)=>(r.map['a'+r.act]||[]).find(n=>n.id===id)||null;
+ function availableNodes(r){const nodes=r.map['a'+r.act];if(r.status!=='active'||!nodes)return [];if(r.nodeId===null)return nodes.filter(n=>n.floor===0);
+  const cur=mapNode(r,r.nodeId);return cur?nodes.filter(n=>cur.next.includes(n.id)):[];}
+ function canEnter(r,id){return availableNodes(r).some(n=>n.id===id);}
+ /* Past a map node: the next floor, or the next act after a boss; the last boss wins the run. */
+ function advance(n,node){if(node.kind==='boss'){if(n.act>=CONFIG.acts){n.status='won';n.nodeId=node.id;n.floor=CONFIG.floors;}else{n.act+=1;n.floor=0;n.nodeId=null;}}else{n.nodeId=node.id;n.floor=node.floor+1;}return n;}
+ function visitNode(r,id){if(!canEnter(r,id))throw Error('Node not reachable '+id);const node=mapNode(r,id);if(COMBAT_KINDS.includes(node.kind))throw Error('Combat node needs an encounter');
+  const n=copy(r);n.stats.nodes+=1;n.history.push({nodeId:id,kind:node.kind,result:'visited'});return advance(n,node);}
  function storage(s){try{return s||window.localStorage;}catch{return null;}}
  function write(key,value,s){const st=storage(s);if(!st)return {ok:false,reason:'storage unavailable'};try{st.setItem(key,JSON.stringify(value));return {ok:true};}catch(e){return {ok:false,reason:String(e&&e.name||e)};}}
  function read(key,check,s){const st=storage(s);if(!st)return {value:null,reason:'storage unavailable'};try{const raw=st.getItem(key);if(raw===null)return {value:null,reason:'empty'};const v=JSON.parse(raw);return check(v)?{value:v,reason:null}:{value:null,reason:'invalid'};}catch{return {value:null,reason:'invalid'};}}
- return Object.freeze({CONTRACT,META_CONTRACT,RUN_KEY,META_KEY,CONFIG,hash,rng,encounterSeed,createMeta,validateMeta,createRun,validateRun,resolveKit,NODE_KINDS,validNode,enemyScale,encounterData,startEncounter,finishEncounter,
+ return Object.freeze({CONTRACT,META_CONTRACT,RUN_KEY,META_KEY,CONFIG,hash,rng,encounterSeed,createMeta,validateMeta,createRun,validateRun,resolveKit,NODE_KINDS,validNode,enemyScale,encounterData,startEncounter,finishEncounter,MAP_KINDS,generateMap,validMap,mapNode,availableNodes,canEnter,visitNode,
   saveRun:(r,s)=>validateRun(r)?write(RUN_KEY,r,s):{ok:false,reason:'invalid'},loadRun:s=>read(RUN_KEY,v=>validateRun(v),s),
   clearRun:s=>{const st=storage(s);try{st&&st.removeItem(RUN_KEY);return true;}catch{return false;}},
   saveMeta:(m,s)=>validateMeta(m)?write(META_KEY,m,s):{ok:false,reason:'invalid'},loadMeta:s=>read(META_KEY,v=>validateMeta(v),s)});

@@ -136,5 +136,53 @@ class EncounterTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
 
 
+class MapTests(unittest.TestCase):
+    def test_map_is_deterministic_and_well_formed(self):
+        result = node("""
+        const a=R.createRun('bolt',77),b=R.createRun('bolt',77),c=R.createRun('bolt',78);
+        assert.deepEqual(a.map,b.map);assert.notDeepEqual(a.map,c.map);assert.ok(R.validMap(a.map));
+        for(let act=1;act<=3;act++){const nodes=a.map['a'+act];
+          assert.equal(nodes.filter(n=>n.kind==='boss').length,1);assert.equal(nodes.find(n=>n.kind==='boss').floor,5);
+          for(let f=0;f<5;f++){const row=nodes.filter(n=>n.floor===f);assert.ok(row.length>=2&&row.length<=3);
+            const next=new Set(row.flatMap(n=>n.next));assert.equal(next.size,nodes.filter(n=>n.floor===f+1).length,'every next-floor node reachable');}
+          assert.ok(nodes.filter(n=>n.floor===0).every(n=>n.kind==='battle'));
+          assert.ok(nodes.filter(n=>n.floor===1).every(n=>n.kind!=='elite'));
+          for(const n of nodes)if(n.waves)assert.ok(R.validNode(n));}
+        assert.equal(a.map.a3.find(n=>n.kind==='boss').waves.at(-1).boss,1);
+        const bad=JSON.parse(JSON.stringify(a));bad.map.a1[0].next=['a1-f3-n0'];assert.equal(R.validateRun(bad),false);
+        const bad2=JSON.parse(JSON.stringify(a));bad2.nodeId='a1-f9-n9';assert.equal(R.validateRun(bad2),false);
+        """)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_reachability_and_non_combat_visit(self):
+        result = node("""
+        const run=R.createRun('rain',5);
+        assert.deepEqual(R.availableNodes(run).map(n=>n.floor),R.availableNodes(run).map(()=>0));
+        const f0=R.availableNodes(run)[0],far=run.map.a1.find(n=>n.floor===2);
+        assert.throws(()=>R.startEncounter(run,far),/not reachable/);
+        assert.throws(()=>R.visitNode(run,f0.id),/needs an encounter/);
+        const r1=JSON.parse(JSON.stringify(run));r1.nodeId=f0.id;r1.floor=1;assert.ok(R.validateRun(r1));
+        const quiet=R.availableNodes(r1).find(n=>!['battle','elite','boss'].includes(n.kind));
+        if(quiet){const r2=R.visitNode(r1,quiet.id);assert.equal(r2.nodeId,quiet.id);assert.equal(r2.floor,2);assert.equal(r2.history.at(-1).result,'visited');assert.ok(R.validateRun(r2));}
+        """)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_full_run_through_three_acts(self):
+        result = node("""
+        let run=R.createRun('stone',2024);let steps=0,battles=0;
+        while(run.status==='active'&&steps++<60){const opts=R.availableNodes(run);assert.ok(opts.length>0,'dead end at '+run.act+'/'+run.floor);const n=opts[0];
+          if(['battle','elite','boss'].includes(n.kind)){const w=R.startEncounter(run,n);w.hero.invuln=1e9;
+            for(let i=0;i<60*600&&!w.over;i++){const h=w.hero,alive=w.enemies.filter(e=>e.hp>0);
+              if(alive.length){alive.sort((a,b)=>Math.hypot(a.x-h.x,a.z-h.z)-Math.hypot(b.x-h.x,b.z-h.z));const t=alive[0];
+                for(const slot of [4,5,1,0])if(w.cast(slot,{x:t.x,z:t.z}))break;const dx=t.x-h.x,dz=t.z-h.z,d=Math.hypot(dx,dz)||1;w.step(d>25?{mx:dx/d,mz:dz/d}:{});}else w.step({});}
+            assert.ok(w.over&&w.won,'battle '+n.id+' not won');run=R.finishEncounter(run,w,n);battles++;}
+          else run=R.visitNode(run,n.id);
+          assert.ok(R.validateRun(run),'invalid after '+n.id);}
+        assert.equal(run.status,'won');assert.equal(run.act,3);assert.equal(run.history.length,18);
+        assert.ok(battles>=6);assert.ok(run.history.filter(h=>h.kind==='boss').length===3);
+        """)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+
 if __name__ == '__main__':
     unittest.main()
