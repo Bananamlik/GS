@@ -13510,7 +13510,7 @@ window.GA_RUN=(function(){
   if(!def)throw Error('Unknown hero '+heroKey);if(meta&&!meta.unlocked.heroes.includes(heroKey))throw Error('Hero locked '+heroKey);
   const difficulty=options.difficulty??0;if(!isInt(difficulty,0,meta?meta.maxDifficulty:CONFIG.maxDifficulty))throw Error('Difficulty out of range');
   return {schema:1,contract:CONTRACT,seed:(seed>>>0)||1,heroKey,difficulty,act:1,floor:0,nodeId:null,map:generateMap((seed>>>0)||1),
-   hero:{hp:def.hp,hpMax:def.hp},kit:def.skills.map((_,slot)=>({src:'hero',slot})),passives:[],reward:null,gold:0,
+   hero:{hp:def.hp,hpMax:def.hp},kit:def.skills.map((_,slot)=>({src:'hero',slot})),passives:[],reward:null,stop:null,gold:0,
    stats:{kills:0,damage:0,taken:0,nodes:0,time:0},history:[],status:'active'};}
  function validKitEntry(k,slot,def,lib){if(!k||typeof k!=='object')return false;
   if(k.src==='hero')return k.slot===slot&&Object.keys(k).length===2;
@@ -13523,7 +13523,7 @@ window.GA_RUN=(function(){
   if(!['active','won','lost'].includes(r.status)||!validMap(r.map,data))return false;if(r.nodeId!==null&&Object.keys(r.map).length&&!mapNode(r,r.nodeId))return false;
   const def=data.heroes[r.heroKey],h=r.hero;if(!h||h.hpMax!==def.hp||!isNum(h.hp,0,h.hpMax)||(r.status==='active'&&h.hp<=0))return false;
   if(!Array.isArray(r.kit)||r.kit.length!==def.skills.length||!r.kit.every((k,i)=>validKitEntry(k,i,def,lib)))return false;
-  if(!Array.isArray(r.passives)||r.passives.length>CONFIG.passiveSlots||r.passives.some(p=>!p||!Object.hasOwn(PASSIVES,p.id)||!isInt(p.stacks,1,99))||new Set(r.passives.map(p=>p.id)).size!==r.passives.length)return false;if(!validReward(r.reward,lib))return false;
+  if(!Array.isArray(r.passives)||r.passives.length>CONFIG.passiveSlots||r.passives.some(p=>!p||!Object.hasOwn(PASSIVES,p.id)||!isInt(p.stacks,1,99))||new Set(r.passives.map(p=>p.id)).size!==r.passives.length)return false;if(!validReward(r.reward,lib)||!validStop(r.stop,lib))return false;
   if(!isInt(r.gold,0,1e9))return false;
   const s=r.stats;if(!s||!['kills','damage','taken','nodes','time'].every(k=>isNum(s[k],0,1e12)))return false;
   if(!Array.isArray(r.history)||r.history.length>500||r.history.some(x=>!x||typeof x.nodeId!=='string'||typeof x.kind!=='string'||typeof x.result!=='string'))return false;
@@ -13579,13 +13579,13 @@ window.GA_RUN=(function(){
     if(n.next.some(id=>ids.get(id)?.floor!==n.floor+1))return false;if(COMBAT_KINDS.includes(n.kind)!==!!n.waves)return false;if(n.waves&&!validNode(n,data))return false;}}
   return true;}
  const mapNode=(r,id)=>(r.map['a'+r.act]||[]).find(n=>n.id===id)||null;
- function availableNodes(r){const nodes=r.map['a'+r.act];if(r.status!=='active'||!nodes||r.reward)return [];if(r.nodeId===null)return nodes.filter(n=>n.floor===0);
+ function availableNodes(r){const nodes=r.map['a'+r.act];if(r.status!=='active'||!nodes||r.reward||r.stop)return [];if(r.nodeId===null)return nodes.filter(n=>n.floor===0);
   const cur=mapNode(r,r.nodeId);return cur?nodes.filter(n=>cur.next.includes(n.id)):[];}
  function canEnter(r,id){return availableNodes(r).some(n=>n.id===id);}
  /* Past a map node: the next floor, or the next act after a boss; the last boss wins the run. */
  function advance(n,node){if(node.kind==='boss'){if(n.act>=CONFIG.acts){n.status='won';n.nodeId=node.id;n.floor=CONFIG.floors;}else{n.act+=1;n.floor=0;n.nodeId=null;}}else{n.nodeId=node.id;n.floor=node.floor+1;}return n;}
  function visitNode(r,id){if(!canEnter(r,id))throw Error('Node not reachable '+id);const node=mapNode(r,id);if(COMBAT_KINDS.includes(node.kind))throw Error('Combat node needs an encounter');
-  const n=copy(r);n.stats.nodes+=1;n.history.push({nodeId:id,kind:node.kind,result:'visited'});return advance(n,node);}
+  const n=copy(r);n.stats.nodes+=1;n.history.push({nodeId:id,kind:node.kind,result:'visited'});n.stop=makeStop(n,node);return n;}
  /* @S4 Node rewards. Battle: gold + one of 3 library skills (rated >= 3) for a matching slot; elite: gold + one of 3 passives; boss: gold + a skill/ultimate choice.
     Offers live on the run (reward) so a reload resumes the choice. Passives change only the combat copies of the kit (encounterData). */
  const RUN_SLOTS=Object.freeze({basic:Object.freeze([0]),skill:Object.freeze([1,3,5]),guard:Object.freeze([1,3,5]),ult:Object.freeze([4])});
@@ -13624,10 +13624,46 @@ window.GA_RUN=(function(){
    if(o.type==='skill'){if(!o.slots.includes(choice.slot))throw Error('Invalid slot');n.kit[choice.slot]={src:'lib',id:o.id,size:o.size};}
    else{const p=n.passives.find(x=>x.id===o.id);if(p)p.stacks=Math.min(99,p.stacks+1);else{if(n.passives.length>=CONFIG.passiveSlots)throw Error('Passive slots full');n.passives.push({id:o.id,stacks:1});}}}
   n.reward=null;return n;}
+ /* @S5 Non-combat stops. Entering a shop, event or rest node opens run.stop (options are fixed at entry, deterministic per node); the map waits until the stop ends.
+    Effects are data: hp (fraction of max, never below 1), gold (spend needs enough), passive (stack), skill (slot), upgrade (next size of a library skill in a slot). Shop items have a price and stay until 떠나기. */
+ const SIZE_ORDER=Object.freeze(['S','M','L','XL']);
+ const EVENTS=Object.freeze([
+  {id:'altar',title:'버려진 제단',text:'피를 바치면 힘을 얻는다.',choices:[{label:'피를 바친다',text:'체력 -20% · 패시브 1개',fx:{hp:-.2,passive:'random'}},{label:'지나간다',text:'아무 일도 없다',fx:{}}]},
+  {id:'peddler',title:'떠돌이 상인',text:'약초를 판다.',choices:[{label:'약초를 산다',text:'골드 -30 · 체력 +30%',fx:{gold:-30,hp:.3}},{label:'지나간다',text:'아무 일도 없다',fx:{}}]},
+  {id:'chest',title:'봉인된 상자',text:'열면 다칠 수도 있다.',choices:[{label:'연다',text:'골드 +40 · 체력 -15%',fx:{gold:40,hp:-.15}},{label:'지나간다',text:'아무 일도 없다',fx:{}}]},
+  {id:'dojo',title:'수련장',text:'옛 무사의 흔적.',choices:[{label:'수련한다',text:'체력 -10% · 예리함(피해 +10%)',fx:{hp:-.1,passive:'dmg'}},{label:'쉰다',text:'체력 +10%',fx:{hp:.1}}]},
+  {id:'spring',title:'맑은 샘',text:'차가운 물이 흐른다.',choices:[{label:'마신다',text:'체력 +25%',fx:{hp:.25}},{label:'병에 담는다',text:'골드 +15',fx:{gold:15}}]}]);
+ function nextSize(L,size){if(!L?.variants||!size)return null;const keys=Object.keys(L.variants);for(let i=SIZE_ORDER.indexOf(size)+1;i<SIZE_ORDER.length;i++)if(keys.includes(SIZE_ORDER[i]))return SIZE_ORDER[i];return null;}
+ function makeStop(r,node,lib){lib=libOf(lib);const rand=rng(hash(r.seed+':stop:'+node.id)),pick=()=>{const ids=Object.keys(PASSIVES);return ids[Math.floor(rand()*ids.length)];};
+  if(node.kind==='event'){const e=EVENTS[Math.floor(rand()*EVENTS.length)];return {kind:'event',nodeId:node.id,title:e.title,text:e.text,options:e.choices.map(c=>({label:c.label,text:c.text,fx:c.fx.passive==='random'?{...c.fx,passive:pick()}:{...c.fx}}))};}
+  if(node.kind==='rest'){const options=[{label:'휴식',text:'체력 +30%',fx:{hp:.3}}];
+   r.kit.forEach((k,slot)=>{if(k.src!=='lib')return;const L=lib[k.id],to=nextSize(L,k.size);if(to)options.push({label:'단련',text:`${L.name.split(' · ')[0]} 크기 ${k.size} → ${to}`,fx:{upgrade:{slot,size:to}}});});
+   return {kind:'rest',nodeId:node.id,title:'모닥불',text:'하나만 할 수 있다.',options};}
+  const skills=offerSkills(r,['skill','basic'],rand,lib).map(o=>({label:o.name.split(' · ')[0],text:'스킬',price:45+Math.floor(rand()*16),sold:false,fx:{skill:{id:o.id,size:o.size,slots:o.slots}}}));
+  const passives=offerPassives(rand).slice(0,2).map(o=>({label:o.name,text:o.text,price:50,sold:false,fx:{passive:o.id}}));
+  return {kind:'shop',nodeId:node.id,title:'상점',text:'골드로 산다. 여러 개 살 수 있다.',options:[...skills,...passives,{label:'치료',text:'체력 +30%',price:30,sold:false,fx:{hp:.3}}]};}
+ function validStop(t,lib){if(t===null||t===undefined)return true;if(!t||!['shop','event','rest'].includes(t.kind)||typeof t.nodeId!=='string'||typeof t.title!=='string'||!Array.isArray(t.options)||t.options.length<1||t.options.length>8)return false;
+  return t.options.every(o=>{if(!o||typeof o.label!=='string'||o.label.length>60||!o.fx||typeof o.fx!=='object')return false;if(t.kind==='shop'&&(!isInt(o.price,0,1000)||typeof o.sold!=='boolean'))return false;
+   const f=o.fx,keys=Object.keys(f);if(keys.some(k=>!['hp','gold','passive','skill','upgrade'].includes(k)))return false;
+   if(f.hp!==undefined&&!isNum(f.hp,-.5,1))return false;if(f.gold!==undefined&&!(Number.isInteger(f.gold)&&Math.abs(f.gold)<=500))return false;if(f.passive!==undefined&&!Object.hasOwn(PASSIVES,f.passive))return false;
+   if(f.skill!==undefined&&!(lib[f.skill.id]&&(f.skill.size===''?!lib[f.skill.id].variants:!!lib[f.skill.id].variants?.[f.skill.size])&&Array.isArray(f.skill.slots)&&f.skill.slots.length&&f.skill.slots.every(x=>[0,1,3,4,5].includes(x))))return false;
+   if(f.upgrade!==undefined&&!(isInt(f.upgrade.slot,0,5)&&SIZE_ORDER.includes(f.upgrade.size)))return false;return true;});}
+ function applyFx(n,f,slot,lib){
+  if(f.gold!==undefined){if(n.gold+f.gold<0)throw Error('Not enough gold');n.gold+=f.gold;}
+  if(f.hp!==undefined)n.hero.hp=Math.max(1,Math.min(n.hero.hpMax,Math.round(n.hero.hp+f.hp*n.hero.hpMax)));
+  if(f.passive){const p=n.passives.find(x=>x.id===f.passive);if(p)p.stacks=Math.min(99,p.stacks+1);else{if(n.passives.length>=CONFIG.passiveSlots)throw Error('Passive slots full');n.passives.push({id:f.passive,stacks:1});}}
+  if(f.skill){if(!f.skill.slots.includes(slot))throw Error('Invalid slot');n.kit[slot]={src:'lib',id:f.skill.id,size:f.skill.size};}
+  if(f.upgrade){const k=n.kit[f.upgrade.slot];if(k?.src!=='lib'||!lib[k.id]?.variants?.[f.upgrade.size])throw Error('Cannot upgrade');k.size=f.upgrade.size;}}
+ /* Event and rest: one choice ends the stop. Shop: buy (index) any number of unsold items; leave with index null. */
+ function chooseStop(r,index,slot,lib){lib=libOf(lib);if(!r.stop)throw Error('No stop open');const n=copy(r),t=n.stop,node=mapNode(n,t.nodeId);
+  if(index===null||index===undefined){if(t.kind!=='shop')throw Error('Choose an option');n.stop=null;return advance(n,node);}
+  const o=t.options[index];if(!o)throw Error('Invalid option');
+  if(t.kind==='shop'){if(o.sold)throw Error('Sold out');if(n.gold<o.price)throw Error('Not enough gold');n.gold-=o.price;applyFx(n,o.fx,slot,lib);o.sold=true;return n;}
+  applyFx(n,o.fx,slot,lib);n.history.at(-1).result=o.label;n.stop=null;return advance(n,node);}
  function storage(s){try{return s||window.localStorage;}catch{return null;}}
  function write(key,value,s){const st=storage(s);if(!st)return {ok:false,reason:'storage unavailable'};try{st.setItem(key,JSON.stringify(value));return {ok:true};}catch(e){return {ok:false,reason:String(e&&e.name||e)};}}
  function read(key,check,s){const st=storage(s);if(!st)return {value:null,reason:'storage unavailable'};try{const raw=st.getItem(key);if(raw===null)return {value:null,reason:'empty'};const v=JSON.parse(raw);return check(v)?{value:v,reason:null}:{value:null,reason:'invalid'};}catch{return {value:null,reason:'invalid'};}}
- return Object.freeze({CONTRACT,META_CONTRACT,RUN_KEY,META_KEY,CONFIG,hash,rng,encounterSeed,createMeta,validateMeta,createRun,validateRun,resolveKit,NODE_KINDS,validNode,enemyScale,encounterData,startEncounter,finishEncounter,MAP_KINDS,generateMap,validMap,mapNode,availableNodes,canEnter,visitNode,PASSIVES,RUN_SLOTS,applyPassives,makeReward,validReward,takeReward,
+ return Object.freeze({CONTRACT,META_CONTRACT,RUN_KEY,META_KEY,CONFIG,hash,rng,encounterSeed,createMeta,validateMeta,createRun,validateRun,resolveKit,NODE_KINDS,validNode,enemyScale,encounterData,startEncounter,finishEncounter,MAP_KINDS,generateMap,validMap,mapNode,availableNodes,canEnter,visitNode,PASSIVES,RUN_SLOTS,applyPassives,makeReward,validReward,takeReward,EVENTS,makeStop,validStop,chooseStop,
   saveRun:(r,s)=>validateRun(r)?write(RUN_KEY,r,s):{ok:false,reason:'invalid'},loadRun:s=>read(RUN_KEY,v=>validateRun(v),s),
   clearRun:s=>{const st=storage(s);try{st&&st.removeItem(RUN_KEY);return true;}catch{return false;}},
   saveMeta:(m,s)=>validateMeta(m)?write(META_KEY,m,s):{ok:false,reason:'invalid'},loadMeta:s=>read(META_KEY,v=>validateMeta(v),s)});
@@ -14795,7 +14831,7 @@ function runStart(){const R=window.GA_RUN,meta=runMeta();
 function runEnterView(){if(!V.active||V.mode!=='game'){V.loadSeq++;enterAction('game');clearActionWorld();}} /*@S3b the overlay lives in #ga, shown in game mode*/
 function runContinue(){const r=window.GA_RUN.loadRun().value;if(!r||r.status!=='active')return false;runEnterView();V.run=r;selectHero(r.heroKey);openRunMap();return true;}
 function openRunMap(note=''){const R=window.GA_RUN,run=V.run;if(!run)return false;V.paused=true;document.exitPointerLock?.();el('gaMenu').style.display='none';el('gaResult').style.display='none';
- el('gaRunMap').hidden=false;const hero=D.heroes[run.heroKey];if(run.reward)return renderRunReward(note); /*@S4*/
+ el('gaRunMap').hidden=false;const hero=D.heroes[run.heroKey];if(run.reward)return renderRunReward(note); /*@S4*/if(run.stop)return renderRunStop(note); /*@S5*/
  el('gaRunTitle').textContent=`ACT ${run.act} / ${R.CONFIG.acts}`;
  el('gaRunInfo').textContent=`${hero.name} · 체력 ${Math.ceil(run.hero.hp)}/${run.hero.hpMax} · 골드 ${run.gold} · 노드 ${run.stats.nodes}${run.passives.length?' · 패시브 '+run.passives.map(p=>R.PASSIVES[p.id].name+(p.stacks>1?'×'+p.stacks:'')).join(', '):''}`;
  const open=new Set(R.availableNodes(run).map(n=>n.id)),done=new Set(run.history.map(h=>h.nodeId)),nodes=run.map['a'+run.act]||[],rows=[];
@@ -14816,10 +14852,24 @@ function renderRunReward(note=''){const R=window.GA_RUN,run=V.run,w=run.reward,k
  const skip=document.createElement('button');skip.type='button';skip.className='ga-run-node';skip.dataset.state='open';skip.id='gaRunSkip';skip.textContent='골드만 받기';skip.onclick=()=>runTakeReward(null);
  el('gaRunFloors').replaceChildren(...cards,skip);el('gaRunNote').textContent=note||'하나를 고르거나 골드만 받으세요.';return true;}
 function runTakeReward(choice){V.run=window.GA_RUN.takeReward(V.run,choice);runSave();openRunMap('보상을 받았습니다.');return true;}
+/*@S5 shop, event and rest in the run overlay: options fixed at entry; shop items until 떠나기, event/rest one choice.*/
+const RUN_STOP_ERR={'Not enough gold':'골드가 부족합니다.','Sold out':'이미 구매했습니다.','Invalid slot':'그 슬롯에는 넣을 수 없습니다.','Passive slots full':'패시브 슬롯이 가득 찼습니다.','Cannot upgrade':'단련할 수 없습니다.'};
+function renderRunStop(note=''){const R=window.GA_RUN,run=V.run,t=run.stop,kit=R.resolveKit(run);
+ el('gaRunTitle').textContent=`${RUN_KIND_LABEL[t.kind]} · ${t.title}`;el('gaRunInfo').textContent=`${t.text} · 골드 ${run.gold} · 체력 ${Math.ceil(run.hero.hp)}/${run.hero.hpMax}`;
+ const cards=t.options.map((o,i)=>{const d=document.createElement('div');d.className='ga-run-offer';const h=document.createElement('strong');h.textContent=o.label+(t.kind==='shop'?` · ${o.price}G`:'');
+  const m=document.createElement('small');m.textContent=o.text;d.append(h,m);const row=document.createElement('div');row.className='ga-run-floor';
+  const add=(label,slot)=>{const b=document.createElement('button');b.type='button';b.className='ga-run-node';b.dataset.state='open';b.dataset.option=i;if(slot!==undefined)b.dataset.slot=slot;b.textContent=label;
+   b.disabled=!!o.sold||(t.kind==='shop'&&run.gold<o.price)||(o.fx.gold<0&&run.gold+o.fx.gold<0);b.onclick=()=>runChooseStop(i,slot);row.appendChild(b);};
+  if(o.fx.skill&&!o.sold)for(const slot of o.fx.skill.slots)add(`${kit[slot].key} ← ${kit[slot].name}`,slot);else add(o.sold?'구매함':t.kind==='shop'?'구매':'선택');
+  d.appendChild(row);return d;});
+ const extra=[];if(t.kind==='shop'){const b=document.createElement('button');b.type='button';b.className='ga-run-node';b.dataset.state='open';b.id='gaRunLeave';b.textContent='떠나기';b.onclick=()=>runChooseStop(null);extra.push(b);}
+ el('gaRunFloors').replaceChildren(...cards,...extra);el('gaRunNote').textContent=note||(t.kind==='shop'?'원하는 만큼 사고 떠나기를 누르세요.':'하나를 고르세요.');return true;}
+function runChooseStop(index,slot){try{V.run=window.GA_RUN.chooseStop(V.run,index,slot);}catch(error){const m=String(error?.message||error);openRunMap(RUN_STOP_ERR[m]||m);return false;}
+ runSave();openRunMap(V.run.stop?'구매했습니다.':'');return true;}
 function closeRunMap(){el('gaRunMap').hidden=true;}
 function runChoose(id){const R=window.GA_RUN,node=V.run&&R.mapNode(V.run,id);if(!node||!R.canEnter(V.run,id))return false;
  if(['battle','elite','boss'].includes(node.kind)){runEnterBattle(node);return true;}
- V.run=R.visitNode(V.run,id);runSave();openRunMap(`${RUN_KIND_LABEL[node.kind]} 통과 · 내용은 다음 단계에서 추가됩니다.`);return true;}
+ V.run=R.visitNode(V.run,id);runSave();openRunMap();return true;}
 async function runEnterBattle(node){const R=window.GA_RUN,seq=++V.loadSeq;closeRunMap();
  enterAction('game');clearActionWorld();selectHero(V.run.heroKey);V.runNode=node;
  V.world=R.startEncounter(V.run,node);bindRig('hero');for(const e of V.world.events.splice(0))emit(e);V.god=false;el('gaGod').textContent='무적';
@@ -14832,7 +14882,7 @@ function runBattleEnd(){const R=window.GA_RUN,node=V.runNode;V.run=R.finishEncou
  const meta=runMeta();meta.runs+=1;if(V.run.status==='won')meta.wins+=1;R.saveMeta(meta);R.clearRun();refreshRunButtons();
  el('gaResult').style.display='grid';el('gaResultTitle').textContent=V.run.status==='won'?'런 클리어':'런 실패';el('gaResultSkills').replaceChildren();
  el('gaResultStats').textContent=`ACT ${V.run.act} · 노드 ${V.run.stats.nodes} · 처치 ${V.run.stats.kills} · 가한 피해 ${Math.round(V.run.stats.damage)} · ${Math.round(V.run.stats.time)}초`;}
-const RUN_API={start:runStart,continue:runContinue,choose:runChoose,openMap:openRunMap,takeReward:runTakeReward,get state(){return V.run?JSON.parse(JSON.stringify(V.run)):null;},get node(){return V.runNode?{...V.runNode}:null;},get mapOpen(){return !el('gaRunMap').hidden;}};
+const RUN_API={start:runStart,continue:runContinue,choose:runChoose,openMap:openRunMap,takeReward:runTakeReward,chooseStop:runChooseStop,get state(){return V.run?JSON.parse(JSON.stringify(V.run)):null;},get node(){return V.runNode?{...V.runNode}:null;},get mapOpen(){return !el('gaRunMap').hidden;}};
 el('gaRunStart').onclick=()=>runStart();el('gaRunContinue').onclick=()=>runContinue();el('gaRunMenu').onclick=()=>{closeRunMap();showMenu('select');};
 window.GS_ACTION={run:RUN_API,setTrialDamage(on){if(!V.world?.trial||V.mode!=='trial')return false;V.world.controlTrialDamage=!!on;V.god=!on;V.world.hero.invuln=on?0:1e9;el('gaGod').textContent=V.god?'무적 ON':'무적';return true;},get objective(){const o=objectiveRow();return o?JSON.parse(JSON.stringify(o)):null;},checkpoint:{get saved(){return runSaved?JSON.parse(JSON.stringify(runSaved)):null;},get storageOK(){return runSaveOK;},resume:resumeRun},showLabGuide,clearLabGuide,inspectSkillCast,get labGuide(){return labGuideSnapshot?{...labGuideSnapshot}:null;},get staticBatches(){return {...V.staticBatches};},get cameraMode(){return V.settings.cameraMode;},get cameraDistance(){return V.cameraDistance;},get bloomBuffers(){return {scale:H.classicBloom.resolutionScale,width:H.classicBloom.rtBright.width,height:H.classicBloom.rtBright.height};},version:'GS_Action v34',buildId:'v34-runtime-8',get deployVisuals(){return deployVisualSnapshot();},get deployPulseTrace(){return deployPulseEvents.map(e=>({...e}));},get vfxWarmStatus(){return V.lastWarmResult?JSON.parse(JSON.stringify(V.lastWarmResult)):null;},gpuSweep,get gpu(){return {...V.gpu,geometries:E.renderer.info.memory.geometries,textures:E.renderer.info.memory.textures};},runBench,stopBench:()=>finishBench('interrupted'),get benchResult(){return V.benchResult||null;},get benchOn(){return !!V.bench?.on;},draft:{get open(){return !!V.draftOpen;},get offers(){return (V.draft||[]).map(o=>({...o}));},pick:(i,slot)=>pickDraft(i,slot),skip:()=>closeDraft(),get enabled(){return V.settings.draft!==false;},set enabled(v){V.settings.draft=!!v;}},applyPreset,get runKit(){return V.runKit?V.runKit.key:null;},get timingTrace(){return timingEvents.map(e=>({...e}));},clearTimingTrace:()=>{timingEvents.length=0;renderTimingAudit();},scaleContract:id=>window.GA_VFX_CONTRACT(id),equipSkill:(hero,slot,id,size)=>equipSkill(hero,slot,id,false,size),resetKit,get loadout(){return JSON.parse(JSON.stringify(loadout));},get governor(){return {...V.gov};},beamTrialProfiles:()=>Object.values(window.GA_BEAM_TRIAL).map(p=>({...p})),fxTrialProfiles:()=>Object.values(window.GA_FX_TRIAL||{}).map(p=>({...p})),castTrialBeam:(id,target)=>V.mode==='trial'&&V.world?.castTrialBeam(id,target||aim()),get inputBuffer(){const p=inputBuffer.peek(performance.now());return p?{slot:p.slot,remainingMs:Math.max(0,p.expires-performance.now())}:null;},get sim(){return V.world},get status(){return {active:V.active,paused:V.paused,ready:V.ready,mode:V.mode,uiCursor:V.uiCursor,altHeld:V.altHeld,locked:V.locked,pointer:V.locked?'lock':V.uiCursor?'ui':'free',over:!!V.world?.over}},profile:COAST_PROFILE,get stageRoot(){return V.stage},get view(){try{return V.active&&V.world?{yaw:V.yaw,pitch:V.pitch,aim:aim(),eye:camera.position.toArray(),direction:camera.getWorldDirection(new T.Vector3()).toArray()}:null}catch(err){console.warn('[GS Action view]',err);return null;}},get mech(){const hero=V.rigs.get('hero');return {ready:!!V.mechGltf,clips:V.mechGltf?.animations.map(a=>a.name)||[],hero:!!hero?.visual,current:hero?.mech?.current||null};},formOf,poseFor,castTrialEffect,get lastTrialCast(){return V.lastTrialCast},catalog:()=>trialEffects.map(x=>({id:x.id,name:x.name,tag:trialTag(x.id),form:formOf(x.id),taxonomy:x.taxonomy||null,disposition:x.disposition||null})),start,startTrial,enterGameSelect,leaveToLab,stopFx:()=>{if(V.world){for(const p of V.world.pending.filter(p=>p.type==='trialBeamImpact'))dropPreview(p.slot);V.world.pending=V.world.pending.filter(p=>p.type!=='trialBeamImpact');}stopPool();try{VFX_COMBAT.stopAll();}catch{}},warmFx,get warmStatus(){return {active:!!activeWarm,queued:warmQueued,maskedRoots:warmRoots.size,parallel:E.renderer.extensions.has('KHR_parallel_shader_compile')};},authoredTune:BASE_TUNE,spawn:(kind,n=1)=>{const k=V.world?.spawn(kind,n);for(const e of V.world?.events.splice(0)||[])emit(e);return k;},god:on=>{if(V.world)V.world.hero.invuln=on?1e9:0;},resetCd:()=>{if(V.world)V.world.hero.cds.fill(0);},timescale:v=>{window.__GS_TIMESCALE=S.clamp(v,.01,2);},cast,fx,fxStats:()=>Object.fromEntries([...V.pool].map(([id,p])=>[id,p.map(x=>({index:x.i,busy:x.until>V.clock}))])),fxTest:(id,n=3)=>{for(let i=0;i<n;i++)fx({id,caster:'test',origin:{x:i*9-9,z:-12},target:{x:i*9-9,z:-27},dir:{x:0,z:-1},hold:2,size:'S'});return V.pool.get(id)?.length||0;},hitboxes:on=>{V.boxes=!!on;for(const r of V.rigs.values())r.ring.visible=V.boxes;}};
 // Controlled review adapter: original cast functions and original simulation rules.
