@@ -1,0 +1,296 @@
+[
+{
+"i": 0,
+"id": "FX-06",
+"kind": "zone",
+"tag": "허공·치우침"
+},
+{
+"i": 5,
+"id": "FX-12",
+"kind": "circle",
+"tag": "하늘"
+},
+{
+"i": 6,
+"id": "FX-25",
+"kind": "circle",
+"tag": "과대·치우침"
+},
+{
+"i": 11,
+"id": "SC-01",
+"kind": "circle",
+"tag": "과대"
+},
+{
+"i": 14,
+"id": "AS-10",
+"kind": "circle",
+"tag": "치우침"
+},
+{
+"i": 16,
+"id": "ARC-09",
+"kind": "radial",
+"tag": "허공"
+},
+{
+"i": 18,
+"id": "FX-21",
+"kind": "zone",
+"tag": "과대"
+},
+{
+"i": 19,
+"id": "FX-22",
+"kind": "zone",
+"tag": "과대·허공"
+},
+{
+"i": 20,
+"id": "FX-34",
+"kind": "circle",
+"tag": "과대"
+},
+{
+"i": 23,
+"id": "ARC-08",
+"kind": "circle",
+"tag": "하늘"
+},
+{
+"i": 24,
+"id": "MC-01",
+"kind": "radial",
+"tag": "하늘"
+},
+{
+"i": 26,
+"id": "MC-04",
+"kind": "circle",
+"tag": "허공"
+},
+{
+"i": 28,
+"id": "AC-02",
+"kind": "shield",
+"tag": "허공·과대"
+},
+{
+"i": 30,
+"id": "AS-04",
+"kind": "radial",
+"tag": "안 보임"
+},
+{
+"i": 33,
+"id": "INT-02",
+"kind": "circle",
+"tag": "하늘·과대"
+},
+{
+"i": 34,
+"id": "INT-03",
+"kind": "circle",
+"tag": "허공"
+},
+{
+"i": 39,
+"id": "SC-03",
+"kind": "circle",
+"tag": "허공"
+},
+{
+"i": 40,
+"id": "SC-02",
+"kind": "circle",
+"tag": "하늘·안 보임"
+},
+{
+"i": 42,
+"id": "NV-06",
+"kind": "circle",
+"tag": "허공"
+},
+{
+"i": 46,
+"id": "V5-05",
+"kind": "zone",
+"tag": "과대"
+},
+{
+"i": 47,
+"id": "INT-08-P",
+"kind": "circle",
+"tag": "과대"
+},
+{
+"i": 48,
+"id": "FX-10-C",
+"kind": "circle",
+"tag": "허공"
+},
+{
+"i": 49,
+"id": "FX-10-O",
+"kind": "circle",
+"tag": "과대"
+},
+{
+"i": 51,
+"id": "ARC-21",
+"kind": "circle",
+"tag": "과대"
+},
+{
+"i": 53,
+"id": "FX-146",
+"kind": "circle",
+"tag": "하늘"
+},
+{
+"i": 56,
+"id": "FX-125",
+"kind": "circle",
+"tag": "하늘"
+},
+{
+"i": 70,
+"id": "ARC-25",
+"kind": "zone",
+"tag": "허공"
+},
+{
+"i": 74,
+"id": "MYTH-01",
+"kind": "circle",
+"tag": "허공"
+},
+{
+"i": 78,
+"id": "GS-vortexring",
+"kind": "circle",
+"tag": "허공"
+},
+{
+"i": 82,
+"id": "GS-nuke",
+"kind": "circle",
+"tag": "하늘"
+},
+{
+"i": 84,
+"id": "GS-helix",
+"kind": "circle",
+"tag": "안 보임"
+},
+{
+"i": 87,
+"id": "GS-mirv",
+"kind": "circle",
+"tag": "하늘"
+},
+{
+"i": 91,
+"id": "GS-dynamite",
+"kind": "circle",
+"tag": "안 보임"
+},
+{
+"i": 120,
+"id": "GS-digital",
+"kind": "circle",
+"tag": "과대"
+},
+{
+"i": 149,
+"id": "CH:obang",
+"kind": "circle",
+"tag": "안 보임"
+},
+{
+"i": 151,
+"id": "CH:emille",
+"kind": "circle",
+"tag": "과대"
+},
+{
+"i": 152,
+"id": "CH:tomo",
+"kind": "circle",
+"tag": "치우침"
+},
+{
+"i": 165,
+"id": "FX-04",
+"kind": "circle",
+"tag": "치우침"
+},
+{
+"i": 167,
+"id": "INT-03-G",
+"kind": "circle",
+"tag": "과대"
+},
+{
+"i": 171,
+"id": "D:STRUCT:obelisk",
+"kind": "deploy",
+"tag": "안 보임"
+},
+{
+"i": 174,
+"id": "D:STRUCT:tree",
+"kind": "deploy",
+"tag": "안 보임"
+},
+{
+"i": 177,
+"id": "D:STRUCT:lunar",
+"kind": "deploy",
+"tag": "안 보임"
+},
+{
+"i": 180,
+"id": "D:STRUCT:pylon",
+"kind": "deploy",
+"tag": "안 보임"
+},
+{
+"i": 182,
+"id": "D:PROJ:lance",
+"kind": "circle",
+"tag": "방향·과대"
+},
+{
+"i": 183,
+"id": "D:ULT:inkfall",
+"kind": "circle",
+"tag": "하늘"
+},
+{
+"i": 195,
+"id": "C:F_PROJ:sing",
+"kind": "projectile",
+"tag": "과대"
+},
+{
+"i": 199,
+"id": "C:SF_PROJ:prs",
+"kind": "projectile",
+"tag": "과대"
+},
+{
+"i": 200,
+"id": "C:SF_PROJ:eco",
+"kind": "projectile",
+"tag": "과대"
+},
+{
+"i": 201,
+"id": "C:SF_PROJ:mtr",
+"kind": "projectile",
+"tag": "과대"
+}
+]
