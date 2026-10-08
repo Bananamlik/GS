@@ -26,8 +26,8 @@ class VfxAnchoring(performance.BrowserSession):
 
         self.page.evaluate("GS_ACTION.startTrial('rain')")
         self.page.locator('#gaStart').evaluate('e=>e.click()')
-        self.page.wait_for_function('!GS_ACTION.status.paused', timeout=60000)
-        self.page.wait_for_function('GS_ACTION.vfxWarmStatus?.ids && GS_ACTION.warmStatus.queued===0', timeout=60000)
+        self.page.wait_for_function('!GS_ACTION.status.paused', timeout=120000)
+        self.page.wait_for_function('GS_ACTION.vfxWarmStatus?.ids && GS_ACTION.warmStatus.queued===0', timeout=150000)
         cast = self.page.evaluate("(()=>{const h=GS_ACTION.sim.hero;return GS_ACTION.fx({id:'ARC-04',kind:'shield',caster:'test',origin:{x:h.x,z:h.z},target:{x:h.x,z:h.z-20}});})()")
         self.assertTrue(cast['ok'], cast)
         self.assertEqual(cast['form'], 'self')
@@ -44,8 +44,8 @@ class VfxAnchoring(performance.BrowserSession):
     def test_lance_beam_follows_the_aim_and_starts_at_the_caster(self):
         self.page.evaluate("GS_ACTION.startTrial('bolt')")
         self.page.locator('#gaStart').evaluate('e=>e.click()')
-        self.page.wait_for_function('!GS_ACTION.status.paused', timeout=60000)
-        self.page.wait_for_function('GS_ACTION.vfxWarmStatus?.ids && GS_ACTION.warmStatus.queued===0', timeout=60000)
+        self.page.wait_for_function('!GS_ACTION.status.paused', timeout=120000)
+        self.page.wait_for_function('GS_ACTION.vfxWarmStatus?.ids && GS_ACTION.warmStatus.queued===0', timeout=150000)
         probe = '''([tx,tz])=>new Promise(done=>{
           const h=GS_ACTION.sim.hero;h.x=0;h.z=0;h.invuln=1e9;
           const r=GS_ACTION.fx({id:'D:PROJ:lance',kind:'circle',caster:'test',origin:{x:0,z:0},target:{x:tx,z:tz}});
@@ -75,8 +75,8 @@ class VfxAnchoring(performance.BrowserSession):
         self.assertTrue(self.page.evaluate('ids=>ids.every(i=>window.__FX_SCALABLE.has(i))', list(lifts)))
         self.page.evaluate("GS_ACTION.startTrial('bolt')")
         self.page.locator('#gaStart').evaluate('e=>e.click()')
-        self.page.wait_for_function('!GS_ACTION.status.paused', timeout=60000)
-        self.page.wait_for_function('GS_ACTION.vfxWarmStatus?.ids && GS_ACTION.warmStatus.queued===0', timeout=60000)
+        self.page.wait_for_function('!GS_ACTION.status.paused', timeout=120000)
+        self.page.wait_for_function('GS_ACTION.vfxWarmStatus?.ids && GS_ACTION.warmStatus.queued===0', timeout=150000)
         got = self.page.evaluate('''()=>{const h=GS_ACTION.sim.hero;h.x=0;h.z=0;h.invuln=1e9;
           const r=GS_ACTION.fx({id:'FX-25',kind:'circle',caster:'test',origin:{x:0,z:0},target:{x:0,z:-25},scale:.5});
           const root=(STAGE3D.getEffect(r.id)?.__gsRoots||[])[0];

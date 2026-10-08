@@ -13152,7 +13152,7 @@ function objectiveEvent(type,e){if(w.trial||w.benchmarkLoop)return;const rows=w.
    if(e.id==='hero'&&e.state==='windup'){
     const p=w.pending.find(p=>p.type==='release'&&p.slot===e.windupSlot);if(!p)return;const castId=p.sk?._combat?.castId;
     w.pending=w.pending.filter(p=>!(p.type==='release'&&p.sk?._combat?.castId===castId||p.type==='fxStart'&&p.entry?.sk?._combat?.castId===castId));
-    e.state='recover';e.stateT=.13;e.windupSlot=-1;e.windupSk=null;w.emit('cast:cancel',{id:e.id,slot:p.slot,castId,reason});recordCombat({type:'cast:cancel',source:sourceOf(p.sk,p.slot),targetId:e.id,policy:STATUS_RULES.names[reason]+'으로 준비 중 시전 취소 · 비용 유지'});
+    e.state='recover';e.stateT=.13;e.windupSlot=-1;e.windupSk=null;w.emit('cast:cancel',{id:e.id,slot:p.slot,castId,reason});recordCombat({type:'cast:cancel',source:sourceOf(p.sk,p.slot),targetId:e.id,policy:(STATUS_RULES.names[reason]||'회피')+'으로 준비 중 시전 취소 · 비용 유지'});
    }else if(e.id!=='hero'&&e.phase==='tele'){
     const a=e.attack;for(let j=0;j<(a?.count||1);j++)w.emit('telegraph:end',{id:j?e.id+':z'+j:e.id});e.phase='chase';e.state='idle';e.stateT=0;e.cd=Math.max(e.cd,.6);w.emit('cast:cancel',{id:e.id,castId:a?._combat?.castId,reason});recordCombat({type:'cast:cancel',source:a?._combat||null,targetId:e.id,policy:STATUS_RULES.names[reason]+'으로 준비 중 적 공격 취소'});
    }
@@ -13227,8 +13227,9 @@ function objectiveEvent(type,e){if(w.trial||w.benchmarkLoop)return;const rows=w.
    if(early){const entry={slot,id:s.id,sk:s,caster:'hero',origin:origin0,target:{...target},dir:{...dir},hold:s.hold,size:s.size,startAt:Math.max(0,pre-wEff)};if(s.fxDelay>0)w.pending.push({type:'fxStart',when:w.t+s.fxDelay,entry});else w.emit('fx:cast',entry);}
    w.emit('windup',{slot,id:s.id,sk:s,origin:{x:h.x,z:h.z},target:{...target},dir:{...dir},kind:s.kind,radius:s.radius||8,width:s.width||6,range:s.kind==='beam'?range:s.range||0,duration:wEff+s.hitT+(s.hitV?Math.max(.03-s.hitT,range/s.hitV+(s.hitA||0)):0)});return true;}; /*@V5 beam length = cast length*/
   w.castLib=(sk,aim)=>{const h=w.hero;if(!w.trial||!sk||sk.kind==='dodge'||sk.kind==='dash')return false;if(!aim||![aim.x,aim.z].every(Number.isFinite)||!window.GA_VFX_QA.validateSkill(sk).ok||!STATUS_RULES.validSkill(sk))return false;const u=h.ult,priorCd=h.cds[6];if(sk.ult)h.ult=100;h.cds[6]=0;const ok=w.cast(6,aim,sk);h.ult=u;h.cds[6]=ok?.5:priorCd;return ok;}; /*@V10 trial: cast any library skill with its real judgement, no slot needed*/
-  w.dodge=(dx,dz)=>{const h=w.hero;let s=skills[2];if(w.over||h.cds[2]>0||h.state==='windup'||h.state==='dodge')return false;
+  w.dodge=(dx,dz)=>{const h=w.hero;let s=skills[2];if(w.over||h.cds[2]>0||h.state==='windup'&&(h.windupSk||skills[h.windupSlot])?.ult||h.state==='dodge')return false; /*@V41 C4: a dodge cancels a wind-up (cost kept); an ultimate cannot be cancelled*/
    if(!Number.isFinite(dx)||!Number.isFinite(dz)||!canAct(2,s,true)||!STATUS_RULES.validSkill(s))return false;s=snapshot(s,2);const hasMove=Math.hypot(dx,dz)>1e-5,d=norm(hasMove?dx:Math.sin(h.facing),hasMove?dz:Math.cos(h.facing)),dash=s.kind==='dash';h.facing=Math.atan2(d.x,d.z);
+   if(h.state==='windup')interrupt(h,'dodge'); /*@V41*/
    h.invuln=.38;h.state='dodge';h.stateT=.35;h.vx=d.x*(dash?86:40);h.vz=d.z*(dash?86:40);h.cds[2]=s.cd;
    if(s.haste)addStatus(h,'haste',s.haste,sourceOf(s,null));
    ledger(s).casts++;if(dash){w.stats.casts[2]++;const from={x:h.x,z:h.z},pathLength=Math.min(30,Math.max(0,traceSolid(h,d,30,{mask:'movement',radius:h.radius,body:true}).distance-1e-5)),target={x:h.x+d.x*pathLength,z:h.z+d.z*pathLength};if(pathLength<29.99)w.emit('combat:blocked',{slot:2,distance:pathLength});w.emit('fx:cast',{slot:2,id:s.id,sk:s,caster:'hero',origin:from,target,dir:d,pathLength,hold:s.hold,size:s.size});w.pending.push({when:w.t+s.hitT,type:'dashImpact',slot:2,sk:s,from,dir:d,target,pathLength});}
