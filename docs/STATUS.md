@@ -1,12 +1,13 @@
 # STATUS
 
-갱신: 2026-10-06 21:50 KST. 근거: `docs/evidence/`. 검증하지 못한 항목은 UNVERIFIED.
+갱신: 2026-10-07 00:25 KST. 근거: `docs/evidence/`. 검증하지 못한 항목은 UNVERIFIED.
 
 ## 1. 코드 상태
 
 | 항목 | 값 |
 |---|---|
-| main | `7bcf549` (#20 병합). `index.html` = `GS_Action_v34_runtime.html`, md5 `a1129562470585674331ed97ce640a6e` (v35 + HUD 개선 + HUD 위계 + 랩 모바일 + SFX 음량 정규화 + SFX 겹침 규칙) |
+| main | `3fc9c6e` (#30 병합). `index.html` = `GS_Action_v34_runtime.html`, md5 `0eaa8b73a1a4ef38a48e9809a52d5bd8`, 62,769줄 (v35 + HUD + 랩 모바일 + SFX + 스킬 주제 상태 + VFX 위치 + 로그라이트 런 S1~S5·S7) |
+| SFX 겹침 규칙까지(#20 시점) | main `7bcf549`의 `index.html`, md5 `a1129562470585674331ed97ce640a6e` |
 | v35 파일 | `GS_Action_v35_261005-2000.html`, md5 `f7d2ab883d7bc78fc05d9b046e45bf47` = PR #3 최종본. HUD 개선 이전 빌드. 수정하지 않음. |
 | 랩 모바일까지(#15 시점) | main `a8df602`의 `index.html`, md5 `f239381cb8f1ab9107ac1325db821e24` |
 | HUD 개선만(#11 시점) | main `a503a7e`의 `index.html`, md5 `5c7263984c75c6c44346abee821b4b88` |
@@ -31,6 +32,16 @@
 | [#18](https://github.com/Bananamlik/GS/pull/18) | 문서: SFX 정규화 후 재측정 | `9c0f648` |
 | [#19](https://github.com/Bananamlik/GS/pull/19) | 문서: STATUS 정정, 랩·HUD 증거 이관, 현황 보고서 | `b995c2a` |
 | [#20](https://github.com/Bananamlik/GS/pull/20) | SFX 겹침 규칙: 다른 효과가 겹치면 마지막 효과 보정(감쇠만), 거절된 시전은 보정 안 바꿈 | `7bcf549` |
+| [#21](https://github.com/Bananamlik/GS/pull/21) | 평점 3 이상 21개 스킬 주제 상태이상(`GA_SKILL_THEME`) | `a64f39f` |
+| [#24](https://github.com/Bananamlik/GS/pull/24) | 런 S1: 런·계정 저장 구조(`GA_RUN`, `gs-run-1`·`gs-meta-1`) | `68422bc` |
+| [#22](https://github.com/Bananamlik/GS/pull/22) | 문서: 평점 3 이상 243개 점검표 | `9b41e92` |
+| [#23](https://github.com/Bananamlik/GS/pull/23) | 문서: 로그라이트 런 뼈대 설계(S1~S8) | `22881a6` |
+| [#25](https://github.com/Bananamlik/GS/pull/25) | 런 S2: 노드 전투 실행기(체력 이월, 적 배율) | `8a362f9` |
+| [#26](https://github.com/Bananamlik/GS/pull/26) | VFX 위치: 자기형 효과 시전자 추적, 지면 균열 바닥 고정, Lab 빔 길이 = 사거리 | `553d6ae` |
+| [#27](https://github.com/Bananamlik/GS/pull/27) | 런 S3: 지도(3지역×6층), 지도 화면, 게임 화면 런 전투 | `ea16598` |
+| [#28](https://github.com/Bananamlik/GS/pull/28) | 런 S4: 노드 보상(골드·스킬·패시브 12종), 일반 드래프트 평점 필터 수정 | `60b3b8a` |
+| [#29](https://github.com/Bananamlik/GS/pull/29) | 런 S5: 상점·이벤트 5종·휴식 | `7cbf508` |
+| [#30](https://github.com/Bananamlik/GS/pull/30) | 런 S7: 조각·해금(영웅 2·특성 3)·난이도 단계·최고 기록 | `3fc9c6e` |
 
 - 닫음: [#4](https://github.com/Bananamlik/GS/pull/4) (권한 확인용).
 - 열려 있음: [#3](https://github.com/Bananamlik/GS/pull/3) (분할 전 원본. 내용이 `main`에 들어가 중복 상태. 닫을지는 사용자 결정), [#1](https://github.com/Bananamlik/GS/pull/1) (v14, 별개).
@@ -41,7 +52,11 @@
 
 | 항목 | 결과 | 환경 |
 |---|---|---|
-| `main` md5, `cmp index.html GS_Action_v34_runtime.html` | 두 파일 `a1129562…`, 동일 | 클라우드 세션 |
+| `main` md5, `cmp index.html GS_Action_v34_runtime.html` | 두 파일 `0eaa8b73…`, 동일 (`3fc9c6e`) | 클라우드 세션 |
+| `node --check` `<script>` JS 249개 + importmap 1개 (`3fc9c6e`) | 0 실패 | 클라우드 세션 |
+| 테스트 43개 (브라우저 29 + Node만 14), PR #30 헤드 `a8aabbb` (병합 결과 tree 동일) | **통과** (run 37485950877) | GitHub 러너, SwiftShader, 1회 |
+| 런 모드 실제 플레이 체감·난이도·신규 수치·새 화면 모양 | **UNVERIFIED** (자동 테스트는 무적 영웅) | |
+| VFX 위치 수정(#26) 화면 확인, 243개 전수 위치 점검 | **UNVERIFIED** (probe `claude/probe-vfx-anchor` 1차 캡처는 판정 불충분) | SwiftShader |
 | 브라우저 테스트 25개, PR #20 헤드 `4e474ef` | **통과** | GitHub 러너, SwiftShader, 1회 |
 | `node --check` `<script>` JS 248개 (importmap JSON 1개 별도 `json.loads`) | 0 실패 (`9c0f648`, 2026-10-06 21:00 재확인). 이전 기록의 247은 #17 이전 값 | 클라우드 세션 |
 | 브라우저 테스트 25개, `main` `a7df8f0` (#17 코드 포함, `workflow_dispatch`, run 17) | **통과** (conclusion success) | GitHub 러너, SwiftShader, 1회 |
@@ -87,11 +102,12 @@ AMD Radeon 내장, ANGLE/D3D11, Chrome 154, 1920×922, 품질 auto, 설정 60 �
 2. 밸런스 승인: 설치물 46종만 승인, 나머지 379종은 제안값(`gs-cloud-handoff`).
 3. PR #3 닫기, 결과 수집용 브랜치 삭제.
 4. SFX 효과별 보정 구조: 겹침 규칙만 조정하기로 함(#20 적용). 공통 trim 구조는 유지. 겹침 청감 UNVERIFIED.
-5. 평점 3 이상 스킬 상태이상: 주제 기반 21개 추가안(PR #21, 미병합). 오로라 계열 burn 유지 여부, CSV v8 갱신, 피해 차등·속성 체계는 미결 (`gs-skill-theme_v1_261006-2147.md`).
+5. 평점 3 이상 스킬 상태이상: 주제 기반 21개 추가(#21 병합). 오로라 계열 burn 유지 여부, CSV v8 갱신, 피해 차등·속성 체계는 미결 (`gs-skill-theme_v1_261006-2147.md`).
 
 ## 6. 남은 작업
 
-0. 게임 뼈대: 로그라이트 런 구조로 결정(2026-10-06). 설계안 `docs/design/gs-run-skeleton_v1_261006-2213.md`, 승인 전. 단계 S1~S8.
+0. 게임 뼈대: 로그라이트 런(`docs/design/gs-run-skeleton_v1_261006-2213.md`). S1~S5·S7 병합. 남음: S6 지역별 경기장·보스 강화형, S8 타이틀·런 결과·튜토리얼(런 종료 후 "다시 시작"이 일반 6웨이브로 감). 모든 신규 수치는 초안, 플레이 후 조정. 세션 정리 `docs/evidence/gs-session-wrapup_v1_261007-0016.md`.
+0-1. VFX 위치 점검 마무리: 243개 측면·상단 캡처(`claude/probe-vfx-anchor`, v2) 재판정 후 수정 PR. 1차 추정 후보 ARC-07·ARC-08(하늘 쪽), AC-02(머리 위 대형).
 
 1. 같은 PC·같은 조건으로 main v34(`76ddfb4`)와 현재 `main`을 3회씩 측정 (보류 중).
 2. 현재 빌드 60초 측정 후 결과 JSON(`phaseTotals`, `phaseSpans`, `longTasks`)을 `docs/evidence/`에 저장. 끊김 원인 좁히기. 품질 `낮음` 1회.
