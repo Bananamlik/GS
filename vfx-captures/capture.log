@@ -1,0 +1,189 @@
+09:28:16 ok   trial
+09:28:17 ok   start
+09:28:17 ok   unpaused
+09:28:22 ok   warm
+09:28:22 ok   invuln
+09:28:22 ok   hide ui
+09:28:22 ok   camera override
+09:28:22 series 9 scaled effects
+09:28:22 ok   S000-FX-25 cast
+09:28:23 ok   S000-FX-25 roots 0
+09:28:24 ok   S000-FX-25 side 0
+09:28:25 ok   S000-FX-25 top 0
+09:28:25 ok   S000-FX-25 roots 1
+09:28:26 ok   S000-FX-25 side 1
+09:28:27 ok   S000-FX-25 top 1
+09:28:27 ok   S000-FX-25 roots 2
+09:28:28 ok   S000-FX-25 side 2
+09:28:28 ok   S000-FX-25 top 2
+09:28:28 ok   S000-FX-25 roots 3
+09:28:29 ok   S000-FX-25 side 3
+09:28:30 ok   S000-FX-25 top 3
+09:28:30 ok   S000-FX-25 roots 4
+09:28:31 ok   S000-FX-25 side 4
+09:28:31 ok   S000-FX-25 top 4
+09:28:31 ok   S000-FX-25 roots 5
+09:28:32 ok   S000-FX-25 side 5
+09:28:33 ok   S000-FX-25 top 5
+09:28:33 ok   S000-FX-25 stop
+09:28:33 ok   S001-AS-10 cast
+09:28:33 ok   S001-AS-10 roots 0
+09:28:34 ok   S001-AS-10 side 0
+09:28:35 ok   S001-AS-10 top 0
+09:28:35 ok   S001-AS-10 roots 1
+09:28:35 ok   S001-AS-10 side 1
+09:28:36 ok   S001-AS-10 top 1
+09:28:36 ok   S001-AS-10 roots 2
+09:28:36 ok   S001-AS-10 side 2
+09:28:37 ok   S001-AS-10 top 2
+09:28:37 ok   S001-AS-10 roots 3
+09:28:37 ok   S001-AS-10 side 3
+09:28:37 ok   S001-AS-10 top 3
+09:28:37 ok   S001-AS-10 roots 4
+09:28:38 ok   S001-AS-10 side 4
+09:28:38 ok   S001-AS-10 top 4
+09:28:38 ok   S001-AS-10 roots 5
+09:28:39 ok   S001-AS-10 side 5
+09:28:39 ok   S001-AS-10 top 5
+09:28:39 ok   S001-AS-10 stop
+09:28:40 ok   S002-ARC-08 cast
+09:28:40 ok   S002-ARC-08 roots 0
+09:28:40 ok   S002-ARC-08 side 0
+09:28:41 ok   S002-ARC-08 top 0
+09:28:41 ok   S002-ARC-08 roots 1
+09:28:41 ok   S002-ARC-08 side 1
+09:28:42 ok   S002-ARC-08 top 1
+09:28:42 ok   S002-ARC-08 roots 2
+09:28:42 ok   S002-ARC-08 side 2
+09:28:43 ok   S002-ARC-08 top 2
+09:28:43 ok   S002-ARC-08 roots 3
+09:28:43 ok   S002-ARC-08 side 3
+09:28:44 ok   S002-ARC-08 top 3
+09:28:44 ok   S002-ARC-08 roots 4
+09:28:44 ok   S002-ARC-08 side 4
+09:28:44 ok   S002-ARC-08 top 4
+09:28:44 ok   S002-ARC-08 roots 5
+09:28:45 ok   S002-ARC-08 side 5
+09:28:45 ok   S002-ARC-08 top 5
+09:28:45 ok   S002-ARC-08 stop
+09:28:46 ok   S003-AC-02 cast
+09:28:46 ok   S003-AC-02 roots 0
+09:28:47 ok   S003-AC-02 side 0
+09:28:47 ok   S003-AC-02 top 0
+09:28:47 ok   S003-AC-02 roots 1
+09:28:47 ok   S003-AC-02 side 1
+09:28:48 ok   S003-AC-02 top 1
+09:28:48 ok   S003-AC-02 roots 2
+09:28:48 ok   S003-AC-02 side 2
+09:28:49 ok   S003-AC-02 top 2
+09:28:49 ok   S003-AC-02 roots 3
+09:28:49 ok   S003-AC-02 side 3
+09:28:50 ok   S003-AC-02 top 3
+09:28:50 ok   S003-AC-02 roots 4
+09:28:50 ok   S003-AC-02 side 4
+09:28:50 ok   S003-AC-02 top 4
+09:28:50 ok   S003-AC-02 roots 5
+09:28:51 ok   S003-AC-02 side 5
+09:28:51 ok   S003-AC-02 top 5
+09:28:51 ok   S003-AC-02 stop
+09:28:52 ok   S004-SC-02 cast
+09:28:52 ok   S004-SC-02 roots 0
+09:28:52 ok   S004-SC-02 side 0
+09:28:53 ok   S004-SC-02 top 0
+09:28:53 ok   S004-SC-02 roots 1
+09:28:54 ok   S004-SC-02 side 1
+09:28:54 ok   S004-SC-02 top 1
+09:28:54 ok   S004-SC-02 roots 2
+09:28:55 ok   S004-SC-02 side 2
+09:28:55 ok   S004-SC-02 top 2
+09:28:55 ok   S004-SC-02 roots 3
+09:28:56 ok   S004-SC-02 side 3
+09:28:56 ok   S004-SC-02 top 3
+09:28:56 ok   S004-SC-02 roots 4
+09:28:56 ok   S004-SC-02 side 4
+09:28:57 ok   S004-SC-02 top 4
+09:28:57 ok   S004-SC-02 roots 5
+09:28:57 ok   S004-SC-02 side 5
+09:28:58 ok   S004-SC-02 top 5
+09:28:58 ok   S004-SC-02 stop
+09:28:58 ok   S005-FX-10-O cast
+09:28:58 ok   S005-FX-10-O roots 0
+09:28:59 ok   S005-FX-10-O side 0
+09:28:59 ok   S005-FX-10-O top 0
+09:28:59 ok   S005-FX-10-O roots 1
+09:29:00 ok   S005-FX-10-O side 1
+09:29:00 ok   S005-FX-10-O top 1
+09:29:00 ok   S005-FX-10-O roots 2
+09:29:01 ok   S005-FX-10-O side 2
+09:29:01 ok   S005-FX-10-O top 2
+09:29:01 ok   S005-FX-10-O roots 3
+09:29:02 ok   S005-FX-10-O side 3
+09:29:02 ok   S005-FX-10-O top 3
+09:29:02 ok   S005-FX-10-O roots 4
+09:29:03 ok   S005-FX-10-O side 4
+09:29:03 ok   S005-FX-10-O top 4
+09:29:03 ok   S005-FX-10-O roots 5
+09:29:04 ok   S005-FX-10-O side 5
+09:29:04 ok   S005-FX-10-O top 5
+09:29:04 ok   S005-FX-10-O stop
+09:29:05 ok   S006-FX-146 cast
+09:29:05 ok   S006-FX-146 roots 0
+09:29:05 ok   S006-FX-146 side 0
+09:29:06 ok   S006-FX-146 top 0
+09:29:06 ok   S006-FX-146 roots 1
+09:29:06 ok   S006-FX-146 side 1
+09:29:07 ok   S006-FX-146 top 1
+09:29:07 ok   S006-FX-146 roots 2
+09:29:08 ok   S006-FX-146 side 2
+09:29:08 ok   S006-FX-146 top 2
+09:29:08 ok   S006-FX-146 roots 3
+09:29:09 ok   S006-FX-146 side 3
+09:29:10 ok   S006-FX-146 top 3
+09:29:10 ok   S006-FX-146 roots 4
+09:29:10 ok   S006-FX-146 side 4
+09:29:11 ok   S006-FX-146 top 4
+09:29:11 ok   S006-FX-146 roots 5
+09:29:11 ok   S006-FX-146 side 5
+09:29:11 ok   S006-FX-146 top 5
+09:29:11 ok   S006-FX-146 stop
+09:29:12 ok   S007-ARC-25 cast
+09:29:12 ok   S007-ARC-25 roots 0
+09:29:14 ok   S007-ARC-25 side 0
+09:29:15 ok   S007-ARC-25 top 0
+09:29:15 ok   S007-ARC-25 roots 1
+09:29:16 ok   S007-ARC-25 side 1
+09:29:17 ok   S007-ARC-25 top 1
+09:29:17 ok   S007-ARC-25 roots 2
+09:29:18 ok   S007-ARC-25 side 2
+09:29:19 ok   S007-ARC-25 top 2
+09:29:19 ok   S007-ARC-25 roots 3
+09:29:20 ok   S007-ARC-25 side 3
+09:29:21 ok   S007-ARC-25 top 3
+09:29:21 ok   S007-ARC-25 roots 4
+09:29:22 ok   S007-ARC-25 side 4
+09:29:23 ok   S007-ARC-25 top 4
+09:29:23 ok   S007-ARC-25 roots 5
+09:29:24 ok   S007-ARC-25 side 5
+09:29:24 ok   S007-ARC-25 top 5
+09:29:24 ok   S007-ARC-25 stop
+09:29:25 ok   S008-D:PROJ:lance cast
+09:29:26 ok   S008-D:PROJ:lance roots 0
+09:29:27 ok   S008-D:PROJ:lance side 0
+09:29:28 ok   S008-D:PROJ:lance top 0
+09:29:28 ok   S008-D:PROJ:lance roots 1
+09:29:28 ok   S008-D:PROJ:lance side 1
+09:29:29 ok   S008-D:PROJ:lance top 1
+09:29:29 ok   S008-D:PROJ:lance roots 2
+09:29:30 ok   S008-D:PROJ:lance side 2
+09:29:30 ok   S008-D:PROJ:lance top 2
+09:29:30 ok   S008-D:PROJ:lance roots 3
+09:29:31 ok   S008-D:PROJ:lance side 3
+09:29:32 ok   S008-D:PROJ:lance top 3
+09:29:32 ok   S008-D:PROJ:lance roots 4
+09:29:32 ok   S008-D:PROJ:lance side 4
+09:29:33 ok   S008-D:PROJ:lance top 4
+09:29:33 ok   S008-D:PROJ:lance roots 5
+09:29:33 ok   S008-D:PROJ:lance side 5
+09:29:34 ok   S008-D:PROJ:lance top 5
+09:29:34 ok   S008-D:PROJ:lance stop
+09:29:34 pageerrors 0 []
