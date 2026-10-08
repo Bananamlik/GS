@@ -44274,7 +44274,7 @@ class Projectile{
  constructor(p,t,from){
   super(p,t);
   const d=t.clone().sub(p);d.y=0;
-  this.dir=d.lengthSq()>1e-6?d.normalize():new THREE.Vector3(1,0,0);
+  this.dir=d.lengthSq()>1e-6?d.normalize():new THREE.Vector3(1,0,0);if(from){const f=new THREE.Vector3(p.x-from.x,0,p.z-from.z);if(f.lengthSq()>1e-6)this.dir.copy(f.normalize());} /*@V37 a cast beam runs from the caster through the target*/
   this.a=clampArena(t.clone().addScaledVector(this.dir,-62));this.a.y=1.6;if(from)this.a.set(from.x,1.6,from.z); /*@V37 a cast beam starts at the caster instead of 62 behind the target*/
   this.b=clampArena(t.clone().addScaledVector(this.dir, 62));this.b.y=1.6;
   const len=this.a.distanceTo(this.b);
