@@ -1,0 +1,50 @@
+test_checkpoint_resume_and_real_context_recovery (test_cloud_workflows.CloudWorkflows.test_checkpoint_resume_and_real_context_recovery) ... ok
+test_equipment_change_prepares_and_restores_kit (test_cloud_workflows.CloudWorkflows.test_equipment_change_prepares_and_restores_kit) ... ok
+test_library_variants_and_seeded_simulation (test_cloud_workflows.CloudWorkflows.test_library_variants_and_seeded_simulation) ... ok
+test_mobile_and_desktop_library_review_panels (test_cloud_workflows.CloudWorkflows.test_mobile_and_desktop_library_review_panels) ... ok
+test_repeat_compare_cancel_and_json_export (test_cloud_workflows.CloudWorkflows.test_repeat_compare_cancel_and_json_export) ... ok
+test_representative_casts_deliver_damage_control_and_visual (test_cloud_workflows.CloudWorkflows.test_representative_casts_deliver_damage_control_and_visual) ... ok
+test_second_context_loss_cancels_pending_recovery_compile (test_cloud_workflows.CloudWorkflows.test_second_context_loss_cancels_pending_recovery_compile) ... ok
+test_touch_cast_root_restriction_and_pause (test_cloud_workflows.CloudWorkflows.test_touch_cast_root_restriction_and_pause) ... ok
+test_wave_reward_changes_checkpoint_and_restores_lab_kit (test_cloud_workflows.CloudWorkflows.test_wave_reward_changes_checkpoint_and_restores_lab_kit) ... ok
+test_async_warm_serializes_hides_and_restores_latest_target (test_performance_measurement.BrowserTests.test_async_warm_serializes_hides_and_restores_latest_target) ... ok
+test_cancel_during_calibration_restores_active_trial (test_performance_measurement.BrowserTests.test_cancel_during_calibration_restores_active_trial) ... ok
+test_compile_failure_and_context_loss_release_warm_ownership (test_performance_measurement.BrowserTests.test_compile_failure_and_context_loss_release_warm_ownership) ... ok
+test_extension_fallback_is_explicit_and_yields (test_performance_measurement.BrowserTests.test_extension_fallback_is_explicit_and_yields) ... ok
+test_fixed_target_and_real_phase_records (test_performance_measurement.BrowserTests.test_fixed_target_and_real_phase_records) ... ok
+test_module_preparation_cancels_and_rebuilds_after_context_loss (test_performance_measurement.BrowserTests.test_module_preparation_cancels_and_rebuilds_after_context_loss) ... ok
+test_output_copy_elision_preserves_pixels_and_conversion_fallback (test_performance_measurement.BrowserTests.test_output_copy_elision_preserves_pixels_and_conversion_fallback) ... ok
+test_preparation_failure_cannot_pass (test_performance_measurement.BrowserTests.test_preparation_failure_cannot_pass) ... ok
+test_quality_changes_resize_once_and_skip_identical_settings (test_performance_measurement.BrowserTests.test_quality_changes_resize_once_and_skip_identical_settings) ... ok
+test_real_cast_cancels_warm_without_stopping_new_visual (test_performance_measurement.BrowserTests.test_real_cast_cancels_warm_without_stopping_new_visual) ... ok
+test_slow_render_is_not_skipped_again_at_30_fps (test_performance_measurement.BrowserTests.test_slow_render_is_not_skipped_again_at_30_fps) ... ok
+test_storm_segmented_batches_preserve_alpha_order_and_visibility (test_performance_measurement.BrowserTests.test_storm_segmented_batches_preserve_alpha_order_and_visibility) ... ok
+test_trace_capacity_stack_and_setting_change (test_performance_measurement.BrowserTests.test_trace_capacity_stack_and_setting_change) ... ok
+test_elapsed_pacing_keeps_slow_frames_and_limits_fast_refresh (test_performance_measurement.SourceTests.test_elapsed_pacing_keeps_slow_frames_and_limits_fast_refresh) ... ok
+test_loaded_cadence_cannot_relax_requested_budget (test_performance_measurement.SourceTests.test_loaded_cadence_cannot_relax_requested_budget) ... ok
+test_runtime_files_match_and_scripts_parse (test_performance_measurement.SourceTests.test_runtime_files_match_and_scripts_parse) ... ok
+test_encounter_is_deterministic_and_carries_hp_and_stats (test_run_state.EncounterTests.test_encounter_is_deterministic_and_carries_hp_and_stats) ... ok
+test_enemy_scaling_kit_and_node_validation (test_run_state.EncounterTests.test_enemy_scaling_kit_and_node_validation) ... ok
+test_loss_ends_the_run (test_run_state.EncounterTests.test_loss_ends_the_run) ... ok
+test_full_run_through_three_acts (test_run_state.MapTests.test_full_run_through_three_acts) ... ok
+test_map_is_deterministic_and_well_formed (test_run_state.MapTests.test_map_is_deterministic_and_well_formed) ... ok
+test_reachability_and_non_combat_visit (test_run_state.MapTests.test_reachability_and_non_combat_visit) ... ok
+test_settle_unlock_traits_and_difficulty (test_run_state.MetaTests.test_settle_unlock_traits_and_difficulty) ... ok
+test_battle_reward_offers_and_skill_swap (test_run_state.RewardTests.test_battle_reward_offers_and_skill_swap) ... ok
+test_passives_change_only_combat_copies (test_run_state.RewardTests.test_passives_change_only_combat_copies) ... ok
+test_create_validate_save_and_load_round_trip (test_run_state.RunStateTests.test_create_validate_save_and_load_round_trip) ... ok
+test_invalid_runs_are_rejected (test_run_state.RunStateTests.test_invalid_runs_are_rejected) ... ok
+test_seeds_are_deterministic_and_kit_resolves_for_combat (test_run_state.RunStateTests.test_seeds_are_deterministic_and_kit_resolves_for_combat) ... ok
+test_event_and_rest (test_run_state.StopTests.test_event_and_rest) ... ok
+test_shop_buy_and_leave (test_run_state.StopTests.test_shop_buy_and_leave) ... ok
+test_run_map_battle_and_return (test_run_ui.RunUi.test_run_map_battle_and_return) ... ok
+test_run_shop_buy_and_leave (test_run_ui.RunUi.test_run_shop_buy_and_leave) ... ok
+test_unlock_screen_buys_a_hero (test_run_ui.RunUi.test_unlock_screen_buys_a_hero) ... ok
+test_audit_lifts_lower_floating_effects (test_vfx_anchoring.VfxAnchoring.test_audit_lifts_lower_floating_effects) ... ok
+test_lance_beam_follows_the_aim_and_starts_at_the_caster (test_vfx_anchoring.VfxAnchoring.test_lance_beam_follows_the_aim_and_starts_at_the_caster) ... ok
+test_poses_follow_ground_lab_length_and_shield_follows_hero (test_vfx_anchoring.VfxAnchoring.test_poses_follow_ground_lab_length_and_shield_follows_hero) ... ok
+
+----------------------------------------------------------------------
+Ran 45 tests in 305.925s
+
+OK
