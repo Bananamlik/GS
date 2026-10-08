@@ -1,12 +1,13 @@
 # STATUS
 
-갱신: 2026-10-07 00:25 KST. 근거: `docs/evidence/`. 검증하지 못한 항목은 UNVERIFIED.
+갱신: 2026-10-08 19:20 KST. 근거: `docs/evidence/`. 검증하지 못한 항목은 UNVERIFIED.
 
 ## 1. 코드 상태
 
 | 항목 | 값 |
 |---|---|
-| main | `3fc9c6e` (#30 병합). `index.html` = `GS_Action_v34_runtime.html`, md5 `0eaa8b73a1a4ef38a48e9809a52d5bd8`, 62,769줄 (v35 + HUD + 랩 모바일 + SFX + 스킬 주제 상태 + VFX 위치 + 로그라이트 런 S1~S5·S7) |
+| main | `886d728` (#35 병합). `index.html` = `GS_Action_v34_runtime.html`, md5 `10ef9fe87f56b0c0a9c13b92e86ff77e`, 62,769줄 (v35 + HUD + 랩 모바일 + SFX + 스킬 주제 상태 + VFX 위치 + 로그라이트 런 S1~S5·S7 + 관통 빔 방향 + 높이 보정 7개) |
+| 런 S7까지(#30 시점) | main `3fc9c6e`의 `index.html`, md5 `0eaa8b73a1a4ef38a48e9809a52d5bd8` |
 | SFX 겹침 규칙까지(#20 시점) | main `7bcf549`의 `index.html`, md5 `a1129562470585674331ed97ce640a6e` |
 | v35 파일 | `GS_Action_v35_261005-2000.html`, md5 `f7d2ab883d7bc78fc05d9b046e45bf47` = PR #3 최종본. HUD 개선 이전 빌드. 수정하지 않음. |
 | 랩 모바일까지(#15 시점) | main `a8df602`의 `index.html`, md5 `f239381cb8f1ab9107ac1325db821e24` |
@@ -42,6 +43,11 @@
 | [#28](https://github.com/Bananamlik/GS/pull/28) | 런 S4: 노드 보상(골드·스킬·패시브 12종), 일반 드래프트 평점 필터 수정 | `60b3b8a` |
 | [#29](https://github.com/Bananamlik/GS/pull/29) | 런 S5: 상점·이벤트 5종·휴식 | `7cbf508` |
 | [#30](https://github.com/Bananamlik/GS/pull/30) | 런 S7: 조각·해금(영웅 2·특성 3)·난이도 단계·최고 기록 | `3fc9c6e` |
+| [#31](https://github.com/Bananamlik/GS/pull/31) | 문서: 세션 정리(10-07) | `6d933ae` |
+| [#32](https://github.com/Bananamlik/GS/pull/32) | 문서: 인계 프롬프트 v2 | `b5f89cc` |
+| [#33](https://github.com/Bananamlik/GS/pull/33) | 문서: VFX 위치 판정표 v1·v2 (243행, 정상 219·의심 24) | `f5403bd` |
+| [#34](https://github.com/Bananamlik/GS/pull/34) | 수평 관통 빔(`D:PROJ:lance`): 무작위 방향 → 시전자에서 표적 방향 | `3ad36a8` |
+| [#35](https://github.com/Bananamlik/GS/pull/35) | VFX 높이 보정 7개(`AC-02`·`ARC-08`·`SC-02`·`FX-10-O`·`FX-25`·`FX-146`·`AS-10`) | `886d728` |
 
 - 닫음: [#4](https://github.com/Bananamlik/GS/pull/4) (권한 확인용).
 - 열려 있음: [#3](https://github.com/Bananamlik/GS/pull/3) (분할 전 원본. 내용이 `main`에 들어가 중복 상태. 닫을지는 사용자 결정), [#1](https://github.com/Bananamlik/GS/pull/1) (v14, 별개).
@@ -52,11 +58,11 @@
 
 | 항목 | 결과 | 환경 |
 |---|---|---|
-| `main` md5, `cmp index.html GS_Action_v34_runtime.html` | 두 파일 `0eaa8b73…`, 동일 (`3fc9c6e`) | 클라우드 세션 |
+| `main` md5, `cmp index.html GS_Action_v34_runtime.html` | 두 파일 `10ef9fe8…`, 동일 (`886d728`) | 클라우드 세션 |
 | `node --check` `<script>` JS 249개 + importmap 1개 (`3fc9c6e`) | 0 실패 | 클라우드 세션 |
-| 테스트 43개 (브라우저 29 + Node만 14), PR #30 헤드 `a8aabbb` (병합 결과 tree 동일) | **통과** (run 37485950877) | GitHub 러너, SwiftShader, 1회 |
+| 테스트 45개 (브라우저 31 + Node만 14), PR #35 헤드 `097828f` (병합 결과의 실행본 동일) | **통과** (run 37757805710) | GitHub 러너, SwiftShader, 1회. 같은 PR의 앞 커밋 `6f8b745`는 1회 실패(로그를 받지 못해 원인 미확인) |
 | 런 모드 실제 플레이 체감·난이도·신규 수치·새 화면 모양 | **UNVERIFIED** (자동 테스트는 무적 영웅) | |
-| VFX 위치 수정(#26) 화면 확인, 243개 전수 위치 점검 | **UNVERIFIED** (probe `claude/probe-vfx-anchor` 1차 캡처는 판정 불충분) | SwiftShader |
+| VFX 위치 수정(#26) 화면 확인, 243개 전수 위치 점검 | **확인** (SwiftShader 캡처, `gs-vfx-anchor-audit_v2_261008-1811.md`). 정상 219·의심 24, 그중 8개는 #34·#35로 수정. 실제 GPU·실기기 화면은 UNVERIFIED | SwiftShader, 조준 1방향·거리 25 |
 | 브라우저 테스트 25개, PR #20 헤드 `4e474ef` | **통과** | GitHub 러너, SwiftShader, 1회 |
 | `node --check` `<script>` JS 248개 (importmap JSON 1개 별도 `json.loads`) | 0 실패 (`9c0f648`, 2026-10-06 21:00 재확인). 이전 기록의 247은 #17 이전 값 | 클라우드 세션 |
 | 브라우저 테스트 25개, `main` `a7df8f0` (#17 코드 포함, `workflow_dispatch`, run 17) | **통과** (conclusion success) | GitHub 러너, SwiftShader, 1회 |
@@ -107,7 +113,8 @@ AMD Radeon 내장, ANGLE/D3D11, Chrome 154, 1920×922, 품질 auto, 설정 60 �
 ## 6. 남은 작업
 
 0. 게임 뼈대: 로그라이트 런(`docs/design/gs-run-skeleton_v1_261006-2213.md`). S1~S5·S7 병합. 남음: S6 지역별 경기장·보스 강화형, S8 타이틀·런 결과·튜토리얼(런 종료 후 "다시 시작"이 일반 6웨이브로 감). 모든 신규 수치는 초안, 플레이 후 조정. 세션 정리 `docs/evidence/gs-session-wrapup_v1_261007-0016.md`.
-0-1. VFX 위치 점검 마무리: 243개 측면·상단 캡처(`claude/probe-vfx-anchor`, v2) 재판정 후 수정 PR. 1차 추정 후보 ARC-07·ARC-08(하늘 쪽), AC-02(머리 위 대형).
+0-1. VFX 위치: 판정·1차 수정 완료(#33·#34·#35). 남음 16개 = 높이 보정이 안 듣는 `ARC-25`, 의도일 수 있는 공중 연출 5개(그대로 두기로 함), 크기·가림 10개(실기기에서 보고 결정). 평점 2 이하·폐기 효과는 작업 보류(사용자 방침, 평점 3 이상만 사용).
+0-2. 전투 설계 문서(카메라·조준·이동·가독성·빌드 축) 작성 후 S6 진행.
 
 1. 같은 PC·같은 조건으로 main v34(`76ddfb4`)와 현재 `main`을 3회씩 측정 (보류 중).
 2. 현재 빌드 60초 측정 후 결과 JSON(`phaseTotals`, `phaseSpans`, `longTasks`)을 `docs/evidence/`에 저장. 끊김 원인 좁히기. 품질 `낮음` 1회.
