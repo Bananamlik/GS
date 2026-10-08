@@ -68,3 +68,20 @@ class VfxAnchoring(performance.BrowserSession):
                 self.assertAlmostEqual(got['mid'][k], unit * (reach + 62) / 2, delta=1.5, msg=str((aim, got)))
             self.page.evaluate("VFX_COMBAT.stop('D:PROJ:lance')")
             self.page.wait_for_timeout(1500)
+
+    def test_audit_lifts_lower_floating_effects(self):
+        lifts = {'AC-02': -12, 'ARC-08': -12, 'SC-02': -11, 'FX-10-O': -8, 'FX-25': -4, 'FX-146': -10, 'AS-10': -3}
+        self.assertEqual(self.page.evaluate('ids=>ids.map(i=>window.__FX_ADJ[i]?.lift)', list(lifts)), list(lifts.values()))
+        self.assertTrue(self.page.evaluate('ids=>ids.every(i=>window.__FX_SCALABLE.has(i))', list(lifts)))
+        self.page.evaluate("GS_ACTION.startTrial('bolt')")
+        self.page.locator('#gaStart').evaluate('e=>e.click()')
+        self.page.wait_for_function('!GS_ACTION.status.paused', timeout=60000)
+        self.page.wait_for_function('GS_ACTION.vfxWarmStatus?.ids && GS_ACTION.warmStatus.queued===0', timeout=60000)
+        got = self.page.evaluate('''()=>{const h=GS_ACTION.sim.hero;h.x=0;h.z=0;h.invuln=1e9;
+          const r=GS_ACTION.fx({id:'FX-25',kind:'circle',caster:'test',origin:{x:0,z:0},target:{x:0,z:-25},scale:.5});
+          const root=(STAGE3D.getEffect(r.id)?.__gsRoots||[])[0];
+          return {cast:r,parent:root?.parent?.name,y:root?.parent?.position.y,k:root?.parent?.scale.x};}''')
+        self.assertTrue(got['cast']['ok'], got)
+        self.assertEqual(got['parent'], 'GS_FX_SCALER', got)
+        self.assertAlmostEqual(got['k'], .5, places=3, msg=str(got))
+        self.assertAlmostEqual(got['y'], -4 * .5, places=3, msg=str(got))
