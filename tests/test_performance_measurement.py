@@ -98,7 +98,7 @@ class BrowserSession(unittest.TestCase):
 class BrowserTests(BrowserSession):
     def test_slow_render_is_not_skipped_again_at_30_fps(self):
         self.page.evaluate("GS_ACTION.startTrial('bolt')")
-        self.page.wait_for_function('GS_ACTION.vfxWarmStatus?.ids && GS_ACTION.warmStatus.queued===0',timeout=60000)
+        self.page.wait_for_function('GS_ACTION.vfxWarmStatus && GS_ACTION.warmStatus.queued===0 && !GS_ACTION.warmStatus.active',timeout=60000)
         self.page.select_option('#gaFpsCap','30',force=True)
         self.page.evaluate('''() => {
           window.pacedFrames=[];const C=STAGE3D.host.composer;

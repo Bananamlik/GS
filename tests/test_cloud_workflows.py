@@ -138,7 +138,7 @@ class CloudWorkflows(performance.BrowserSession):
 
     def test_second_context_loss_cancels_pending_recovery_compile(self):
         self.page.evaluate("GS_ACTION.startTrial('bolt')")
-        self.page.wait_for_function('GS_ACTION.vfxWarmStatus?.ids && GS_ACTION.warmStatus.queued===0',timeout=60000)
+        self.page.wait_for_function('GS_ACTION.vfxWarmStatus && GS_ACTION.warmStatus.queued===0 && !GS_ACTION.warmStatus.active',timeout=60000)
         self.page.locator('#gaMenuOpen').evaluate('e=>e.click()')
         self.page.evaluate('''() => {
           const R=STAGE3D.env.renderer,c=R.domElement;window.nativeCompile=R.compileAsync;
@@ -158,7 +158,7 @@ class CloudWorkflows(performance.BrowserSession):
 
     def test_touch_cast_root_restriction_and_pause(self):
         self.page.evaluate("GS_ACTION.startTrial('bolt')")
-        self.page.wait_for_function('GS_ACTION.vfxWarmStatus?.ids && GS_ACTION.warmStatus.queued===0',timeout=60000)
+        self.page.wait_for_function('GS_ACTION.vfxWarmStatus && GS_ACTION.warmStatus.queued===0 && !GS_ACTION.warmStatus.active',timeout=60000)
         self.page.evaluate('''() => {
           window.touchAccepted=[];const w=GS_ACTION.sim,native=w.cast;
           w.cast=function(...args){const ok=native.apply(this,args);if(ok)touchAccepted.push(args[0]);return ok;};
