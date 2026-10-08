@@ -23,6 +23,8 @@
 | `gs-hud-hier-capture-log_v1_261006-2107.txt` | `d46f8fd818d9e0b45a0fd8a4dc2ec7d8` | HUD 위계 캡처 로그(`claude/probe-hud-hier`) | 이미지는 브랜치에만 있음. |
 | `gs-skill-theme_v1_261006-2147.md` | `45c5d930e098fc71d6f15d7c91c3185b` | 평점 3 이상 243개 효과·피해·상태이상 점검과 주제 기반 상태 21개 추가 근거(PR #21) | 매핑은 이름·시각 기준 판단. 밸런스 체감 UNVERIFIED. |
 | `gs-session-wrapup_v1_261007-0016.md` | `91f56f124a61586939d9e6632cbee1cb` | 세션 정리: 병합 PR #19~#30, 고친 버그, 테스트 43개, UNVERIFIED, 남은 작업 | 런 모드·VFX 위치 화면·신규 수치는 UNVERIFIED. VFX 위치 후보는 1차 캡처 추정. |
+| `gs-vfx-anchor-audit_v1_261008-1745.md` | `316afeefb49e3614144f96c15d78d33d` | 평점 3 이상 243개 VFX 위치 판정표 1차(정상 194, 의심 49). **v2로 대체됨** | 효과당 화면 1시점을 눈으로 판정. SwiftShader 1회. 원본 크기로 시전해 `fxScale` 미반영. Lab 빔 길이·자광 단층 길이 UNVERIFIED. |
+| `gs-vfx-anchor-audit_v2_261008-1811.md` | `85f637f91514e59ab0f3824e038acd8d` | VFX 위치 판정표 2차: 시점별·게임 배율 재촬영 반영(정상 219, 의심 24), #26 수정·Lab 빔 확인, 처리 제안 | SwiftShader 3회. 조준 1방향·거리 25. '허공'·'과대'는 눈 판정이며 의도 여부는 사용자 판단 필요. |
 
 ## 한계
 
