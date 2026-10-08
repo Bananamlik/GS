@@ -1,0 +1,29 @@
+09:43:10 ok   trial
+09:43:11 ok   start
+09:43:11 ok   unpaused
+09:43:14 ok   warm
+09:43:14 ok   invuln
+09:43:14 ok   hide ui
+09:43:14 ok   camera override
+09:43:14 series 1 scaled effects
+09:43:14 ok   S000-FX-146 cast
+09:43:14 ok   S000-FX-146 roots 0
+09:43:15 ok   S000-FX-146 side 0
+09:43:15 ok   S000-FX-146 top 0
+09:43:15 ok   S000-FX-146 roots 1
+09:43:16 ok   S000-FX-146 side 1
+09:43:17 ok   S000-FX-146 top 1
+09:43:17 ok   S000-FX-146 roots 2
+09:43:17 ok   S000-FX-146 side 2
+09:43:18 ok   S000-FX-146 top 2
+09:43:18 ok   S000-FX-146 roots 3
+09:43:18 ok   S000-FX-146 side 3
+09:43:19 ok   S000-FX-146 top 3
+09:43:19 ok   S000-FX-146 roots 4
+09:43:19 ok   S000-FX-146 side 4
+09:43:20 ok   S000-FX-146 top 4
+09:43:20 ok   S000-FX-146 roots 5
+09:43:20 ok   S000-FX-146 side 5
+09:43:20 ok   S000-FX-146 top 5
+09:43:20 ok   S000-FX-146 stop
+09:43:21 pageerrors 0 []
