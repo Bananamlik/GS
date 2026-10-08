@@ -1,4 +1,4 @@
-"""Probe v3: time series for the 49 suspect effects of the VFX anchor audit (SwiftShader, not a real GPU). Not for merge.
+"""Probe v4: effects with fxScale cast at in-game scale, 3 frames each (SwiftShader, not a real GPU). Not for merge.
 
 Usage: python3 scripts/capture_vfx.py OUTDIR  (serve the repo on 127.0.0.1:8000 first)
 A: Lab beam preview with the welcome dialog closed.  B: violet fault over time.  D: lance at two aims.
@@ -12,8 +12,6 @@ from playwright.sync_api import sync_playwright
 OUT = Path(sys.argv[1] if len(sys.argv) > 1 else 'vfx-captures')
 (OUT / 'series').mkdir(parents=True, exist_ok=True)
 URL = os.environ.get('GS_TEST_BASE_URL', 'http://127.0.0.1:8000/')
-SUSPECTS = json.loads((Path(__file__).parent / 'vfx_suspects.json').read_text())
-TIMES = [0.3, 0.8, 1.4, 2.2, 3.2, 4.5]
 log, results = [], {}
 
 
@@ -33,7 +31,7 @@ def step(label, fn):
         return None
 
 
-FX = '''([id,kind,ox,oz,tx,tz])=>GS_ACTION.fx({id,kind,caster:'test',origin:{x:ox,z:oz},target:{x:tx,z:tz}})'''
+FX = '''([id,kind,ox,oz,tx,tz,scale])=>GS_ACTION.fx({id,kind,caster:'test',origin:{x:ox,z:oz},target:{x:tx,z:tz},...(scale?{scale}:{})})'''
 ROOTS = '''id=>{try{const m=STAGE3D.getEffect(STAGE3D.resolveId?.(id)||id);const r=m?.__gsRoots||[];
   return {live:!!m?.__gsLive,n:r.length,roots:r.slice(0,12).map(o=>({v:o.visible,p:[o.position.x,o.position.y,o.position.z].map(x=>+x.toFixed(2)),
     pp:o.parent?[o.parent.position.x,o.parent.position.y,o.parent.position.z].map(x=>+x.toFixed(2)):null,pn:o.parent?.name||''}))};}catch(e){return {err:String(e).slice(0,120)};}}'''
@@ -48,18 +46,6 @@ with sync_playwright() as p:
     page.goto(URL, wait_until='networkidle', timeout=90000)
     page.wait_for_function('window.GS_ACTION && window.GS_STUDIO', timeout=90000)
     shot = lambda name, q=60: step(f'shot {name}', lambda: page.screenshot(path=str(OUT / f'{name}.jpg'), type='jpeg', quality=q))
-
-    # A. Lab beam length, welcome dialog closed
-    step('lab welcome close', lambda: page.evaluate("document.getElementById('gaLabWelcome').style.display='none'"))
-    for bid in ['CH:tidal', 'CH:storm']:
-        step(f'lab play {bid}', lambda: page.evaluate('id=>GS_STUDIO.select(id,{play:true})', bid))
-        step('lab welcome close', lambda: page.evaluate("document.getElementById('gaLabWelcome').style.display='none'"))
-        for i, w in enumerate([1200, 800, 800]):
-            page.wait_for_timeout(w)
-            shot(f'A-lab-{bid.replace(":", "_")}-{i}')
-        results['A-' + bid] = step(f'lab half {bid}', lambda: page.evaluate('id=>({half:typeof labBeamHalf==="function"?labBeamHalf(id):null})', bid))
-        step(f'lab stop {bid}', lambda: page.evaluate('id=>VFX_COMBAT.stop(id)', bid))
-        page.wait_for_timeout(300)
 
     # Trial
     step('trial', lambda: page.evaluate("GS_ACTION.startTrial('bolt')"))
@@ -78,11 +64,11 @@ with sync_playwright() as p:
         page.evaluate('([p,t])=>{window.__probeCam={p,t}}', [pp, t])
         page.wait_for_timeout(110)
 
-    def series(tag, fid, kind, aim, times):
+    def series(tag, fid, kind, aim, times, scale=None):
         fn = tag.replace(':', '_').replace('/', '_')
         page.evaluate(home)
         page.wait_for_timeout(200)
-        res = step(f'{tag} cast', lambda: page.evaluate(FX, [fid, kind, 0, 0, aim[0], aim[1]]))
+        res = step(f'{tag} cast', lambda: page.evaluate(FX, [fid, kind, 0, 0, aim[0], aim[1], scale]))
         t0 = time.time()
         frames = []
         for k, t in enumerate(times):
@@ -100,16 +86,14 @@ with sync_playwright() as p:
         step(f'{tag} stop', lambda: page.evaluate('id=>{VFX_COMBAT.stop(id)}', fid))
         page.wait_for_timeout(250)
 
-    # B. violet fault over time
-    series('B-violet', 'VA:violet_fault', 'beam', (0, -30), [0.9, 1.4, 2.0, 2.8, 3.6])
-    # D. lance direction: same effect, two aims
-    series('D-lance-fwd', 'D:PROJ:lance', 'circle', (0, -25), [0.5, 1.0])
-    series('D-lance-diag', 'D:PROJ:lance', 'circle', (-20, -15), [0.5, 1.0])
-    series('D-lance-side', 'D:PROJ:lance', 'circle', (22, 0), [0.5, 1.0])
-    # S. suspects
-    note(f'series {len(SUSPECTS)} suspects')
-    for s in SUSPECTS:
-        series(f"S{s['i']:03d}-{s['id']}", s['id'], s['kind'], (0, -25), TIMES)
+    # S. every rating>=3 effect whose default skill carries fxScale, cast at that in-game scale
+    rows = page.evaluate("""()=>Object.values(GA_SKILL_LIB).filter(L=>(L.rating||0)>=3&&L.skill.fxScale).map(L=>({id:L.id,kind:L.skill.kind,first:L.native?.firstHit||0,scale:L.skill.fxScale,radius:L.skill.radius||null,nat:L.native?.radius||null}))""")
+    note(f'series {len(rows)} scaled effects')
+    for i, r in enumerate(rows):
+        f = min(3.4, max(0.5, (r['first'] or 0.6) + 0.15))
+        tag = f"S{i:03d}-{r['id']}"
+        series(tag, r['id'], r['kind'], (0, -25), [f, f + 1.2, f + 2.6], scale=r['scale'])
+        results[tag].update(r)
     note(f'pageerrors {len(errors)} {errors[:5]}')
     b.close()
 

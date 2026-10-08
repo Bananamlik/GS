@@ -2,7 +2,7 @@ name: vfx-capture
 
 on:
   push:
-    branches: ['claude/probe-vfx-anchor-v3']
+    branches: ['claude/probe-vfx-anchor-v4']
   workflow_dispatch:
 
 permissions:
