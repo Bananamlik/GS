@@ -1,0 +1,10626 @@
+{
+ "A-CH:tidal": {
+  "half": 27.5
+ },
+ "A-CH:storm": {
+  "half": 27.5
+ },
+ "B-violet": {
+  "cast": {
+   "ok": true,
+   "id": "VA:violet_fault",
+   "instance": 0,
+   "form": "beam",
+   "pending": false
+  },
+  "id": "VA:violet_fault",
+  "kind": "beam",
+  "aim": [
+   0,
+   -30
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.9,
+    "at": 0.9,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 1.4,
+    "at": 2.36,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 2.0,
+    "at": 3.94,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.8,
+    "at": 5.98,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.6,
+    "at": 7.52,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "D-lance-fwd": {
+  "cast": {
+   "ok": true,
+   "id": "D:PROJ:lance",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "D:PROJ:lance",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.5,
+    "at": 0.5,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 1.0,
+    "at": 2.53,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "D-lance-diag": {
+  "cast": {
+   "ok": true,
+   "id": "D:PROJ:lance",
+   "instance": 1,
+   "form": "point",
+   "pending": false
+  },
+  "id": "D:PROJ:lance",
+  "kind": "circle",
+  "aim": [
+   -20,
+   -15
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.5,
+    "at": 0.5,
+    "roots": {
+     "live": false,
+     "n": 1,
+     "roots": [
+      {
+       "v": false,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 1.0,
+    "at": 2.19,
+    "roots": {
+     "live": false,
+     "n": 1,
+     "roots": [
+      {
+       "v": false,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "D-lance-side": {
+  "cast": {
+   "ok": true,
+   "id": "D:PROJ:lance",
+   "instance": 2,
+   "form": "point",
+   "pending": false
+  },
+  "id": "D:PROJ:lance",
+  "kind": "circle",
+  "aim": [
+   22,
+   0
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.5,
+    "at": 0.5,
+    "roots": {
+     "live": false,
+     "n": 1,
+     "roots": [
+      {
+       "v": false,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": null,
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 1.0,
+    "at": 2.63,
+    "roots": {
+     "live": false,
+     "n": 1,
+     "roots": [
+      {
+       "v": false,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": null,
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S000-FX-06": {
+  "cast": {
+   "ok": true,
+   "id": "FX-06",
+   "instance": 0,
+   "form": "zone",
+   "pending": false
+  },
+  "id": "FX-06",
+  "kind": "zone",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 2.04,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 3.53,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 4.85,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 6.16,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 7.07,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S005-FX-12": {
+  "cast": {
+   "ok": true,
+   "id": "FX-12",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "FX-12",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.26,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.18,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.12,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.92,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.89,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S006-FX-25": {
+  "cast": {
+   "ok": true,
+   "id": "FX-25",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "FX-25",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0.02,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.22,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0.02,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.13,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0.02,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.15,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0.02,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.13,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0.02,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.13,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0.02,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S011-SC-01": {
+  "cast": {
+   "ok": true,
+   "id": "SC-01",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "SC-01",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 5,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.11,
+    "roots": {
+     "live": true,
+     "n": 5,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.0,
+    "roots": {
+     "live": true,
+     "n": 5,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 2.97,
+    "roots": {
+     "live": true,
+     "n": 5,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.83,
+    "roots": {
+     "live": true,
+     "n": 5,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.77,
+    "roots": {
+     "live": true,
+     "n": 5,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S014-AS-10": {
+  "cast": {
+   "ok": true,
+   "id": "AS-10",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "AS-10",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        6,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.24,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        6,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.12,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        6,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.06,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        6,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.94,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        6,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.83,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        6,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S016-ARC-09": {
+  "cast": {
+   "ok": true,
+   "id": "ARC-09",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "ARC-09",
+  "kind": "radial",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        3,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.17,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        3,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.01,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        3,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.05,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        3,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.98,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        3,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.93,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        3,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S018-FX-21": {
+  "cast": {
+   "ok": true,
+   "id": "FX-21",
+   "instance": 0,
+   "form": "zone",
+   "pending": false
+  },
+  "id": "FX-21",
+  "kind": "zone",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        24,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.14,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        24,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 1.91,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        24,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 2.79,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        24,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.61,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        24,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.5,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        24,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S019-FX-22": {
+  "cast": {
+   "ok": true,
+   "id": "FX-22",
+   "instance": 0,
+   "form": "zone",
+   "pending": false
+  },
+  "id": "FX-22",
+  "kind": "zone",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        -6,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.21,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        -6,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.16,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        -6,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.07,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        -6,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.02,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        -6,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.91,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        -6,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S020-FX-34": {
+  "cast": {
+   "ok": true,
+   "id": "FX-34",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "FX-34",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.35,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.21,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.01,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.89,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.79,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S023-ARC-08": {
+  "cast": {
+   "ok": true,
+   "id": "ARC-08",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "ARC-08",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.17,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.03,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 2.96,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.81,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.63,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": false,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S024-MC-01": {
+  "cast": {
+   "ok": true,
+   "id": "MC-01",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "MC-01",
+  "kind": "radial",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        8,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.06,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        8,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.03,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        8,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.0,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        8,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.99,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        8,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.02,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        8,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S026-MC-04": {
+  "cast": {
+   "ok": true,
+   "id": "MC-04",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "MC-04",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        11,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.31,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        11,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.38,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        11,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        11,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.28,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        11,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.22,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        11,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S028-AC-02": {
+  "cast": {
+   "ok": true,
+   "id": "AC-02",
+   "instance": 0,
+   "form": "self",
+   "pending": false
+  },
+  "id": "AC-02",
+  "kind": "shield",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.22,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.01,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 2.95,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.82,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.57,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S030-AS-04": {
+  "cast": {
+   "ok": true,
+   "id": "AS-04",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "AS-04",
+  "kind": "radial",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.28,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.18,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.38,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.36,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S033-INT-02": {
+  "cast": {
+   "ok": true,
+   "id": "INT-02",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "INT-02",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        15,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.21,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        15,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.34,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        15,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.35,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        15,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.52,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        15,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.64,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        15,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S034-INT-03": {
+  "cast": {
+   "ok": true,
+   "id": "INT-03",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "INT-03",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        23,
+        -25
+       ],
+       "pp": [
+        0,
+        -14,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.32,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        23,
+        -25
+       ],
+       "pp": [
+        0,
+        -14,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.11,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        23,
+        -25
+       ],
+       "pp": [
+        0,
+        -14,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 2.96,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        23,
+        -25
+       ],
+       "pp": [
+        0,
+        -14,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.01,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        23,
+        -25
+       ],
+       "pp": [
+        0,
+        -14,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.8,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        23,
+        -25
+       ],
+       "pp": [
+        0,
+        -14,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S039-SC-03": {
+  "cast": {
+   "ok": true,
+   "id": "SC-03",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "SC-03",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        -7,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.15,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        -7,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 1.99,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        -7,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 2.78,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        -7,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.74,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        -7,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.64,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        -7,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S040-SC-02": {
+  "cast": {
+   "ok": true,
+   "id": "SC-02",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "SC-02",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.18,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.09,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 2.86,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.67,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.54,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": false,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S042-NV-06": {
+  "cast": {
+   "ok": true,
+   "id": "NV-06",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "NV-06",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        1,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.21,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        1,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.27,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        1,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.15,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        1,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.01,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        1,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.79,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        1,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S046-V5-05": {
+  "cast": {
+   "ok": true,
+   "id": "V5-05",
+   "instance": 0,
+   "form": "zone",
+   "pending": false
+  },
+  "id": "V5-05",
+  "kind": "zone",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.16,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.08,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 2.95,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.78,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.62,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        10,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S047-INT-08-P": {
+  "cast": {
+   "ok": true,
+   "id": "INT-08-P",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "INT-08-P",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.28,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.08,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 2.78,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.78,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.6,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S048-FX-10-C": {
+  "cast": {
+   "ok": true,
+   "id": "FX-10-C",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "FX-10-C",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.33,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.36,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.37,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.33,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.26,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S049-FX-10-O": {
+  "cast": {
+   "ok": true,
+   "id": "FX-10-O",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "FX-10-O",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 63,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        -0.02,
+        15.97,
+        -24.97
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        -0.02,
+        15.97,
+        -24.97
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        -0.02,
+        15.97,
+        -24.97
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        -0.02,
+        15.97,
+        -24.97
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        -0.02,
+        15.97,
+        -24.97
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        10.38,
+        16.1,
+        -24.9
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        -3.81,
+        27.5,
+        -31.37
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        -7.91,
+        28.36,
+        -12.95
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        19.26,
+        30.84,
+        -13.01
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        13.06,
+        21.21,
+        -7.97
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        22.96,
+        8,
+        -11.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        37.34,
+        5.68,
+        -1.32
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.25,
+    "roots": {
+     "live": true,
+     "n": 63,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        -0.08,
+        16.09,
+        -25.13
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        -0.08,
+        16.09,
+        -25.13
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        -0.08,
+        16.09,
+        -25.13
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        -0.08,
+        16.09,
+        -25.13
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        -0.08,
+        16.09,
+        -25.13
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        10.09,
+        16.41,
+        -24.6
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0.88,
+        28.44,
+        -29.46
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        -13.41,
+        26.58,
+        -15.11
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        21.03,
+        30.36,
+        -12.41
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        8.84,
+        22.7,
+        -8.16
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        22.15,
+        9.4,
+        -12.49
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        39.57,
+        9.24,
+        -0.94
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.15,
+    "roots": {
+     "live": true,
+     "n": 63,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        14.09,
+        17,
+        -24.04
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        7.36,
+        34.88,
+        -28.87
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        -25.64,
+        28.47,
+        -13.84
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        32.29,
+        35.91,
+        -6.18
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        6.96,
+        27.45,
+        -1.21
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        30.01,
+        8.5,
+        -8.22
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        57.54,
+        11.19,
+        9.51
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.08,
+    "roots": {
+     "live": true,
+     "n": 63,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        9.05,
+        16.98,
+        -24.05
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        9.58,
+        29.2,
+        -25.57
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        -21.18,
+        21.86,
+        -20.12
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        22.97,
+        28.65,
+        -11.88
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0.02,
+        24.95,
+        -9.59
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        17.97,
+        12.65,
+        -14.88
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        36.96,
+        16.75,
+        -2.51
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.03,
+    "roots": {
+     "live": true,
+     "n": 63,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        8.24,
+        17.19,
+        -23.85
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        12.73,
+        28.79,
+        -23.86
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        -22.34,
+        19.31,
+        -22.62
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        22.7,
+        27.36,
+        -12.17
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        -3.82,
+        25.43,
+        -10.93
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        14.78,
+        14.27,
+        -16.43
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        32.02,
+        19.98,
+        -4.6
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.91,
+    "roots": {
+     "live": true,
+     "n": 63,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        7.46,
+        17.36,
+        -23.68
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        15.12,
+        28.18,
+        -22.39
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        -22.15,
+        16.95,
+        -24.85
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        22.13,
+        26.11,
+        -12.53
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        -7.05,
+        25.66,
+        -12.3
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        11.51,
+        15.73,
+        -17.93
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        26.1,
+        22.64,
+        -6.93
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S051-ARC-21": {
+  "cast": {
+   "ok": true,
+   "id": "ARC-21",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "ARC-21",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0.02,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.42,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0.02,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.56,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0.02,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.71,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0.02,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.64,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0.02,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.59,
+    "roots": {
+     "live": true,
+     "n": 3,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        0.02,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S053-FX-146": {
+  "cast": {
+   "ok": true,
+   "id": "FX-146",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "FX-146",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 2,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        15,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.19,
+    "roots": {
+     "live": true,
+     "n": 2,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        15,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.23,
+    "roots": {
+     "live": true,
+     "n": 2,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        15,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.15,
+    "roots": {
+     "live": true,
+     "n": 2,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        15,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.18,
+    "roots": {
+     "live": true,
+     "n": 2,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        15,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.09,
+    "roots": {
+     "live": true,
+     "n": 2,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        15,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S056-FX-125": {
+  "cast": {
+   "ok": true,
+   "id": "FX-125",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "FX-125",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 2,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.08,
+    "roots": {
+     "live": true,
+     "n": 2,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 1.97,
+    "roots": {
+     "live": true,
+     "n": 2,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 2.78,
+    "roots": {
+     "live": true,
+     "n": 2,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.7,
+    "roots": {
+     "live": true,
+     "n": 2,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.68,
+    "roots": {
+     "live": true,
+     "n": 2,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      },
+      {
+       "v": true,
+       "p": [
+        0,
+        16,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S070-ARC-25": {
+  "cast": {
+   "ok": true,
+   "id": "ARC-25",
+   "instance": 0,
+   "form": "zone",
+   "pending": false
+  },
+  "id": "ARC-25",
+  "kind": "zone",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 3.14,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 5.67,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 7.7,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 10.08,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 12.45,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        12,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S074-MYTH-01": {
+  "cast": {
+   "ok": true,
+   "id": "MYTH-01",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "MYTH-01",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.58,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.72,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.97,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 5.03,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.91,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S078-GS-vortexring": {
+  "cast": {
+   "ok": true,
+   "id": "GS-vortexring",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "GS-vortexring",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.33,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.31,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.23,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.24,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.93,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S082-GS-nuke": {
+  "cast": {
+   "ok": true,
+   "id": "GS-nuke",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "GS-nuke",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.66,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.92,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 4.31,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 5.73,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 7.1,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S084-GS-helix": {
+  "cast": {
+   "ok": true,
+   "id": "GS-helix",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "GS-helix",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.46,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.7,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.79,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.97,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 6.17,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S087-GS-mirv": {
+  "cast": {
+   "ok": true,
+   "id": "GS-mirv",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "GS-mirv",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.48,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.64,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.82,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 5.05,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 6.48,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S091-GS-dynamite": {
+  "cast": {
+   "ok": true,
+   "id": "GS-dynamite",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "GS-dynamite",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.34,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.14,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.28,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.45,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.36,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": false,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S120-GS-digital": {
+  "cast": {
+   "ok": true,
+   "id": "GS-digital",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "GS-digital",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.18,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 1.99,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 2.84,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.86,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.16,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S149-CH:obang": {
+  "cast": {
+   "ok": true,
+   "id": "CH:obang",
+   "instance": 0,
+   "form": "beam",
+   "pending": false
+  },
+  "id": "CH:obang",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.35,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.36,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.36,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.49,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.31,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S151-CH:emille": {
+  "cast": {
+   "ok": true,
+   "id": "CH:emille",
+   "instance": 0,
+   "form": "beam",
+   "pending": false
+  },
+  "id": "CH:emille",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.32,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.21,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.2,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.17,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.22,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S152-CH:tomo": {
+  "cast": {
+   "ok": true,
+   "id": "CH:tomo",
+   "instance": 0,
+   "form": "beam",
+   "pending": false
+  },
+  "id": "CH:tomo",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.31,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.32,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.37,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.5,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.43,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0.45,
+        7.85,
+        -1.7
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S165-FX-04": {
+  "cast": {
+   "ok": true,
+   "id": "FX-04",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "FX-04",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        23,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.06,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        23,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.01,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        23,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 2.94,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        23,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.95,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        23,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.84,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        23,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S167-INT-03-G": {
+  "cast": {
+   "ok": true,
+   "id": "INT-03-G",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "INT-03-G",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        17,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.24,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        17,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.16,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        17,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 2.97,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        17,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.8,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        17,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.59,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        17,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": "GS_FX_SCALER"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S171-D:STRUCT:obelisk": {
+  "cast": {
+   "ok": true,
+   "id": "D:STRUCT:obelisk",
+   "instance": 0,
+   "form": "structure",
+   "pending": false
+  },
+  "id": "D:STRUCT:obelisk",
+  "kind": "deploy",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 2.07,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.8,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.65,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.34,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.26,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S174-D:STRUCT:tree": {
+  "cast": {
+   "ok": true,
+   "id": "D:STRUCT:tree",
+   "instance": 0,
+   "form": "structure",
+   "pending": false
+  },
+  "id": "D:STRUCT:tree",
+  "kind": "deploy",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 2.07,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.92,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.9,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.82,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.63,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S177-D:STRUCT:lunar": {
+  "cast": {
+   "ok": true,
+   "id": "D:STRUCT:lunar",
+   "instance": 0,
+   "form": "structure",
+   "pending": false
+  },
+  "id": "D:STRUCT:lunar",
+  "kind": "deploy",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.83,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.82,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.72,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.65,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.57,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S180-D:STRUCT:pylon": {
+  "cast": {
+   "ok": true,
+   "id": "D:STRUCT:pylon",
+   "instance": 0,
+   "form": "structure",
+   "pending": false
+  },
+  "id": "D:STRUCT:pylon",
+  "kind": "deploy",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.95,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.66,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.47,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.26,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.13,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S182-D:PROJ:lance": {
+  "cast": {
+   "ok": true,
+   "id": "D:PROJ:lance",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "D:PROJ:lance",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 2.33,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 3.19,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 4.35,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 5.52,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 6.66,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S183-D:ULT:inkfall": {
+  "cast": {
+   "ok": true,
+   "id": "D:ULT:inkfall",
+   "instance": 0,
+   "form": "point",
+   "pending": false
+  },
+  "id": "D:ULT:inkfall",
+  "kind": "circle",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 2.04,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.97,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.95,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.91,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.81,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        0,
+        0
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S195-C:F_PROJ:sing": {
+  "cast": {
+   "ok": true,
+   "id": "C:F_PROJ:sing",
+   "instance": 0,
+   "form": "flight",
+   "pending": false
+  },
+  "id": "C:F_PROJ:sing",
+  "kind": "projectile",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.08,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 1.91,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 2.74,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.62,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.5,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S199-C:SF_PROJ:prs": {
+  "cast": {
+   "ok": true,
+   "id": "C:SF_PROJ:prs",
+   "instance": 0,
+   "form": "flight",
+   "pending": false
+  },
+  "id": "C:SF_PROJ:prs",
+  "kind": "projectile",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.16,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.12,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 2.97,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.93,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.84,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": false,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S200-C:SF_PROJ:eco": {
+  "cast": {
+   "ok": true,
+   "id": "C:SF_PROJ:eco",
+   "instance": 0,
+   "form": "flight",
+   "pending": false
+  },
+  "id": "C:SF_PROJ:eco",
+  "kind": "projectile",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.29,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.22,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 3.14,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 4.14,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 5.08,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": false,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "S201-C:SF_PROJ:mtr": {
+  "cast": {
+   "ok": true,
+   "id": "C:SF_PROJ:mtr",
+   "instance": 0,
+   "form": "flight",
+   "pending": false
+  },
+  "id": "C:SF_PROJ:mtr",
+  "kind": "projectile",
+  "aim": [
+   0,
+   -25
+  ],
+  "frames": [
+   {
+    "k": 0,
+    "t": 0.3,
+    "at": 0.3,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 1,
+    "t": 0.8,
+    "at": 1.21,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 2,
+    "t": 1.4,
+    "at": 2.15,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 3,
+    "t": 2.2,
+    "at": 2.91,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 4,
+    "t": 3.2,
+    "at": 3.71,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   },
+   {
+    "k": 5,
+    "t": 4.5,
+    "at": 4.51,
+    "roots": {
+     "live": true,
+     "n": 1,
+     "roots": [
+      {
+       "v": true,
+       "p": [
+        0,
+        7.85,
+        -25
+       ],
+       "pp": [
+        0,
+        0,
+        0
+       ],
+       "pn": ""
+      }
+     ]
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,1045 @@
+08:48:41 ok   lab welcome close
+08:48:41 ok   lab play CH:tidal
+08:48:41 ok   lab welcome close
+08:48:43 ok   shot A-lab-CH_tidal-0
+08:48:44 ok   shot A-lab-CH_tidal-1
+08:48:45 ok   shot A-lab-CH_tidal-2
+08:48:45 ok   lab half CH:tidal
+08:48:45 ok   lab stop CH:tidal
+08:48:46 ok   lab play CH:storm
+08:48:46 ok   lab welcome close
+08:48:48 ok   shot A-lab-CH_storm-0
+08:48:49 ok   shot A-lab-CH_storm-1
+08:48:50 ok   shot A-lab-CH_storm-2
+08:48:50 ok   lab half CH:storm
+08:48:50 ok   lab stop CH:storm
+08:48:51 ok   trial
+08:48:53 ok   start
+08:48:53 ok   unpaused
+08:48:57 ok   warm
+08:48:57 ok   invuln
+08:48:57 ok   hide ui
+08:48:57 ok   camera override
+08:48:57 ok   B-violet cast
+08:48:58 ok   B-violet roots 0
+08:48:59 ok   B-violet side 0
+08:49:00 ok   B-violet top 0
+08:49:00 ok   B-violet roots 1
+08:49:00 ok   B-violet side 1
+08:49:01 ok   B-violet top 1
+08:49:01 ok   B-violet roots 2
+08:49:02 ok   B-violet side 2
+08:49:03 ok   B-violet top 2
+08:49:03 ok   B-violet roots 3
+08:49:04 ok   B-violet side 3
+08:49:05 ok   B-violet top 3
+08:49:05 ok   B-violet roots 4
+08:49:05 ok   B-violet side 4
+08:49:06 ok   B-violet top 4
+08:49:06 ok   B-violet stop
+08:49:07 ok   D-lance-fwd cast
+08:49:08 ok   D-lance-fwd roots 0
+08:49:09 ok   D-lance-fwd side 0
+08:49:09 ok   D-lance-fwd top 0
+08:49:09 ok   D-lance-fwd roots 1
+08:49:10 ok   D-lance-fwd side 1
+08:49:11 ok   D-lance-fwd top 1
+08:49:11 ok   D-lance-fwd stop
+08:49:11 ok   D-lance-diag cast
+08:49:12 ok   D-lance-diag roots 0
+08:49:13 ok   D-lance-diag side 0
+08:49:13 ok   D-lance-diag top 0
+08:49:13 ok   D-lance-diag roots 1
+08:49:14 ok   D-lance-diag side 1
+08:49:14 ok   D-lance-diag top 1
+08:49:14 ok   D-lance-diag stop
+08:49:15 ok   D-lance-side cast
+08:49:16 ok   D-lance-side roots 0
+08:49:17 ok   D-lance-side side 0
+08:49:18 ok   D-lance-side top 0
+08:49:18 ok   D-lance-side roots 1
+08:49:18 ok   D-lance-side side 1
+08:49:19 ok   D-lance-side top 1
+08:49:19 ok   D-lance-side stop
+08:49:19 series 49 suspects
+08:49:20 ok   S000-FX-06 cast
+08:49:20 ok   S000-FX-06 roots 0
+08:49:21 ok   S000-FX-06 side 0
+08:49:22 ok   S000-FX-06 top 0
+08:49:22 ok   S000-FX-06 roots 1
+08:49:22 ok   S000-FX-06 side 1
+08:49:23 ok   S000-FX-06 top 1
+08:49:23 ok   S000-FX-06 roots 2
+08:49:24 ok   S000-FX-06 side 2
+08:49:25 ok   S000-FX-06 top 2
+08:49:25 ok   S000-FX-06 roots 3
+08:49:25 ok   S000-FX-06 side 3
+08:49:26 ok   S000-FX-06 top 3
+08:49:26 ok   S000-FX-06 roots 4
+08:49:26 ok   S000-FX-06 side 4
+08:49:27 ok   S000-FX-06 top 4
+08:49:27 ok   S000-FX-06 roots 5
+08:49:27 ok   S000-FX-06 side 5
+08:49:28 ok   S000-FX-06 top 5
+08:49:28 ok   S000-FX-06 stop
+08:49:28 ok   S005-FX-12 cast
+08:49:29 ok   S005-FX-12 roots 0
+08:49:29 ok   S005-FX-12 side 0
+08:49:29 ok   S005-FX-12 top 0
+08:49:29 ok   S005-FX-12 roots 1
+08:49:30 ok   S005-FX-12 side 1
+08:49:30 ok   S005-FX-12 top 1
+08:49:30 ok   S005-FX-12 roots 2
+08:49:31 ok   S005-FX-12 side 2
+08:49:31 ok   S005-FX-12 top 2
+08:49:31 ok   S005-FX-12 roots 3
+08:49:32 ok   S005-FX-12 side 3
+08:49:32 ok   S005-FX-12 top 3
+08:49:32 ok   S005-FX-12 roots 4
+08:49:33 ok   S005-FX-12 side 4
+08:49:33 ok   S005-FX-12 top 4
+08:49:33 ok   S005-FX-12 roots 5
+08:49:34 ok   S005-FX-12 side 5
+08:49:34 ok   S005-FX-12 top 5
+08:49:34 ok   S005-FX-12 stop
+08:49:35 ok   S006-FX-25 cast
+08:49:35 ok   S006-FX-25 roots 0
+08:49:35 ok   S006-FX-25 side 0
+08:49:36 ok   S006-FX-25 top 0
+08:49:36 ok   S006-FX-25 roots 1
+08:49:36 ok   S006-FX-25 side 1
+08:49:37 ok   S006-FX-25 top 1
+08:49:37 ok   S006-FX-25 roots 2
+08:49:37 ok   S006-FX-25 side 2
+08:49:38 ok   S006-FX-25 top 2
+08:49:38 ok   S006-FX-25 roots 3
+08:49:38 ok   S006-FX-25 side 3
+08:49:39 ok   S006-FX-25 top 3
+08:49:39 ok   S006-FX-25 roots 4
+08:49:39 ok   S006-FX-25 side 4
+08:49:40 ok   S006-FX-25 top 4
+08:49:40 ok   S006-FX-25 roots 5
+08:49:40 ok   S006-FX-25 side 5
+08:49:41 ok   S006-FX-25 top 5
+08:49:41 ok   S006-FX-25 stop
+08:49:41 ok   S011-SC-01 cast
+08:49:41 ok   S011-SC-01 roots 0
+08:49:42 ok   S011-SC-01 side 0
+08:49:42 ok   S011-SC-01 top 0
+08:49:42 ok   S011-SC-01 roots 1
+08:49:43 ok   S011-SC-01 side 1
+08:49:43 ok   S011-SC-01 top 1
+08:49:43 ok   S011-SC-01 roots 2
+08:49:44 ok   S011-SC-01 side 2
+08:49:44 ok   S011-SC-01 top 2
+08:49:44 ok   S011-SC-01 roots 3
+08:49:45 ok   S011-SC-01 side 3
+08:49:45 ok   S011-SC-01 top 3
+08:49:45 ok   S011-SC-01 roots 4
+08:49:45 ok   S011-SC-01 side 4
+08:49:46 ok   S011-SC-01 top 4
+08:49:46 ok   S011-SC-01 roots 5
+08:49:46 ok   S011-SC-01 side 5
+08:49:47 ok   S011-SC-01 top 5
+08:49:47 ok   S011-SC-01 stop
+08:49:47 ok   S014-AS-10 cast
+08:49:47 ok   S014-AS-10 roots 0
+08:49:48 ok   S014-AS-10 side 0
+08:49:48 ok   S014-AS-10 top 0
+08:49:48 ok   S014-AS-10 roots 1
+08:49:49 ok   S014-AS-10 side 1
+08:49:49 ok   S014-AS-10 top 1
+08:49:49 ok   S014-AS-10 roots 2
+08:49:50 ok   S014-AS-10 side 2
+08:49:50 ok   S014-AS-10 top 2
+08:49:50 ok   S014-AS-10 roots 3
+08:49:51 ok   S014-AS-10 side 3
+08:49:51 ok   S014-AS-10 top 3
+08:49:51 ok   S014-AS-10 roots 4
+08:49:52 ok   S014-AS-10 side 4
+08:49:52 ok   S014-AS-10 top 4
+08:49:52 ok   S014-AS-10 roots 5
+08:49:52 ok   S014-AS-10 side 5
+08:49:53 ok   S014-AS-10 top 5
+08:49:53 ok   S014-AS-10 stop
+08:49:53 ok   S016-ARC-09 cast
+08:49:53 ok   S016-ARC-09 roots 0
+08:49:54 ok   S016-ARC-09 side 0
+08:49:54 ok   S016-ARC-09 top 0
+08:49:54 ok   S016-ARC-09 roots 1
+08:49:55 ok   S016-ARC-09 side 1
+08:49:55 ok   S016-ARC-09 top 1
+08:49:55 ok   S016-ARC-09 roots 2
+08:49:56 ok   S016-ARC-09 side 2
+08:49:56 ok   S016-ARC-09 top 2
+08:49:56 ok   S016-ARC-09 roots 3
+08:49:57 ok   S016-ARC-09 side 3
+08:49:57 ok   S016-ARC-09 top 3
+08:49:57 ok   S016-ARC-09 roots 4
+08:49:58 ok   S016-ARC-09 side 4
+08:49:58 ok   S016-ARC-09 top 4
+08:49:58 ok   S016-ARC-09 roots 5
+08:49:59 ok   S016-ARC-09 side 5
+08:49:59 ok   S016-ARC-09 top 5
+08:49:59 ok   S016-ARC-09 stop
+08:49:59 ok   S018-FX-21 cast
+08:50:00 ok   S018-FX-21 roots 0
+08:50:00 ok   S018-FX-21 side 0
+08:50:01 ok   S018-FX-21 top 0
+08:50:01 ok   S018-FX-21 roots 1
+08:50:01 ok   S018-FX-21 side 1
+08:50:01 ok   S018-FX-21 top 1
+08:50:01 ok   S018-FX-21 roots 2
+08:50:02 ok   S018-FX-21 side 2
+08:50:02 ok   S018-FX-21 top 2
+08:50:02 ok   S018-FX-21 roots 3
+08:50:03 ok   S018-FX-21 side 3
+08:50:03 ok   S018-FX-21 top 3
+08:50:03 ok   S018-FX-21 roots 4
+08:50:04 ok   S018-FX-21 side 4
+08:50:04 ok   S018-FX-21 top 4
+08:50:04 ok   S018-FX-21 roots 5
+08:50:04 ok   S018-FX-21 side 5
+08:50:05 ok   S018-FX-21 top 5
+08:50:05 ok   S018-FX-21 stop
+08:50:05 ok   S019-FX-22 cast
+08:50:06 ok   S019-FX-22 roots 0
+08:50:06 ok   S019-FX-22 side 0
+08:50:07 ok   S019-FX-22 top 0
+08:50:07 ok   S019-FX-22 roots 1
+08:50:07 ok   S019-FX-22 side 1
+08:50:07 ok   S019-FX-22 top 1
+08:50:07 ok   S019-FX-22 roots 2
+08:50:08 ok   S019-FX-22 side 2
+08:50:08 ok   S019-FX-22 top 2
+08:50:08 ok   S019-FX-22 roots 3
+08:50:09 ok   S019-FX-22 side 3
+08:50:09 ok   S019-FX-22 top 3
+08:50:09 ok   S019-FX-22 roots 4
+08:50:10 ok   S019-FX-22 side 4
+08:50:10 ok   S019-FX-22 top 4
+08:50:10 ok   S019-FX-22 roots 5
+08:50:11 ok   S019-FX-22 side 5
+08:50:11 ok   S019-FX-22 top 5
+08:50:11 ok   S019-FX-22 stop
+08:50:12 ok   S020-FX-34 cast
+08:50:12 ok   S020-FX-34 roots 0
+08:50:12 ok   S020-FX-34 side 0
+08:50:13 ok   S020-FX-34 top 0
+08:50:13 ok   S020-FX-34 roots 1
+08:50:13 ok   S020-FX-34 side 1
+08:50:14 ok   S020-FX-34 top 1
+08:50:14 ok   S020-FX-34 roots 2
+08:50:14 ok   S020-FX-34 side 2
+08:50:15 ok   S020-FX-34 top 2
+08:50:15 ok   S020-FX-34 roots 3
+08:50:15 ok   S020-FX-34 side 3
+08:50:15 ok   S020-FX-34 top 3
+08:50:16 ok   S020-FX-34 roots 4
+08:50:16 ok   S020-FX-34 side 4
+08:50:16 ok   S020-FX-34 top 4
+08:50:16 ok   S020-FX-34 roots 5
+08:50:17 ok   S020-FX-34 side 5
+08:50:17 ok   S020-FX-34 top 5
+08:50:17 ok   S020-FX-34 stop
+08:50:18 ok   S023-ARC-08 cast
+08:50:18 ok   S023-ARC-08 roots 0
+08:50:18 ok   S023-ARC-08 side 0
+08:50:19 ok   S023-ARC-08 top 0
+08:50:19 ok   S023-ARC-08 roots 1
+08:50:19 ok   S023-ARC-08 side 1
+08:50:20 ok   S023-ARC-08 top 1
+08:50:20 ok   S023-ARC-08 roots 2
+08:50:20 ok   S023-ARC-08 side 2
+08:50:21 ok   S023-ARC-08 top 2
+08:50:21 ok   S023-ARC-08 roots 3
+08:50:21 ok   S023-ARC-08 side 3
+08:50:22 ok   S023-ARC-08 top 3
+08:50:22 ok   S023-ARC-08 roots 4
+08:50:22 ok   S023-ARC-08 side 4
+08:50:22 ok   S023-ARC-08 top 4
+08:50:22 ok   S023-ARC-08 roots 5
+08:50:23 ok   S023-ARC-08 side 5
+08:50:23 ok   S023-ARC-08 top 5
+08:50:23 ok   S023-ARC-08 stop
+08:50:24 ok   S024-MC-01 cast
+08:50:24 ok   S024-MC-01 roots 0
+08:50:24 ok   S024-MC-01 side 0
+08:50:25 ok   S024-MC-01 top 0
+08:50:25 ok   S024-MC-01 roots 1
+08:50:25 ok   S024-MC-01 side 1
+08:50:26 ok   S024-MC-01 top 1
+08:50:26 ok   S024-MC-01 roots 2
+08:50:26 ok   S024-MC-01 side 2
+08:50:27 ok   S024-MC-01 top 2
+08:50:27 ok   S024-MC-01 roots 3
+08:50:27 ok   S024-MC-01 side 3
+08:50:28 ok   S024-MC-01 top 3
+08:50:28 ok   S024-MC-01 roots 4
+08:50:28 ok   S024-MC-01 side 4
+08:50:29 ok   S024-MC-01 top 4
+08:50:29 ok   S024-MC-01 roots 5
+08:50:29 ok   S024-MC-01 side 5
+08:50:30 ok   S024-MC-01 top 5
+08:50:30 ok   S024-MC-01 stop
+08:50:30 ok   S026-MC-04 cast
+08:50:30 ok   S026-MC-04 roots 0
+08:50:31 ok   S026-MC-04 side 0
+08:50:31 ok   S026-MC-04 top 0
+08:50:31 ok   S026-MC-04 roots 1
+08:50:32 ok   S026-MC-04 side 1
+08:50:32 ok   S026-MC-04 top 1
+08:50:32 ok   S026-MC-04 roots 2
+08:50:33 ok   S026-MC-04 side 2
+08:50:33 ok   S026-MC-04 top 2
+08:50:33 ok   S026-MC-04 roots 3
+08:50:34 ok   S026-MC-04 side 3
+08:50:34 ok   S026-MC-04 top 3
+08:50:34 ok   S026-MC-04 roots 4
+08:50:35 ok   S026-MC-04 side 4
+08:50:35 ok   S026-MC-04 top 4
+08:50:35 ok   S026-MC-04 roots 5
+08:50:36 ok   S026-MC-04 side 5
+08:50:36 ok   S026-MC-04 top 5
+08:50:36 ok   S026-MC-04 stop
+08:50:37 ok   S028-AC-02 cast
+08:50:37 ok   S028-AC-02 roots 0
+08:50:37 ok   S028-AC-02 side 0
+08:50:38 ok   S028-AC-02 top 0
+08:50:38 ok   S028-AC-02 roots 1
+08:50:38 ok   S028-AC-02 side 1
+08:50:39 ok   S028-AC-02 top 1
+08:50:39 ok   S028-AC-02 roots 2
+08:50:39 ok   S028-AC-02 side 2
+08:50:40 ok   S028-AC-02 top 2
+08:50:40 ok   S028-AC-02 roots 3
+08:50:40 ok   S028-AC-02 side 3
+08:50:41 ok   S028-AC-02 top 3
+08:50:41 ok   S028-AC-02 roots 4
+08:50:41 ok   S028-AC-02 side 4
+08:50:41 ok   S028-AC-02 top 4
+08:50:41 ok   S028-AC-02 roots 5
+08:50:42 ok   S028-AC-02 side 5
+08:50:42 ok   S028-AC-02 top 5
+08:50:42 ok   S028-AC-02 stop
+08:50:43 ok   S030-AS-04 cast
+08:50:43 ok   S030-AS-04 roots 0
+08:50:43 ok   S030-AS-04 side 0
+08:50:44 ok   S030-AS-04 top 0
+08:50:44 ok   S030-AS-04 roots 1
+08:50:44 ok   S030-AS-04 side 1
+08:50:45 ok   S030-AS-04 top 1
+08:50:45 ok   S030-AS-04 roots 2
+08:50:45 ok   S030-AS-04 side 2
+08:50:46 ok   S030-AS-04 top 2
+08:50:46 ok   S030-AS-04 roots 3
+08:50:46 ok   S030-AS-04 side 3
+08:50:47 ok   S030-AS-04 top 3
+08:50:47 ok   S030-AS-04 roots 4
+08:50:47 ok   S030-AS-04 side 4
+08:50:48 ok   S030-AS-04 top 4
+08:50:48 ok   S030-AS-04 roots 5
+08:50:49 ok   S030-AS-04 side 5
+08:50:49 ok   S030-AS-04 top 5
+08:50:49 ok   S030-AS-04 stop
+08:50:50 ok   S033-INT-02 cast
+08:50:50 ok   S033-INT-02 roots 0
+08:50:51 ok   S033-INT-02 side 0
+08:50:51 ok   S033-INT-02 top 0
+08:50:51 ok   S033-INT-02 roots 1
+08:50:52 ok   S033-INT-02 side 1
+08:50:52 ok   S033-INT-02 top 1
+08:50:52 ok   S033-INT-02 roots 2
+08:50:53 ok   S033-INT-02 side 2
+08:50:53 ok   S033-INT-02 top 2
+08:50:53 ok   S033-INT-02 roots 3
+08:50:54 ok   S033-INT-02 side 3
+08:50:54 ok   S033-INT-02 top 3
+08:50:54 ok   S033-INT-02 roots 4
+08:50:55 ok   S033-INT-02 side 4
+08:50:55 ok   S033-INT-02 top 4
+08:50:55 ok   S033-INT-02 roots 5
+08:50:56 ok   S033-INT-02 side 5
+08:50:56 ok   S033-INT-02 top 5
+08:50:56 ok   S033-INT-02 stop
+08:50:57 ok   S034-INT-03 cast
+08:50:57 ok   S034-INT-03 roots 0
+08:50:58 ok   S034-INT-03 side 0
+08:50:58 ok   S034-INT-03 top 0
+08:50:58 ok   S034-INT-03 roots 1
+08:50:59 ok   S034-INT-03 side 1
+08:50:59 ok   S034-INT-03 top 1
+08:50:59 ok   S034-INT-03 roots 2
+08:50:59 ok   S034-INT-03 side 2
+08:51:00 ok   S034-INT-03 top 2
+08:51:00 ok   S034-INT-03 roots 3
+08:51:00 ok   S034-INT-03 side 3
+08:51:01 ok   S034-INT-03 top 3
+08:51:01 ok   S034-INT-03 roots 4
+08:51:01 ok   S034-INT-03 side 4
+08:51:02 ok   S034-INT-03 top 4
+08:51:02 ok   S034-INT-03 roots 5
+08:51:02 ok   S034-INT-03 side 5
+08:51:03 ok   S034-INT-03 top 5
+08:51:03 ok   S034-INT-03 stop
+08:51:03 ok   S039-SC-03 cast
+08:51:03 ok   S039-SC-03 roots 0
+08:51:04 ok   S039-SC-03 side 0
+08:51:04 ok   S039-SC-03 top 0
+08:51:04 ok   S039-SC-03 roots 1
+08:51:05 ok   S039-SC-03 side 1
+08:51:05 ok   S039-SC-03 top 1
+08:51:05 ok   S039-SC-03 roots 2
+08:51:05 ok   S039-SC-03 side 2
+08:51:06 ok   S039-SC-03 top 2
+08:51:06 ok   S039-SC-03 roots 3
+08:51:06 ok   S039-SC-03 side 3
+08:51:07 ok   S039-SC-03 top 3
+08:51:07 ok   S039-SC-03 roots 4
+08:51:07 ok   S039-SC-03 side 4
+08:51:08 ok   S039-SC-03 top 4
+08:51:08 ok   S039-SC-03 roots 5
+08:51:08 ok   S039-SC-03 side 5
+08:51:08 ok   S039-SC-03 top 5
+08:51:08 ok   S039-SC-03 stop
+08:51:09 ok   S040-SC-02 cast
+08:51:09 ok   S040-SC-02 roots 0
+08:51:10 ok   S040-SC-02 side 0
+08:51:10 ok   S040-SC-02 top 0
+08:51:10 ok   S040-SC-02 roots 1
+08:51:11 ok   S040-SC-02 side 1
+08:51:11 ok   S040-SC-02 top 1
+08:51:11 ok   S040-SC-02 roots 2
+08:51:11 ok   S040-SC-02 side 2
+08:51:12 ok   S040-SC-02 top 2
+08:51:12 ok   S040-SC-02 roots 3
+08:51:12 ok   S040-SC-02 side 3
+08:51:13 ok   S040-SC-02 top 3
+08:51:13 ok   S040-SC-02 roots 4
+08:51:13 ok   S040-SC-02 side 4
+08:51:13 ok   S040-SC-02 top 4
+08:51:13 ok   S040-SC-02 roots 5
+08:51:14 ok   S040-SC-02 side 5
+08:51:14 ok   S040-SC-02 top 5
+08:51:14 ok   S040-SC-02 stop
+08:51:15 ok   S042-NV-06 cast
+08:51:15 ok   S042-NV-06 roots 0
+08:51:15 ok   S042-NV-06 side 0
+08:51:16 ok   S042-NV-06 top 0
+08:51:16 ok   S042-NV-06 roots 1
+08:51:17 ok   S042-NV-06 side 1
+08:51:17 ok   S042-NV-06 top 1
+08:51:17 ok   S042-NV-06 roots 2
+08:51:17 ok   S042-NV-06 side 2
+08:51:18 ok   S042-NV-06 top 2
+08:51:18 ok   S042-NV-06 roots 3
+08:51:18 ok   S042-NV-06 side 3
+08:51:19 ok   S042-NV-06 top 3
+08:51:19 ok   S042-NV-06 roots 4
+08:51:19 ok   S042-NV-06 side 4
+08:51:20 ok   S042-NV-06 top 4
+08:51:20 ok   S042-NV-06 roots 5
+08:51:20 ok   S042-NV-06 side 5
+08:51:20 ok   S042-NV-06 top 5
+08:51:21 ok   S042-NV-06 stop
+08:51:21 ok   S046-V5-05 cast
+08:51:21 ok   S046-V5-05 roots 0
+08:51:22 ok   S046-V5-05 side 0
+08:51:22 ok   S046-V5-05 top 0
+08:51:22 ok   S046-V5-05 roots 1
+08:51:23 ok   S046-V5-05 side 1
+08:51:23 ok   S046-V5-05 top 1
+08:51:23 ok   S046-V5-05 roots 2
+08:51:23 ok   S046-V5-05 side 2
+08:51:24 ok   S046-V5-05 top 2
+08:51:24 ok   S046-V5-05 roots 3
+08:51:24 ok   S046-V5-05 side 3
+08:51:25 ok   S046-V5-05 top 3
+08:51:25 ok   S046-V5-05 roots 4
+08:51:25 ok   S046-V5-05 side 4
+08:51:26 ok   S046-V5-05 top 4
+08:51:26 ok   S046-V5-05 roots 5
+08:51:26 ok   S046-V5-05 side 5
+08:51:27 ok   S046-V5-05 top 5
+08:51:27 ok   S046-V5-05 stop
+08:51:27 ok   S047-INT-08-P cast
+08:51:27 ok   S047-INT-08-P roots 0
+08:51:28 ok   S047-INT-08-P side 0
+08:51:28 ok   S047-INT-08-P top 0
+08:51:28 ok   S047-INT-08-P roots 1
+08:51:29 ok   S047-INT-08-P side 1
+08:51:29 ok   S047-INT-08-P top 1
+08:51:29 ok   S047-INT-08-P roots 2
+08:51:29 ok   S047-INT-08-P side 2
+08:51:30 ok   S047-INT-08-P top 2
+08:51:30 ok   S047-INT-08-P roots 3
+08:51:30 ok   S047-INT-08-P side 3
+08:51:31 ok   S047-INT-08-P top 3
+08:51:31 ok   S047-INT-08-P roots 4
+08:51:31 ok   S047-INT-08-P side 4
+08:51:32 ok   S047-INT-08-P top 4
+08:51:32 ok   S047-INT-08-P roots 5
+08:51:32 ok   S047-INT-08-P side 5
+08:51:33 ok   S047-INT-08-P top 5
+08:51:33 ok   S047-INT-08-P stop
+08:51:33 ok   S048-FX-10-C cast
+08:51:33 ok   S048-FX-10-C roots 0
+08:51:34 ok   S048-FX-10-C side 0
+08:51:34 ok   S048-FX-10-C top 0
+08:51:34 ok   S048-FX-10-C roots 1
+08:51:35 ok   S048-FX-10-C side 1
+08:51:35 ok   S048-FX-10-C top 1
+08:51:35 ok   S048-FX-10-C roots 2
+08:51:36 ok   S048-FX-10-C side 2
+08:51:36 ok   S048-FX-10-C top 2
+08:51:36 ok   S048-FX-10-C roots 3
+08:51:37 ok   S048-FX-10-C side 3
+08:51:37 ok   S048-FX-10-C top 3
+08:51:37 ok   S048-FX-10-C roots 4
+08:51:38 ok   S048-FX-10-C side 4
+08:51:38 ok   S048-FX-10-C top 4
+08:51:38 ok   S048-FX-10-C roots 5
+08:51:39 ok   S048-FX-10-C side 5
+08:51:39 ok   S048-FX-10-C top 5
+08:51:39 ok   S048-FX-10-C stop
+08:51:40 ok   S049-FX-10-O cast
+08:51:40 ok   S049-FX-10-O roots 0
+08:51:40 ok   S049-FX-10-O side 0
+08:51:41 ok   S049-FX-10-O top 0
+08:51:41 ok   S049-FX-10-O roots 1
+08:51:41 ok   S049-FX-10-O side 1
+08:51:42 ok   S049-FX-10-O top 1
+08:51:42 ok   S049-FX-10-O roots 2
+08:51:42 ok   S049-FX-10-O side 2
+08:51:43 ok   S049-FX-10-O top 2
+08:51:43 ok   S049-FX-10-O roots 3
+08:51:43 ok   S049-FX-10-O side 3
+08:51:44 ok   S049-FX-10-O top 3
+08:51:44 ok   S049-FX-10-O roots 4
+08:51:44 ok   S049-FX-10-O side 4
+08:51:45 ok   S049-FX-10-O top 4
+08:51:45 ok   S049-FX-10-O roots 5
+08:51:45 ok   S049-FX-10-O side 5
+08:51:46 ok   S049-FX-10-O top 5
+08:51:46 ok   S049-FX-10-O stop
+08:51:46 ok   S051-ARC-21 cast
+08:51:46 ok   S051-ARC-21 roots 0
+08:51:47 ok   S051-ARC-21 side 0
+08:51:48 ok   S051-ARC-21 top 0
+08:51:48 ok   S051-ARC-21 roots 1
+08:51:48 ok   S051-ARC-21 side 1
+08:51:49 ok   S051-ARC-21 top 1
+08:51:49 ok   S051-ARC-21 roots 2
+08:51:49 ok   S051-ARC-21 side 2
+08:51:50 ok   S051-ARC-21 top 2
+08:51:50 ok   S051-ARC-21 roots 3
+08:51:50 ok   S051-ARC-21 side 3
+08:51:51 ok   S051-ARC-21 top 3
+08:51:51 ok   S051-ARC-21 roots 4
+08:51:51 ok   S051-ARC-21 side 4
+08:51:52 ok   S051-ARC-21 top 4
+08:51:52 ok   S051-ARC-21 roots 5
+08:51:52 ok   S051-ARC-21 side 5
+08:51:53 ok   S051-ARC-21 top 5
+08:51:53 ok   S051-ARC-21 stop
+08:51:53 ok   S053-FX-146 cast
+08:51:53 ok   S053-FX-146 roots 0
+08:51:54 ok   S053-FX-146 side 0
+08:51:54 ok   S053-FX-146 top 0
+08:51:54 ok   S053-FX-146 roots 1
+08:51:55 ok   S053-FX-146 side 1
+08:51:55 ok   S053-FX-146 top 1
+08:51:55 ok   S053-FX-146 roots 2
+08:51:56 ok   S053-FX-146 side 2
+08:51:56 ok   S053-FX-146 top 2
+08:51:56 ok   S053-FX-146 roots 3
+08:51:57 ok   S053-FX-146 side 3
+08:51:57 ok   S053-FX-146 top 3
+08:51:57 ok   S053-FX-146 roots 4
+08:51:58 ok   S053-FX-146 side 4
+08:51:58 ok   S053-FX-146 top 4
+08:51:58 ok   S053-FX-146 roots 5
+08:51:59 ok   S053-FX-146 side 5
+08:51:59 ok   S053-FX-146 top 5
+08:51:59 ok   S053-FX-146 stop
+08:51:59 ok   S056-FX-125 cast
+08:52:00 ok   S056-FX-125 roots 0
+08:52:00 ok   S056-FX-125 side 0
+08:52:01 ok   S056-FX-125 top 0
+08:52:01 ok   S056-FX-125 roots 1
+08:52:01 ok   S056-FX-125 side 1
+08:52:01 ok   S056-FX-125 top 1
+08:52:01 ok   S056-FX-125 roots 2
+08:52:02 ok   S056-FX-125 side 2
+08:52:02 ok   S056-FX-125 top 2
+08:52:02 ok   S056-FX-125 roots 3
+08:52:03 ok   S056-FX-125 side 3
+08:52:03 ok   S056-FX-125 top 3
+08:52:03 ok   S056-FX-125 roots 4
+08:52:04 ok   S056-FX-125 side 4
+08:52:04 ok   S056-FX-125 top 4
+08:52:04 ok   S056-FX-125 roots 5
+08:52:05 ok   S056-FX-125 side 5
+08:52:05 ok   S056-FX-125 top 5
+08:52:05 ok   S056-FX-125 stop
+08:52:06 ok   S070-ARC-25 cast
+08:52:06 ok   S070-ARC-25 roots 0
+08:52:07 ok   S070-ARC-25 side 0
+08:52:09 ok   S070-ARC-25 top 0
+08:52:09 ok   S070-ARC-25 roots 1
+08:52:10 ok   S070-ARC-25 side 1
+08:52:11 ok   S070-ARC-25 top 1
+08:52:11 ok   S070-ARC-25 roots 2
+08:52:12 ok   S070-ARC-25 side 2
+08:52:13 ok   S070-ARC-25 top 2
+08:52:13 ok   S070-ARC-25 roots 3
+08:52:14 ok   S070-ARC-25 side 3
+08:52:16 ok   S070-ARC-25 top 3
+08:52:16 ok   S070-ARC-25 roots 4
+08:52:17 ok   S070-ARC-25 side 4
+08:52:18 ok   S070-ARC-25 top 4
+08:52:18 ok   S070-ARC-25 roots 5
+08:52:19 ok   S070-ARC-25 side 5
+08:52:20 ok   S070-ARC-25 top 5
+08:52:20 ok   S070-ARC-25 stop
+08:52:20 ok   S074-MYTH-01 cast
+08:52:21 ok   S074-MYTH-01 roots 0
+08:52:21 ok   S074-MYTH-01 side 0
+08:52:22 ok   S074-MYTH-01 top 0
+08:52:22 ok   S074-MYTH-01 roots 1
+08:52:23 ok   S074-MYTH-01 side 1
+08:52:23 ok   S074-MYTH-01 top 1
+08:52:23 ok   S074-MYTH-01 roots 2
+08:52:24 ok   S074-MYTH-01 side 2
+08:52:24 ok   S074-MYTH-01 top 2
+08:52:24 ok   S074-MYTH-01 roots 3
+08:52:25 ok   S074-MYTH-01 side 3
+08:52:25 ok   S074-MYTH-01 top 3
+08:52:25 ok   S074-MYTH-01 roots 4
+08:52:26 ok   S074-MYTH-01 side 4
+08:52:26 ok   S074-MYTH-01 top 4
+08:52:26 ok   S074-MYTH-01 roots 5
+08:52:27 ok   S074-MYTH-01 side 5
+08:52:27 ok   S074-MYTH-01 top 5
+08:52:27 ok   S074-MYTH-01 stop
+08:52:28 ok   S078-GS-vortexring cast
+08:52:28 ok   S078-GS-vortexring roots 0
+08:52:29 ok   S078-GS-vortexring side 0
+08:52:29 ok   S078-GS-vortexring top 0
+08:52:29 ok   S078-GS-vortexring roots 1
+08:52:30 ok   S078-GS-vortexring side 1
+08:52:30 ok   S078-GS-vortexring top 1
+08:52:30 ok   S078-GS-vortexring roots 2
+08:52:31 ok   S078-GS-vortexring side 2
+08:52:31 ok   S078-GS-vortexring top 2
+08:52:31 ok   S078-GS-vortexring roots 3
+08:52:32 ok   S078-GS-vortexring side 3
+08:52:32 ok   S078-GS-vortexring top 3
+08:52:32 ok   S078-GS-vortexring roots 4
+08:52:33 ok   S078-GS-vortexring side 4
+08:52:33 ok   S078-GS-vortexring top 4
+08:52:33 ok   S078-GS-vortexring roots 5
+08:52:33 ok   S078-GS-vortexring side 5
+08:52:34 ok   S078-GS-vortexring top 5
+08:52:34 ok   S078-GS-vortexring stop
+08:52:34 ok   S082-GS-nuke cast
+08:52:35 ok   S082-GS-nuke roots 0
+08:52:35 ok   S082-GS-nuke side 0
+08:52:36 ok   S082-GS-nuke top 0
+08:52:36 ok   S082-GS-nuke roots 1
+08:52:37 ok   S082-GS-nuke side 1
+08:52:37 ok   S082-GS-nuke top 1
+08:52:37 ok   S082-GS-nuke roots 2
+08:52:38 ok   S082-GS-nuke side 2
+08:52:39 ok   S082-GS-nuke top 2
+08:52:39 ok   S082-GS-nuke roots 3
+08:52:40 ok   S082-GS-nuke side 3
+08:52:40 ok   S082-GS-nuke top 3
+08:52:40 ok   S082-GS-nuke roots 4
+08:52:41 ok   S082-GS-nuke side 4
+08:52:42 ok   S082-GS-nuke top 4
+08:52:42 ok   S082-GS-nuke roots 5
+08:52:42 ok   S082-GS-nuke side 5
+08:52:43 ok   S082-GS-nuke top 5
+08:52:43 ok   S082-GS-nuke stop
+08:52:43 ok   S084-GS-helix cast
+08:52:44 ok   S084-GS-helix roots 0
+08:52:44 ok   S084-GS-helix side 0
+08:52:45 ok   S084-GS-helix top 0
+08:52:45 ok   S084-GS-helix roots 1
+08:52:45 ok   S084-GS-helix side 1
+08:52:46 ok   S084-GS-helix top 1
+08:52:46 ok   S084-GS-helix roots 2
+08:52:47 ok   S084-GS-helix side 2
+08:52:47 ok   S084-GS-helix top 2
+08:52:47 ok   S084-GS-helix roots 3
+08:52:48 ok   S084-GS-helix side 3
+08:52:48 ok   S084-GS-helix top 3
+08:52:48 ok   S084-GS-helix roots 4
+08:52:49 ok   S084-GS-helix side 4
+08:52:50 ok   S084-GS-helix top 4
+08:52:50 ok   S084-GS-helix roots 5
+08:52:50 ok   S084-GS-helix side 5
+08:52:51 ok   S084-GS-helix top 5
+08:52:51 ok   S084-GS-helix stop
+08:52:51 ok   S087-GS-mirv cast
+08:52:52 ok   S087-GS-mirv roots 0
+08:52:52 ok   S087-GS-mirv side 0
+08:52:53 ok   S087-GS-mirv top 0
+08:52:53 ok   S087-GS-mirv roots 1
+08:52:53 ok   S087-GS-mirv side 1
+08:52:54 ok   S087-GS-mirv top 1
+08:52:54 ok   S087-GS-mirv roots 2
+08:52:55 ok   S087-GS-mirv side 2
+08:52:55 ok   S087-GS-mirv top 2
+08:52:55 ok   S087-GS-mirv roots 3
+08:52:56 ok   S087-GS-mirv side 3
+08:52:56 ok   S087-GS-mirv top 3
+08:52:56 ok   S087-GS-mirv roots 4
+08:52:57 ok   S087-GS-mirv side 4
+08:52:58 ok   S087-GS-mirv top 4
+08:52:58 ok   S087-GS-mirv roots 5
+08:52:58 ok   S087-GS-mirv side 5
+08:52:59 ok   S087-GS-mirv top 5
+08:52:59 ok   S087-GS-mirv stop
+08:53:00 ok   S091-GS-dynamite cast
+08:53:00 ok   S091-GS-dynamite roots 0
+08:53:01 ok   S091-GS-dynamite side 0
+08:53:01 ok   S091-GS-dynamite top 0
+08:53:01 ok   S091-GS-dynamite roots 1
+08:53:02 ok   S091-GS-dynamite side 1
+08:53:02 ok   S091-GS-dynamite top 1
+08:53:02 ok   S091-GS-dynamite roots 2
+08:53:02 ok   S091-GS-dynamite side 2
+08:53:03 ok   S091-GS-dynamite top 2
+08:53:03 ok   S091-GS-dynamite roots 3
+08:53:04 ok   S091-GS-dynamite side 3
+08:53:04 ok   S091-GS-dynamite top 3
+08:53:04 ok   S091-GS-dynamite roots 4
+08:53:05 ok   S091-GS-dynamite side 4
+08:53:05 ok   S091-GS-dynamite top 4
+08:53:05 ok   S091-GS-dynamite roots 5
+08:53:06 ok   S091-GS-dynamite side 5
+08:53:06 ok   S091-GS-dynamite top 5
+08:53:06 ok   S091-GS-dynamite stop
+08:53:07 ok   S120-GS-digital cast
+08:53:07 ok   S120-GS-digital roots 0
+08:53:07 ok   S120-GS-digital side 0
+08:53:08 ok   S120-GS-digital top 0
+08:53:08 ok   S120-GS-digital roots 1
+08:53:08 ok   S120-GS-digital side 1
+08:53:09 ok   S120-GS-digital top 1
+08:53:09 ok   S120-GS-digital roots 2
+08:53:09 ok   S120-GS-digital side 2
+08:53:09 ok   S120-GS-digital top 2
+08:53:09 ok   S120-GS-digital roots 3
+08:53:10 ok   S120-GS-digital side 3
+08:53:10 ok   S120-GS-digital top 3
+08:53:10 ok   S120-GS-digital roots 4
+08:53:11 ok   S120-GS-digital side 4
+08:53:12 ok   S120-GS-digital top 4
+08:53:12 ok   S120-GS-digital roots 5
+08:53:12 ok   S120-GS-digital side 5
+08:53:13 ok   S120-GS-digital top 5
+08:53:13 ok   S120-GS-digital stop
+08:53:14 ok   S149-CH:obang cast
+08:53:14 ok   S149-CH:obang roots 0
+08:53:14 ok   S149-CH:obang side 0
+08:53:15 ok   S149-CH:obang top 0
+08:53:15 ok   S149-CH:obang roots 1
+08:53:15 ok   S149-CH:obang side 1
+08:53:16 ok   S149-CH:obang top 1
+08:53:16 ok   S149-CH:obang roots 2
+08:53:16 ok   S149-CH:obang side 2
+08:53:17 ok   S149-CH:obang top 2
+08:53:17 ok   S149-CH:obang roots 3
+08:53:18 ok   S149-CH:obang side 3
+08:53:18 ok   S149-CH:obang top 3
+08:53:18 ok   S149-CH:obang roots 4
+08:53:18 ok   S149-CH:obang side 4
+08:53:19 ok   S149-CH:obang top 4
+08:53:19 ok   S149-CH:obang roots 5
+08:53:19 ok   S149-CH:obang side 5
+08:53:20 ok   S149-CH:obang top 5
+08:53:20 ok   S149-CH:obang stop
+08:53:20 ok   S151-CH:emille cast
+08:53:21 ok   S151-CH:emille roots 0
+08:53:21 ok   S151-CH:emille side 0
+08:53:22 ok   S151-CH:emille top 0
+08:53:22 ok   S151-CH:emille roots 1
+08:53:22 ok   S151-CH:emille side 1
+08:53:23 ok   S151-CH:emille top 1
+08:53:23 ok   S151-CH:emille roots 2
+08:53:23 ok   S151-CH:emille side 2
+08:53:24 ok   S151-CH:emille top 2
+08:53:24 ok   S151-CH:emille roots 3
+08:53:24 ok   S151-CH:emille side 3
+08:53:25 ok   S151-CH:emille top 3
+08:53:25 ok   S151-CH:emille roots 4
+08:53:25 ok   S151-CH:emille side 4
+08:53:26 ok   S151-CH:emille top 4
+08:53:26 ok   S151-CH:emille roots 5
+08:53:26 ok   S151-CH:emille side 5
+08:53:27 ok   S151-CH:emille top 5
+08:53:27 ok   S151-CH:emille stop
+08:53:27 ok   S152-CH:tomo cast
+08:53:27 ok   S152-CH:tomo roots 0
+08:53:28 ok   S152-CH:tomo side 0
+08:53:28 ok   S152-CH:tomo top 0
+08:53:28 ok   S152-CH:tomo roots 1
+08:53:29 ok   S152-CH:tomo side 1
+08:53:29 ok   S152-CH:tomo top 1
+08:53:29 ok   S152-CH:tomo roots 2
+08:53:30 ok   S152-CH:tomo side 2
+08:53:30 ok   S152-CH:tomo top 2
+08:53:30 ok   S152-CH:tomo roots 3
+08:53:31 ok   S152-CH:tomo side 3
+08:53:32 ok   S152-CH:tomo top 3
+08:53:32 ok   S152-CH:tomo roots 4
+08:53:32 ok   S152-CH:tomo side 4
+08:53:32 ok   S152-CH:tomo top 4
+08:53:33 ok   S152-CH:tomo roots 5
+08:53:33 ok   S152-CH:tomo side 5
+08:53:33 ok   S152-CH:tomo top 5
+08:53:33 ok   S152-CH:tomo stop
+08:53:34 ok   S165-FX-04 cast
+08:53:34 ok   S165-FX-04 roots 0
+08:53:35 ok   S165-FX-04 side 0
+08:53:35 ok   S165-FX-04 top 0
+08:53:35 ok   S165-FX-04 roots 1
+08:53:36 ok   S165-FX-04 side 1
+08:53:36 ok   S165-FX-04 top 1
+08:53:36 ok   S165-FX-04 roots 2
+08:53:36 ok   S165-FX-04 side 2
+08:53:37 ok   S165-FX-04 top 2
+08:53:37 ok   S165-FX-04 roots 3
+08:53:37 ok   S165-FX-04 side 3
+08:53:38 ok   S165-FX-04 top 3
+08:53:38 ok   S165-FX-04 roots 4
+08:53:38 ok   S165-FX-04 side 4
+08:53:39 ok   S165-FX-04 top 4
+08:53:39 ok   S165-FX-04 roots 5
+08:53:39 ok   S165-FX-04 side 5
+08:53:40 ok   S165-FX-04 top 5
+08:53:40 ok   S165-FX-04 stop
+08:53:40 ok   S167-INT-03-G cast
+08:53:41 ok   S167-INT-03-G roots 0
+08:53:41 ok   S167-INT-03-G side 0
+08:53:41 ok   S167-INT-03-G top 0
+08:53:41 ok   S167-INT-03-G roots 1
+08:53:42 ok   S167-INT-03-G side 1
+08:53:42 ok   S167-INT-03-G top 1
+08:53:42 ok   S167-INT-03-G roots 2
+08:53:43 ok   S167-INT-03-G side 2
+08:53:43 ok   S167-INT-03-G top 2
+08:53:43 ok   S167-INT-03-G roots 3
+08:53:44 ok   S167-INT-03-G side 3
+08:53:44 ok   S167-INT-03-G top 3
+08:53:44 ok   S167-INT-03-G roots 4
+08:53:44 ok   S167-INT-03-G side 4
+08:53:45 ok   S167-INT-03-G top 4
+08:53:45 ok   S167-INT-03-G roots 5
+08:53:45 ok   S167-INT-03-G side 5
+08:53:46 ok   S167-INT-03-G top 5
+08:53:46 ok   S167-INT-03-G stop
+08:53:46 ok   S171-D:STRUCT:obelisk cast
+08:53:47 ok   S171-D:STRUCT:obelisk roots 0
+08:53:48 ok   S171-D:STRUCT:obelisk side 0
+08:53:48 ok   S171-D:STRUCT:obelisk top 0
+08:53:48 ok   S171-D:STRUCT:obelisk roots 1
+08:53:49 ok   S171-D:STRUCT:obelisk side 1
+08:53:49 ok   S171-D:STRUCT:obelisk top 1
+08:53:49 ok   S171-D:STRUCT:obelisk roots 2
+08:53:49 ok   S171-D:STRUCT:obelisk side 2
+08:53:50 ok   S171-D:STRUCT:obelisk top 2
+08:53:50 ok   S171-D:STRUCT:obelisk roots 3
+08:53:50 ok   S171-D:STRUCT:obelisk side 3
+08:53:51 ok   S171-D:STRUCT:obelisk top 3
+08:53:51 ok   S171-D:STRUCT:obelisk roots 4
+08:53:51 ok   S171-D:STRUCT:obelisk side 4
+08:53:51 ok   S171-D:STRUCT:obelisk top 4
+08:53:51 ok   S171-D:STRUCT:obelisk roots 5
+08:53:52 ok   S171-D:STRUCT:obelisk side 5
+08:53:52 ok   S171-D:STRUCT:obelisk top 5
+08:53:52 ok   S171-D:STRUCT:obelisk stop
+08:53:53 ok   S174-D:STRUCT:tree cast
+08:53:54 ok   S174-D:STRUCT:tree roots 0
+08:53:54 ok   S174-D:STRUCT:tree side 0
+08:53:55 ok   S174-D:STRUCT:tree top 0
+08:53:55 ok   S174-D:STRUCT:tree roots 1
+08:53:55 ok   S174-D:STRUCT:tree side 1
+08:53:56 ok   S174-D:STRUCT:tree top 1
+08:53:56 ok   S174-D:STRUCT:tree roots 2
+08:53:56 ok   S174-D:STRUCT:tree side 2
+08:53:57 ok   S174-D:STRUCT:tree top 2
+08:53:57 ok   S174-D:STRUCT:tree roots 3
+08:53:57 ok   S174-D:STRUCT:tree side 3
+08:53:58 ok   S174-D:STRUCT:tree top 3
+08:53:58 ok   S174-D:STRUCT:tree roots 4
+08:53:58 ok   S174-D:STRUCT:tree side 4
+08:53:59 ok   S174-D:STRUCT:tree top 4
+08:53:59 ok   S174-D:STRUCT:tree roots 5
+08:53:59 ok   S174-D:STRUCT:tree side 5
+08:53:59 ok   S174-D:STRUCT:tree top 5
+08:53:59 ok   S174-D:STRUCT:tree stop
+08:54:00 ok   S177-D:STRUCT:lunar cast
+08:54:00 ok   S177-D:STRUCT:lunar roots 0
+08:54:01 ok   S177-D:STRUCT:lunar side 0
+08:54:02 ok   S177-D:STRUCT:lunar top 0
+08:54:02 ok   S177-D:STRUCT:lunar roots 1
+08:54:02 ok   S177-D:STRUCT:lunar side 1
+08:54:03 ok   S177-D:STRUCT:lunar top 1
+08:54:03 ok   S177-D:STRUCT:lunar roots 2
+08:54:03 ok   S177-D:STRUCT:lunar side 2
+08:54:04 ok   S177-D:STRUCT:lunar top 2
+08:54:04 ok   S177-D:STRUCT:lunar roots 3
+08:54:04 ok   S177-D:STRUCT:lunar side 3
+08:54:05 ok   S177-D:STRUCT:lunar top 3
+08:54:05 ok   S177-D:STRUCT:lunar roots 4
+08:54:05 ok   S177-D:STRUCT:lunar side 4
+08:54:05 ok   S177-D:STRUCT:lunar top 4
+08:54:05 ok   S177-D:STRUCT:lunar roots 5
+08:54:06 ok   S177-D:STRUCT:lunar side 5
+08:54:06 ok   S177-D:STRUCT:lunar top 5
+08:54:06 ok   S177-D:STRUCT:lunar stop
+08:54:07 ok   S180-D:STRUCT:pylon cast
+08:54:08 ok   S180-D:STRUCT:pylon roots 0
+08:54:08 ok   S180-D:STRUCT:pylon side 0
+08:54:09 ok   S180-D:STRUCT:pylon top 0
+08:54:09 ok   S180-D:STRUCT:pylon roots 1
+08:54:09 ok   S180-D:STRUCT:pylon side 1
+08:54:09 ok   S180-D:STRUCT:pylon top 1
+08:54:09 ok   S180-D:STRUCT:pylon roots 2
+08:54:10 ok   S180-D:STRUCT:pylon side 2
+08:54:10 ok   S180-D:STRUCT:pylon top 2
+08:54:10 ok   S180-D:STRUCT:pylon roots 3
+08:54:11 ok   S180-D:STRUCT:pylon side 3
+08:54:11 ok   S180-D:STRUCT:pylon top 3
+08:54:11 ok   S180-D:STRUCT:pylon roots 4
+08:54:11 ok   S180-D:STRUCT:pylon side 4
+08:54:12 ok   S180-D:STRUCT:pylon top 4
+08:54:12 ok   S180-D:STRUCT:pylon roots 5
+08:54:12 ok   S180-D:STRUCT:pylon side 5
+08:54:13 ok   S180-D:STRUCT:pylon top 5
+08:54:13 ok   S180-D:STRUCT:pylon stop
+08:54:13 ok   S182-D:PROJ:lance cast
+08:54:14 ok   S182-D:PROJ:lance roots 0
+08:54:15 ok   S182-D:PROJ:lance side 0
+08:54:16 ok   S182-D:PROJ:lance top 0
+08:54:16 ok   S182-D:PROJ:lance roots 1
+08:54:16 ok   S182-D:PROJ:lance side 1
+08:54:16 ok   S182-D:PROJ:lance top 1
+08:54:16 ok   S182-D:PROJ:lance roots 2
+08:54:17 ok   S182-D:PROJ:lance side 2
+08:54:18 ok   S182-D:PROJ:lance top 2
+08:54:18 ok   S182-D:PROJ:lance roots 3
+08:54:18 ok   S182-D:PROJ:lance side 3
+08:54:19 ok   S182-D:PROJ:lance top 3
+08:54:19 ok   S182-D:PROJ:lance roots 4
+08:54:19 ok   S182-D:PROJ:lance side 4
+08:54:20 ok   S182-D:PROJ:lance top 4
+08:54:20 ok   S182-D:PROJ:lance roots 5
+08:54:21 ok   S182-D:PROJ:lance side 5
+08:54:21 ok   S182-D:PROJ:lance top 5
+08:54:21 ok   S182-D:PROJ:lance stop
+08:54:22 ok   S183-D:ULT:inkfall cast
+08:54:23 ok   S183-D:ULT:inkfall roots 0
+08:54:23 ok   S183-D:ULT:inkfall side 0
+08:54:24 ok   S183-D:ULT:inkfall top 0
+08:54:24 ok   S183-D:ULT:inkfall roots 1
+08:54:24 ok   S183-D:ULT:inkfall side 1
+08:54:25 ok   S183-D:ULT:inkfall top 1
+08:54:25 ok   S183-D:ULT:inkfall roots 2
+08:54:25 ok   S183-D:ULT:inkfall side 2
+08:54:26 ok   S183-D:ULT:inkfall top 2
+08:54:26 ok   S183-D:ULT:inkfall roots 3
+08:54:26 ok   S183-D:ULT:inkfall side 3
+08:54:26 ok   S183-D:ULT:inkfall top 3
+08:54:26 ok   S183-D:ULT:inkfall roots 4
+08:54:27 ok   S183-D:ULT:inkfall side 4
+08:54:27 ok   S183-D:ULT:inkfall top 4
+08:54:27 ok   S183-D:ULT:inkfall roots 5
+08:54:28 ok   S183-D:ULT:inkfall side 5
+08:54:28 ok   S183-D:ULT:inkfall top 5
+08:54:28 ok   S183-D:ULT:inkfall stop
+08:54:29 ok   S195-C:F_PROJ:sing cast
+08:54:29 ok   S195-C:F_PROJ:sing roots 0
+08:54:30 ok   S195-C:F_PROJ:sing side 0
+08:54:30 ok   S195-C:F_PROJ:sing top 0
+08:54:30 ok   S195-C:F_PROJ:sing roots 1
+08:54:30 ok   S195-C:F_PROJ:sing side 1
+08:54:31 ok   S195-C:F_PROJ:sing top 1
+08:54:31 ok   S195-C:F_PROJ:sing roots 2
+08:54:31 ok   S195-C:F_PROJ:sing side 2
+08:54:32 ok   S195-C:F_PROJ:sing top 2
+08:54:32 ok   S195-C:F_PROJ:sing roots 3
+08:54:32 ok   S195-C:F_PROJ:sing side 3
+08:54:33 ok   S195-C:F_PROJ:sing top 3
+08:54:33 ok   S195-C:F_PROJ:sing roots 4
+08:54:33 ok   S195-C:F_PROJ:sing side 4
+08:54:33 ok   S195-C:F_PROJ:sing top 4
+08:54:33 ok   S195-C:F_PROJ:sing roots 5
+08:54:34 ok   S195-C:F_PROJ:sing side 5
+08:54:34 ok   S195-C:F_PROJ:sing top 5
+08:54:34 ok   S195-C:F_PROJ:sing stop
+08:54:35 ok   S199-C:SF_PROJ:prs cast
+08:54:35 ok   S199-C:SF_PROJ:prs roots 0
+08:54:36 ok   S199-C:SF_PROJ:prs side 0
+08:54:36 ok   S199-C:SF_PROJ:prs top 0
+08:54:36 ok   S199-C:SF_PROJ:prs roots 1
+08:54:36 ok   S199-C:SF_PROJ:prs side 1
+08:54:37 ok   S199-C:SF_PROJ:prs top 1
+08:54:37 ok   S199-C:SF_PROJ:prs roots 2
+08:54:37 ok   S199-C:SF_PROJ:prs side 2
+08:54:38 ok   S199-C:SF_PROJ:prs top 2
+08:54:38 ok   S199-C:SF_PROJ:prs roots 3
+08:54:38 ok   S199-C:SF_PROJ:prs side 3
+08:54:39 ok   S199-C:SF_PROJ:prs top 3
+08:54:39 ok   S199-C:SF_PROJ:prs roots 4
+08:54:39 ok   S199-C:SF_PROJ:prs side 4
+08:54:40 ok   S199-C:SF_PROJ:prs top 4
+08:54:40 ok   S199-C:SF_PROJ:prs roots 5
+08:54:40 ok   S199-C:SF_PROJ:prs side 5
+08:54:40 ok   S199-C:SF_PROJ:prs top 5
+08:54:40 ok   S199-C:SF_PROJ:prs stop
+08:54:41 ok   S200-C:SF_PROJ:eco cast
+08:54:41 ok   S200-C:SF_PROJ:eco roots 0
+08:54:42 ok   S200-C:SF_PROJ:eco side 0
+08:54:42 ok   S200-C:SF_PROJ:eco top 0
+08:54:42 ok   S200-C:SF_PROJ:eco roots 1
+08:54:43 ok   S200-C:SF_PROJ:eco side 1
+08:54:43 ok   S200-C:SF_PROJ:eco top 1
+08:54:43 ok   S200-C:SF_PROJ:eco roots 2
+08:54:44 ok   S200-C:SF_PROJ:eco side 2
+08:54:44 ok   S200-C:SF_PROJ:eco top 2
+08:54:44 ok   S200-C:SF_PROJ:eco roots 3
+08:54:45 ok   S200-C:SF_PROJ:eco side 3
+08:54:45 ok   S200-C:SF_PROJ:eco top 3
+08:54:45 ok   S200-C:SF_PROJ:eco roots 4
+08:54:45 ok   S200-C:SF_PROJ:eco side 4
+08:54:46 ok   S200-C:SF_PROJ:eco top 4
+08:54:46 ok   S200-C:SF_PROJ:eco roots 5
+08:54:46 ok   S200-C:SF_PROJ:eco side 5
+08:54:47 ok   S200-C:SF_PROJ:eco top 5
+08:54:47 ok   S200-C:SF_PROJ:eco stop
+08:54:47 ok   S201-C:SF_PROJ:mtr cast
+08:54:48 ok   S201-C:SF_PROJ:mtr roots 0
+08:54:48 ok   S201-C:SF_PROJ:mtr side 0
+08:54:49 ok   S201-C:SF_PROJ:mtr top 0
+08:54:49 ok   S201-C:SF_PROJ:mtr roots 1
+08:54:49 ok   S201-C:SF_PROJ:mtr side 1
+08:54:50 ok   S201-C:SF_PROJ:mtr top 1
+08:54:50 ok   S201-C:SF_PROJ:mtr roots 2
+08:54:50 ok   S201-C:SF_PROJ:mtr side 2
+08:54:50 ok   S201-C:SF_PROJ:mtr top 2
+08:54:50 ok   S201-C:SF_PROJ:mtr roots 3
+08:54:51 ok   S201-C:SF_PROJ:mtr side 3
+08:54:51 ok   S201-C:SF_PROJ:mtr top 3
+08:54:51 ok   S201-C:SF_PROJ:mtr roots 4
+08:54:51 ok   S201-C:SF_PROJ:mtr side 4
+08:54:52 ok   S201-C:SF_PROJ:mtr top 4
+08:54:52 ok   S201-C:SF_PROJ:mtr roots 5
+08:54:52 ok   S201-C:SF_PROJ:mtr side 5
+08:54:53 ok   S201-C:SF_PROJ:mtr top 5
+08:54:53 ok   S201-C:SF_PROJ:mtr stop
+08:54:53 pageerrors 0 []
