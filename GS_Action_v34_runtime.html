@@ -44271,11 +44271,11 @@ class Projectile{
 
 
     class LanceBeam extends Projectile{
- constructor(p,t){
+ constructor(p,t,from){
   super(p,t);
   const d=t.clone().sub(p);d.y=0;
-  this.dir=d.lengthSq()>1e-6?d.normalize():new THREE.Vector3(1,0,0);
-  this.a=clampArena(t.clone().addScaledVector(this.dir,-62));this.a.y=1.6;
+  this.dir=d.lengthSq()>1e-6?d.normalize():new THREE.Vector3(1,0,0);if(from){const f=new THREE.Vector3(p.x-from.x,0,p.z-from.z);if(f.lengthSq()>1e-6)this.dir.copy(f.normalize());} /*@V37 a cast beam runs from the caster through the target*/
+  this.a=clampArena(t.clone().addScaledVector(this.dir,-62));this.a.y=1.6;if(from)this.a.set(from.x,1.6,from.z); /*@V37 a cast beam starts at the caster instead of 62 behind the target*/
   this.b=clampArena(t.clone().addScaledVector(this.dir, 62));this.b.y=1.6;
   const len=this.a.distanceTo(this.b);
   this.mat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,side:THREE.DoubleSide,
@@ -51031,7 +51031,7 @@ class UmbralSanctum extends Structure{
         if(id==='curse')live=new CurseThorn(origin||polar(17,15,5),point);
         if(id==='diamondhail')live=new DiamondHail(point,point);
         if(id==='knotlance')live=new KnotLance(origin||polar(17,15,5),point);
-        if(id==='lance'){const a=Math.random()*TAU;live=new LanceBeam(point.clone(),point.clone().add(new THREE.Vector3(Math.cos(a),0,Math.sin(a))));}
+        if(id==='lance'){const aimed=!!(castContext?.direction||castContext?.origin),a=Math.random()*TAU;live=new LanceBeam(point.clone(),point.clone().add(aimed?new THREE.Vector3(CAST_DIR.x,0,CAST_DIR.z):new THREE.Vector3(Math.cos(a),0,Math.sin(a))),aimed?origin:null);} /*@V37 a combat cast follows the aim; only the Lab preview keeps a random heading*/
         if(id==='corallance')live=new CoralLance(origin||polar(18,16,6),point);
         if(id==='gearchain')live=new GearChainLance(origin||polar(16,10,3),point);
         if(id==='vortex')live=new VortexSeed(origin||polar(15,22,6),point);
