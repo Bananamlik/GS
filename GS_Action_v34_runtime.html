@@ -13542,6 +13542,7 @@ window.GA_RUN=(function(){
   for(const [key,e] of Object.entries(data.enemies)){const c=copy(e);c.hp=Math.round(e.hp*k.hp);c.damage=Math.round(e.damage*k.damage*10)/10;
    if(c.attacks)for(const a of Object.values(c.attacks))if(Number.isFinite(a.damage))a.damage=Math.round(a.damage*k.damage*10)/10;enemies[key]=c;}
   const heroes={...data.heroes,[r.heroKey]:{...data.heroes[r.heroKey],skills:applyPassives(resolveKit(r,data,lib),r.passives)}};
+  {const B=bossOf(r,node);if(B&&enemies[B.key]){const c=enemies[B.key];c.name=B.name;c.hp=Math.round(c.hp*B.hp);c.damage=Math.round(c.damage*B.damage*10)/10;c.cd=+(c.cd*B.cd).toFixed(2);c.radius=+(c.radius*B.size).toFixed(2);c.height=+(c.height*B.size).toFixed(2);}} /*@S6*/
   return {...data,heroes,enemies,waves:copy(node.waves)};}
  function startEncounter(r,node,options={}){if(r.map&&mapNode(r,node?.id)&&!canEnter(r,node.id))throw Error('Node not reachable '+node.id);const sim=options.sim||window.GA_SIM,d=encounterData(r,node,options.data,options.lib),seed=encounterSeed(r,node.id),w=sim.create(d,r.heroKey,seed,seed);
   w.hero.hp=Math.min(w.hero.hpMax,r.hero.hp);w.start();return w;}
@@ -13556,7 +13557,16 @@ window.GA_RUN=(function(){
  const WAVE_TABLE=Object.freeze({
   battle:[r=>({minion:3+(r()*3|0),archer:r()*2|0}),r=>({minion:2+(r()*3|0),witch:r()*2|0,mage:r()*2|0}),r=>({minion:3+(r()*3|0),archer:1,witch:1,mage:r()*2|0})],
   elite:[()=>({elite:1,minion:2}),()=>({elite:1,witch:1,mage:1}),()=>({elite:2,archer:1,mage:1})],
-  boss:[()=>[{minion:4,archer:1},{elite:2,minion:2}],()=>[{witch:2,mage:2},{elite:2,mage:2}],()=>[{minion:4,elite:1},{boss:1}]]});
+  boss:[()=>[{minion:4,archer:1},{elite:1,minion:3}],()=>[{witch:2,minion:3},{mage:1,witch:1,minion:2}],()=>[{minion:4,elite:1},{boss:1}]]}); /*@S6 act 1 and 2 end on one strengthened enemy (STAGES[].acts[].boss)*/
+ /*@S6 Stage = one bundle a map can swap in: act names, wave tables and the act boss (an existing enemy kind strengthened for the boss node only, so GA_SIM rules stay as they are).
+    Only 'coast' exists; a run has no stage field yet, so every run uses it. A new map (city, cyberpunk) adds a bundle here.*/
+ const STAGES=Object.freeze({coast:Object.freeze({id:'coast',name:'해안',waves:WAVE_TABLE,acts:Object.freeze([
+   Object.freeze({name:'해안 폐허',boss:Object.freeze({key:'elite',name:'잡귀 대장',hp:3,damage:1.2,cd:.8,size:1.45})}),
+   Object.freeze({name:'저주받은 숲',boss:Object.freeze({key:'mage',name:'대술사',hp:6,damage:1.15,cd:.5,size:1.5})}),
+   Object.freeze({name:'심연',boss:null})])})});
+ const stageOf=r=>STAGES[r?.stage]||STAGES.coast,actInfo=r=>stageOf(r).acts[(r?.act||1)-1]||null;
+ /* The act boss applies only when the node's last wave holds exactly one of that kind and no earlier wave has it (maps saved before S6 keep their old boss waves untouched). */
+ function bossOf(r,node){const b=node?.kind==='boss'?actInfo(r)?.boss:null,w=node?.waves;if(!b||!Array.isArray(w)||!w.length)return null;return w[w.length-1][b.key]===1&&w.slice(0,-1).every(x=>!x[b.key])?b:null;}
  const clean=w=>Object.fromEntries(Object.entries(w).filter(([,c])=>c>0));
  function wavesFor(kind,act,floor,r){if(kind==='boss')return WAVE_TABLE.boss[act-1](r).map(clean);if(kind==='elite')return [clean(WAVE_TABLE.elite[act-1](r))];
   if(kind!=='battle')return null;const n=floor>=3?2:1,out=[];for(let i=0;i<n;i++)out.push(clean(WAVE_TABLE.battle[act-1](r)));return out;}
@@ -13681,7 +13691,7 @@ window.GA_RUN=(function(){
  function storage(s){try{return s||window.localStorage;}catch{return null;}}
  function write(key,value,s){const st=storage(s);if(!st)return {ok:false,reason:'storage unavailable'};try{st.setItem(key,JSON.stringify(value));return {ok:true};}catch(e){return {ok:false,reason:String(e&&e.name||e)};}}
  function read(key,check,s){const st=storage(s);if(!st)return {value:null,reason:'storage unavailable'};try{const raw=st.getItem(key);if(raw===null)return {value:null,reason:'empty'};const v=JSON.parse(raw);return check(v)?{value:v,reason:null}:{value:null,reason:'invalid'};}catch{return {value:null,reason:'invalid'};}}
- return Object.freeze({CONTRACT,META_CONTRACT,RUN_KEY,META_KEY,CONFIG,hash,rng,encounterSeed,createMeta,validateMeta,createRun,validateRun,resolveKit,NODE_KINDS,validNode,enemyScale,encounterData,startEncounter,finishEncounter,MAP_KINDS,generateMap,validMap,mapNode,availableNodes,canEnter,visitNode,PASSIVES,RUN_SLOTS,applyPassives,makeReward,validReward,takeReward,EVENTS,makeStop,validStop,chooseStop,UNLOCKS,shardsFor,settleRun,unlock,
+ return Object.freeze({CONTRACT,META_CONTRACT,RUN_KEY,META_KEY,CONFIG,hash,rng,encounterSeed,createMeta,validateMeta,createRun,validateRun,resolveKit,NODE_KINDS,validNode,enemyScale,encounterData,startEncounter,finishEncounter,STAGES,stageOf,actInfo,bossOf,MAP_KINDS,generateMap,validMap,mapNode,availableNodes,canEnter,visitNode,PASSIVES,RUN_SLOTS,applyPassives,makeReward,validReward,takeReward,EVENTS,makeStop,validStop,chooseStop,UNLOCKS,shardsFor,settleRun,unlock,
   saveRun:(r,s)=>validateRun(r)?write(RUN_KEY,r,s):{ok:false,reason:'invalid'},loadRun:s=>read(RUN_KEY,v=>validateRun(v),s),
   clearRun:s=>{const st=storage(s);try{st&&st.removeItem(RUN_KEY);return true;}catch{return false;}},
   saveMeta:(m,s)=>validateMeta(m)?write(META_KEY,m,s):{ok:false,reason:'invalid'},loadMeta:s=>read(META_KEY,v=>validateMeta(v),s)});
@@ -13764,8 +13774,9 @@ for(const side of [-1,1]){
  const knuckle=mesh(new T.BoxGeometry(.3,.12,.14),handMat,g);knuckle.position.set(0,.035,-.35);
  for(const o of [cuff,palm,knuckle]){o.material.depthTest=false;o.material.depthWrite=false;o.renderOrder=999;o.frustumCulled=false;}
 }
+function edef(kind){return (V.runNode&&V.runDefs?.[kind])||D.enemies[kind];} /*@S6 the act boss of a run battle shows its own name and size*/
 function rig(team,kind){
- const root=new T.Group(),hero=team==='P',def=hero?D.heroes[V.heroKey]:D.enemies[kind],h=hero?9:def.height;
+ const root=new T.Group(),hero=team==='P',def=hero?D.heroes[V.heroKey]:edef(kind),h=hero?9:def.height;
  const bodyMat=mat(hero?def.color:kind==='boss'?0x552638:kind==='elite'?0x593b50:0x4b4a62,.55,.3),accent=mat(hero?def.color:kind==='boss'?0xe0a387:0xb56d77,.35,.5);
  const body=mesh(new T.CapsuleGeometry(hero?1.7:def.radius*.78,h*.48,6,10),bodyMat,root);body.position.y=h*.48;
  const shoulder=mesh(new T.SphereGeometry(hero?1.8:def.radius*.82,12,8),accent,root);shoulder.scale.y=.45;shoulder.position.y=h*.67;
@@ -13780,7 +13791,7 @@ function rig(team,kind){
 }
 function bindRig(id,kind){if(V.rigs.has(id))return;const q=rig(id==='hero'?'P':'E',kind);q.ring.visible=V.boxes;if(id==='hero')q.root.visible=false;V.rigs.set(id,q);
  if(id==='hero')ensureMech().then(()=>attachHeroMech(q)).catch(err=>console.warn('[GS Action mech]',err));
- if(id!=='hero'&&kind!=='boss'){const bar=document.createElement('div');bar.className='enemy';bar.innerHTML=`${D.enemies[kind].name}<i><b></b></i>`;el('gaEnemyBars').appendChild(bar);q.bar=bar;}}
+ if(id!=='hero'&&kind!=='boss'){const bar=document.createElement('div');bar.className='enemy';bar.innerHTML=`${edef(kind).name}<i><b></b></i>`;el('gaEnemyBars').appendChild(bar);q.bar=bar;}}
 function disposeRig(r){if(r.mixer){r.mixer.stopAllAction();if(r.visual)r.mixer.uncacheRoot(r.visual);r.mixer=null;}if(r.visual){const skeletons=new Set();r.visual.traverse(o=>{if(o.isSkinnedMesh&&o.skeleton)skeletons.add(o.skeleton);});for(const skeleton of skeletons)skeleton.dispose();V.root.remove(r.visual);r.visual=null;r.mech=null;}V.root.remove(r.root);r.root.traverse(o=>o.geometry?.dispose());for(const m of new Set(r.ownedMaterials))m.dispose();r.bar?.remove();}
 const MECH_FILE='models/white_order_mech_opt.glb',MECH_CDN='https://cdn.jsdelivr.net/gh/Bananamlik/AL@main/models/white_order_mech_opt.glb';
 function clipNamed(list,re){return list.find(a=>re.test(a.name));}
@@ -14703,7 +14714,7 @@ function syncRigs(dt){const w=V.world;if(!w)return;renderEnemies.clear();for(con
  const ex=e.rx??e.x,ez=e.rz??e.z;r.root.position.set(ex,0,ez);
  if(id==='hero')r.root.rotation.y=e.facing;else{const cur=r.fy??e.face;let d=e.face-cur;d-=Math.round(d/6.283185307179586)*6.283185307179586;r.fy=cur+d*(1-Math.exp(-(dt||S.STEP)*14));r.root.rotation.y=r.fy;} /*@V13 enemies turn over ~0.15 s instead of snapping (shortest arc)*/
  r.setState(e.state,V.clock);syncMechVisual(r,e,id,dt);if(id==='hero'){r.root.visible=V.settings.cameraMode==='third'&&!r.visual;if(r.visual)r.visual.visible=V.settings.cameraMode==='third'&&(e.hp>0||w.over);}
- if(id!=='hero'){const priority=objective?.kind==='priority'&&objective.status==='active'&&e.kind===objective.target;r.ring.visible=V.boxes||priority;if(r.__priority!==priority){r.__priority=priority;r.ring.material.color.setHex(priority?0xffd18a:0x8b5360);if(r.bar)r.bar.firstChild.nodeValue=(priority?'◆ 우선 표적 · ':'')+D.enemies[e.kind].name;}r.root.visible=e.hp>0;r.bodyMat.color.copy(r.base).lerp(color(0xffe9d5),Math.min(1,(e.flash||0)*4));
+ if(id!=='hero'){const priority=objective?.kind==='priority'&&objective.status==='active'&&e.kind===objective.target;r.ring.visible=V.boxes||priority;if(r.__priority!==priority){r.__priority=priority;r.ring.material.color.setHex(priority?0xffd18a:0x8b5360);if(r.bar)r.bar.firstChild.nodeValue=(priority?'◆ 우선 표적 · ':'')+edef(e.kind).name;}r.root.visible=e.hp>0;r.bodyMat.color.copy(r.base).lerp(color(0xffe9d5),Math.min(1,(e.flash||0)*4));
    if(r.bar){const p=(syncRigs.p||(syncRigs.p=new T.Vector3())).set(ex,r.h+3,ez).project(camera),distance=Math.hypot(e.x-w.hero.x,e.z-w.hero.z);
      const visible=e.hp>0&&p.z>-1&&p.z<1&&Math.abs(p.x)<.94&&Math.abs(p.y)<.9;
      const focused=Math.abs(p.x)<.2&&Math.abs(p.y)<.25;
@@ -14852,7 +14863,7 @@ function runEnterView(){if(!V.active||V.mode!=='game'){V.loadSeq++;enterAction('
 function runContinue(){const r=window.GA_RUN.loadRun().value;if(!r||r.status!=='active')return false;runEnterView();V.run=r;selectHero(r.heroKey);openRunMap();return true;}
 function openRunMap(note=''){const R=window.GA_RUN,run=V.run;if(!run)return false;V.paused=true;document.exitPointerLock?.();el('gaMenu').style.display='none';el('gaResult').style.display='none';
  el('gaRunMap').hidden=false;const hero=D.heroes[run.heroKey];if(run.reward)return renderRunReward(note); /*@S4*/if(run.stop)return renderRunStop(note); /*@S5*/
- el('gaRunTitle').textContent=`ACT ${run.act} / ${R.CONFIG.acts}`;
+ el('gaRunTitle').textContent=`ACT ${run.act} / ${R.CONFIG.acts} · ${R.actInfo(run)?.name||''}`; /*@S6*/
  el('gaRunInfo').textContent=`${hero.name} · 체력 ${Math.ceil(run.hero.hp)}/${run.hero.hpMax} · 골드 ${run.gold} · 노드 ${run.stats.nodes}${run.passives.length?' · 패시브 '+run.passives.map(p=>R.PASSIVES[p.id].name+(p.stacks>1?'×'+p.stacks:'')).join(', '):''}`;
  const open=new Set(R.availableNodes(run).map(n=>n.id)),done=new Set(run.history.map(h=>h.nodeId)),nodes=run.map['a'+run.act]||[],rows=[];
  for(let f=R.CONFIG.floors-1;f>=0;f--){const row=document.createElement('div');row.className='ga-run-floor';const cap=document.createElement('small');cap.textContent=f===R.CONFIG.floors-1?'보스':`${f+1}층`;row.appendChild(cap);
@@ -14902,12 +14913,12 @@ function runChoose(id){const R=window.GA_RUN,node=V.run&&R.mapNode(V.run,id);if(
  if(['battle','elite','boss'].includes(node.kind)){runEnterBattle(node);return true;}
  V.run=R.visitNode(V.run,id);runSave();openRunMap();return true;}
 async function runEnterBattle(node){const R=window.GA_RUN,seq=++V.loadSeq;closeRunMap();
- enterAction('game');clearActionWorld();selectHero(V.run.heroKey);V.runNode=node;
+ enterAction('game');clearActionWorld();selectHero(V.run.heroKey);V.runNode=node;{const B=R.bossOf(V.run,node),e=B&&D.enemies[B.key];V.runDefs=e?{[B.key]:{...e,name:B.name,radius:e.radius*B.size,height:e.height*B.size}}:null;} /*@S6*/
  V.world=R.startEncounter(V.run,node);bindRig('hero');for(const e of V.world.events.splice(0))emit(e);V.god=false;el('gaGod').textContent='무적';
  V.paused=true;window.__GS_TIMESCALE=V.speed;el('gaResult').style.display='none';
  showMenu('select',`ACT ${V.run.act} · ${RUN_KIND_LABEL[node.kind]} · 효과를 준비하고 있습니다…`);el('gaHeroes').style.display='none';el('gaHeroInfo').style.display='none';el('gaStart').disabled=true;el('gaStart').textContent='VFX 준비 중…';
  let prep=null;try{prep=await prepareRun();}catch(error){console.warn('[GS run prepare]',error);}
- if(seq!==V.loadSeq||!V.active)return false;V.ready=true;el('gaStart').disabled=false;el('gaStart').textContent='준비 완료 · 전투 시작';el('gaMenuNote').textContent=`ACT ${V.run.act} · ${RUN_KIND_LABEL[node.kind]} · 웨이브 ${node.waves.length}`;return true;}
+ if(seq!==V.loadSeq||!V.active)return false;V.ready=true;el('gaStart').disabled=false;el('gaStart').textContent='준비 완료 · 전투 시작';el('gaMenuNote').textContent=`ACT ${V.run.act} ${R.actInfo(V.run)?.name||''} · ${RUN_KIND_LABEL[node.kind]}${R.bossOf(V.run,node)?' · '+R.bossOf(V.run,node).name:''} · 웨이브 ${node.waves.length}`;return true;}
 function runBattleEnd(){const R=window.GA_RUN,node=V.runNode;V.run=R.finishEncounter(V.run,V.world,node);V.runNode=null;runSave();
  if(V.run.status==='active'){openRunMap(`${RUN_KIND_LABEL[node.kind]} 승리 · 체력 ${Math.ceil(V.run.hero.hp)} 유지`);return;}
  const settled=R.settleRun(runMeta(),V.run);R.saveMeta(settled.meta);R.clearRun();refreshRunButtons(); /*@S7*/
