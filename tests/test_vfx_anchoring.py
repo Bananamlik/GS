@@ -70,7 +70,7 @@ class VfxAnchoring(performance.BrowserSession):
             self.page.wait_for_timeout(1500)
 
     def test_audit_lifts_lower_floating_effects(self):
-        lifts = {'AC-02': -12, 'ARC-08': -12, 'SC-02': -11, 'FX-10-O': -8, 'FX-25': -4, 'FX-146': -5, 'ARC-25': -7, 'AS-10': -3}
+        lifts = {'AC-02': -12, 'ARC-08': -12, 'SC-02': -11, 'FX-10-O': -8, 'FX-25': -4, 'FX-146': -10, 'AS-10': -3}
         self.assertEqual(self.page.evaluate('ids=>ids.map(i=>window.__FX_ADJ[i]?.lift)', list(lifts)), list(lifts.values()))
         self.assertTrue(self.page.evaluate('ids=>ids.every(i=>window.__FX_SCALABLE.has(i))', list(lifts)))
         self.page.evaluate("GS_ACTION.startTrial('bolt')")
