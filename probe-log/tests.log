@@ -1,0 +1,8 @@
+test_audit_lifts_lower_floating_effects (test_vfx_anchoring.VfxAnchoring.test_audit_lifts_lower_floating_effects) ... ok
+test_lance_beam_follows_the_aim_and_starts_at_the_caster (test_vfx_anchoring.VfxAnchoring.test_lance_beam_follows_the_aim_and_starts_at_the_caster) ... ok
+test_poses_follow_ground_lab_length_and_shield_follows_hero (test_vfx_anchoring.VfxAnchoring.test_poses_follow_ground_lab_length_and_shield_follows_hero) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 26.617s
+
+OK
