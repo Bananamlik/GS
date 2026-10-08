@@ -40,3 +40,31 @@ class VfxAnchoring(performance.BrowserSession):
         after = self.page.evaluate("STAGE3D.getEffect('ARC-04').__gsRoots.map(r=>r.position.x)")
         moved = max(a - b for a, b in zip(after, before))
         self.assertGreater(moved, 8, (before, after))
+
+    def test_lance_beam_follows_the_aim_and_starts_at_the_caster(self):
+        self.page.evaluate("GS_ACTION.startTrial('bolt')")
+        self.page.locator('#gaStart').evaluate('e=>e.click()')
+        self.page.wait_for_function('!GS_ACTION.status.paused', timeout=60000)
+        self.page.wait_for_function('GS_ACTION.vfxWarmStatus?.ids && GS_ACTION.warmStatus.queued===0', timeout=60000)
+        probe = '''([tx,tz])=>new Promise(done=>{
+          const h=GS_ACTION.sim.hero;h.x=0;h.z=0;h.invuln=1e9;
+          const r=GS_ACTION.fx({id:'D:PROJ:lance',kind:'circle',caster:'test',origin:{x:0,z:0},target:{x:tx,z:tz}});
+          const t0=performance.now();
+          (function look(){
+            let top=(STAGE3D.getEffect(r.id)?.__gsRoots||[])[0];while(top?.parent)top=top.parent;
+            let hit=null;top?.traverse(o=>{if(!hit&&o.isMesh&&o.geometry?.type==='CylinderGeometry'&&o.geometry.parameters.height>40&&o.material?.uniforms?.uOp)hit=o;});
+            if(hit){hit.updateWorldMatrix(true,false);const e=hit.matrixWorld.elements,l=Math.hypot(e[4],e[5],e[6])||1;
+              return done({cast:r,axis:[e[4]/l,e[5]/l,e[6]/l],mid:[e[12],e[13],e[14]],len:hit.geometry.parameters.height});}
+            if(performance.now()-t0>8000)return done({cast:r,axis:null});
+            requestAnimationFrame(look);})();})'''
+        for aim, axis in (((0, -25), 2), ((20, 0), 0)):
+            got = self.page.evaluate(probe, list(aim))
+            self.assertTrue(got['cast']['ok'], got)
+            self.assertIsNotNone(got['axis'], got)
+            reach = (aim[0] ** 2 + aim[1] ** 2) ** .5
+            self.assertGreater(abs(got['axis'][axis]), .98, (aim, got))
+            self.assertAlmostEqual(got['len'], reach + 62, delta=1.5, msg=str((aim, got)))
+            for k, unit in ((0, aim[0] / reach), (2, aim[1] / reach)):
+                self.assertAlmostEqual(got['mid'][k], unit * (reach + 62) / 2, delta=1.5, msg=str((aim, got)))
+            self.page.evaluate("VFX_COMBAT.stop('D:PROJ:lance')")
+            self.page.wait_for_timeout(1500)
