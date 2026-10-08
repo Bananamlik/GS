@@ -1,20 +1,20 @@
 # CLAUDE.md
 
-GS Action: 단일 HTML 게임/VFX 스튜디오. 현재 상태는 `docs/STATUS.md`, 증거는 `docs/evidence/`.
+GS Action: 단일 HTML 게임/VFX 스튜디오. 현재 상태는 `docs/STATUS.md`, 증거는 `docs/evidence/`, 설계는 `docs/design/`(런 구조 `gs-run-skeleton_v1`, 전투 `gs-combat-design_v1`).
 
 ## 파일
 
-- `index.html` = `GS_Action_v34_runtime.html`. 항상 byte 동일. 한쪽만 바꾸지 않는다. 현재 md5 `10ef9fe87f56b0c0a9c13b92e86ff77e` (v35 + HUD + 랩 모바일 + SFX + 스킬 주제 상태 + VFX 위치 + 로그라이트 런 S1~S5·S7 + 관통 빔 방향 + 높이 보정 7개).
+- `index.html` = `GS_Action_v34_runtime.html`. 항상 byte 동일. 한쪽만 바꾸지 않는다. 현재 md5 `7ebf35e6745424f0f8f2b0b653e85355` (v35 + HUD + 랩 모바일 + SFX + 스킬 주제 상태 + VFX 위치 + 로그라이트 런 S1~S5·S7 + 관통 빔 방향 + 높이 보정 7개 + 전투 C1 카메라·C4 회피 취소 + 런 결과 버튼).
 - `GS_Action_v35_261005-2000.html`: PR #3 최종본과 byte 동일(md5 `f7d2ab883d7bc78fc05d9b046e45bf47`), HUD 개선 이전 빌드. 수정하지 않는다.
 - `gs-skill-lib_v7_261003-0344.csv`: 스킬 라이브러리.
 - `GS_Action_v14_261003-0447.html`, `gs-v14-report_v1_261003-0447.md`: 이전 버전·보고서.
-- `docs/`: 상태·증거. `tests/`(45개: 브라우저 31 + Node만 14), `scripts/`, `.github/workflows/tests.yml`은 `main`에 있고 PR마다 자동 실행됨(`workflow_dispatch`로 수동 실행도 가능).
+- `docs/`: 상태·증거. `tests/`(48개: 브라우저 33 + Node만 15), `scripts/`, `.github/workflows/tests.yml`은 `main`에 있고 PR마다 자동 실행됨(`workflow_dispatch`로 수동 실행도 가능).
 
 ## 규칙
 
 - `index.html` 수정 전: md5 기록, 수정 후 md5 출력. 기대값과 다르면 중단하고 보고. 강제 패치 금지.
 - 큰 블록 교체 전 백업(`.bak`). 패치는 앵커 기준 최소 줄 변경. 셰이더·uniform·config 블록 전체 교체 금지.
-- 병합은 사용자가 지시할 때만. main 직접 push 금지.
+- 병합: 확실한 개선(버그 수정, 합의된 설계의 구현, 문서·CI 보완)은 CI 통과 후 자동 병합한다(사용자 방침 2026-10-08). 취향·수치 판단이 갈리거나 되돌리기 어려운 것(삭제, PR 닫기, 저장 형식 변경)은 초안으로 두고 사용자 지시를 기다린다. main 직접 push 금지.
 - 코드 변경 PR과 docs-only PR을 섞지 않는다.
 - 검증하지 못한 것은 "UNVERIFIED"로 쓴다. 통과로 쓰지 않는다. SwiftShader 수치는 GPU 성능이 아니다.
 
@@ -33,6 +33,6 @@ GS Action: 단일 HTML 게임/VFX 스튜디오. 현재 상태는 `docs/STATUS.md
 
 ## PR 구조
 
-- 분할 PR #5~#7, CI #9, HUD #10·#11·#13, 랩 모바일 #15, SFX 측정 문서 #14, SFX 음량 정규화 #17, SFX 겹침 규칙 #20, 스킬 주제 상태 #21, VFX 위치 #26, 로그라이트 런 S1~S5·S7 #24·#25·#27·#28·#29·#30, 관통 빔 방향 #34, VFX 높이 보정 #35, 문서 #16·#18·#19·#22·#23·#31·#32·#33은 모두 `main`에 병합됨(상세는 `docs/STATUS.md`).
-- 새 변경은 `main`에서 브랜치를 만든다. 코드 PR은 `index.html`과 `GS_Action_v34_runtime.html`을 함께 바꾸고 45개 테스트 통과를 확인한다(워크플로가 개수도 검사).
+- 분할 PR #5~#7, CI #9, HUD #10·#11·#13, 랩 모바일 #15, SFX 측정 문서 #14, SFX 음량 정규화 #17, SFX 겹침 규칙 #20, 스킬 주제 상태 #21, VFX 위치 #26, 로그라이트 런 S1~S5·S7 #24·#25·#27·#28·#29·#30, 관통 빔 방향 #34, VFX 높이 보정 #35, 전투 C1 카메라 #39, 런 결과 버튼 #40, 전투 C4 회피 취소 #41, CI 실패 주석 #38, 문서 #16·#18·#19·#22·#23·#31·#32·#33·#36·#37은 모두 `main`에 병합됨(상세는 `docs/STATUS.md`).
+- 새 변경은 `main`에서 브랜치를 만든다. 코드 PR은 `index.html`과 `GS_Action_v34_runtime.html`을 함께 바꾸고 48개 테스트 통과를 확인한다(워크플로가 개수도 검사). CI가 실패하면 실패한 테스트 이름이 check-run 주석(annotation)에 남는다(`gh api repos/{owner}/{repo}/check-runs/{id}/annotations`).
 - 화면 확인이 필요하면 결과 수집용 브랜치(`claude/probe-*`)처럼 캡처 워크플로를 별도 브랜치에 얹어 실행한다. `main`에 넣지 않는다.
