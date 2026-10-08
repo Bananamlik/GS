@@ -1,0 +1,39 @@
+pc-ddefault NV-03 {"ok": true, "id": "NV-03", "instance": 0, "form": "zone", "pending": false}
+pc-ddefault FX-34 {"ok": true, "id": "FX-34", "instance": 0, "form": "point", "pending": false}
+pc-ddefault CH:tidal {"ok": true, "id": "CH:tidal", "instance": 0, "form": "beam", "pending": false}
+pc-ddefault cam {"dx": 0, "y": 10.35, "dz": 6.4, "fov": 60}
+pc-d8 NV-03 {"ok": true, "id": "NV-03", "instance": 1, "form": "zone", "pending": false}
+pc-d8 FX-34 {"ok": true, "id": "FX-34", "instance": 1, "form": "point", "pending": false}
+pc-d8 CH:tidal {"ok": true, "id": "CH:tidal", "instance": 1, "form": "beam", "pending": false}
+pc-d8 cam {"dx": 0, "y": 10.35, "dz": 6.4, "fov": 60}
+pc-d16 NV-03 {"ok": true, "id": "NV-03", "instance": 0, "form": "zone", "pending": false}
+pc-d16 FX-34 {"ok": true, "id": "FX-34", "instance": 0, "form": "point", "pending": false}
+pc-d16 CH:tidal {"ok": true, "id": "CH:tidal", "instance": 0, "form": "beam", "pending": false}
+pc-d16 cam {"dx": 0, "y": 10.35, "dz": 6.4, "fov": 60}
+pc pageerrors 0 []
+portrait-ddefault NV-03 {"ok": true, "id": "NV-03", "instance": 0, "form": "zone", "pending": false}
+portrait-ddefault FX-34 {"ok": true, "id": "FX-34", "instance": 0, "form": "point", "pending": false}
+portrait-ddefault CH:tidal {"ok": true, "id": "CH:tidal", "instance": 0, "form": "beam", "pending": false}
+portrait-ddefault cam {"dx": 0, "y": 10.35, "dz": 6.4, "fov": 60}
+portrait-d8 NV-03 {"ok": true, "id": "NV-03", "instance": 1, "form": "zone", "pending": false}
+portrait-d8 FX-34 {"ok": true, "id": "FX-34", "instance": 1, "form": "point", "pending": false}
+portrait-d8 CH:tidal {"ok": true, "id": "CH:tidal", "instance": 1, "form": "beam", "pending": false}
+portrait-d8 cam {"dx": 0, "y": 10.35, "dz": 6.4, "fov": 60}
+portrait-d16 NV-03 {"ok": true, "id": "NV-03", "instance": 0, "form": "zone", "pending": false}
+portrait-d16 FX-34 {"ok": true, "id": "FX-34", "instance": 0, "form": "point", "pending": false}
+portrait-d16 CH:tidal {"ok": true, "id": "CH:tidal", "instance": 0, "form": "beam", "pending": false}
+portrait-d16 cam {"dx": 0, "y": 10.35, "dz": 6.4, "fov": 60}
+portrait pageerrors 0 []
+landscape-ddefault NV-03 {"ok": true, "id": "NV-03", "instance": 0, "form": "zone", "pending": false}
+landscape-ddefault FX-34 {"ok": true, "id": "FX-34", "instance": 0, "form": "point", "pending": false}
+landscape-ddefault CH:tidal {"ok": true, "id": "CH:tidal", "instance": 0, "form": "beam", "pending": false}
+landscape-ddefault cam {"dx": 0, "y": 10.35, "dz": 6.4, "fov": 60}
+landscape-d8 NV-03 {"ok": true, "id": "NV-03", "instance": 0, "form": "zone", "pending": false}
+landscape-d8 FX-34 {"ok": true, "id": "FX-34", "instance": 0, "form": "point", "pending": false}
+landscape-d8 CH:tidal {"ok": true, "id": "CH:tidal", "instance": 0, "form": "beam", "pending": false}
+landscape-d8 cam {"dx": 0, "y": 10.35, "dz": 6.4, "fov": 60}
+landscape-d16 NV-03 {"ok": true, "id": "NV-03", "instance": 0, "form": "zone", "pending": false}
+landscape-d16 FX-34 {"ok": true, "id": "FX-34", "instance": 0, "form": "point", "pending": false}
+landscape-d16 CH:tidal {"ok": true, "id": "CH:tidal", "instance": 0, "form": "beam", "pending": false}
+landscape-d16 cam {"dx": 0, "y": 10.35, "dz": 6.4, "fov": 60}
+landscape pageerrors 0 []
