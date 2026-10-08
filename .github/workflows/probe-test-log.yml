@@ -1,0 +1,39 @@
+name: probe-test-log
+
+on:
+  push:
+    branches: ['claude/probe-lift-test']
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Playwright and Chromium
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+          echo "GS_CHROMIUM=$(python -c 'from playwright.sync_api import sync_playwright as s; p=s().start(); print(p.chromium.executable_path); p.stop()')" >> "$GITHUB_ENV"
+      - name: Serve repo
+        run: |
+          python -m http.server 8000 --bind 127.0.0.1 > server.log 2>&1 &
+          for i in $(seq 1 20); do curl -fsS -o /dev/null http://127.0.0.1:8000/ && break; sleep 1; done
+      - name: Run anchoring tests
+        run: |
+          mkdir -p probe-log
+          cd tests && python -m unittest -v test_vfx_anchoring > ../probe-log/tests.log 2>&1 || true
+      - name: Commit log
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add probe-log
+          git commit -m "probe log (run ${{ github.run_id }})" || exit 0
+          git push origin "HEAD:${{ github.ref_name }}"
