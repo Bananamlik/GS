@@ -1,12 +1,13 @@
 # STATUS
 
-갱신: 2026-10-08 19:20 KST. 근거: `docs/evidence/`. 검증하지 못한 항목은 UNVERIFIED.
+갱신: 2026-10-08 20:50 KST. 근거: `docs/evidence/`. 검증하지 못한 항목은 UNVERIFIED.
 
 ## 1. 코드 상태
 
 | 항목 | 값 |
 |---|---|
-| main | `886d728` (#35 병합). `index.html` = `GS_Action_v34_runtime.html`, md5 `10ef9fe87f56b0c0a9c13b92e86ff77e`, 62,769줄 (v35 + HUD + 랩 모바일 + SFX + 스킬 주제 상태 + VFX 위치 + 로그라이트 런 S1~S5·S7 + 관통 빔 방향 + 높이 보정 7개) |
+| main | `44cb13e` (#41 병합). `index.html` = `GS_Action_v34_runtime.html`, md5 `7ebf35e6745424f0f8f2b0b653e85355` (위 + 전투 C1 카메라·C4 회피 취소 + 런 결과 버튼) |
+| 높이 보정까지(#35 시점) | main `886d728`의 `index.html`, md5 `10ef9fe87f56b0c0a9c13b92e86ff77e` |
 | 런 S7까지(#30 시점) | main `3fc9c6e`의 `index.html`, md5 `0eaa8b73a1a4ef38a48e9809a52d5bd8` |
 | SFX 겹침 규칙까지(#20 시점) | main `7bcf549`의 `index.html`, md5 `a1129562470585674331ed97ce640a6e` |
 | v35 파일 | `GS_Action_v35_261005-2000.html`, md5 `f7d2ab883d7bc78fc05d9b046e45bf47` = PR #3 최종본. HUD 개선 이전 빌드. 수정하지 않음. |
@@ -48,6 +49,12 @@
 | [#33](https://github.com/Bananamlik/GS/pull/33) | 문서: VFX 위치 판정표 v1·v2 (243행, 정상 219·의심 24) | `f5403bd` |
 | [#34](https://github.com/Bananamlik/GS/pull/34) | 수평 관통 빔(`D:PROJ:lance`): 무작위 방향 → 시전자에서 표적 방향 | `3ad36a8` |
 | [#35](https://github.com/Bananamlik/GS/pull/35) | VFX 높이 보정 7개(`AC-02`·`ARC-08`·`SC-02`·`FX-10-O`·`FX-25`·`FX-146`·`AS-10`) | `886d728` |
+| [#36](https://github.com/Bananamlik/GS/pull/36) | 문서: 상태 갱신 | `4ffcfcf` |
+| [#37](https://github.com/Bananamlik/GS/pull/37) | 문서: 전투 설계 v1 (카메라·조준·이동·가독성·빌드 축, 결정 D1~D9 권장안 확정) | `2f799f2` |
+| [#38](https://github.com/Bananamlik/GS/pull/38) | CI: 실패한 테스트 이름·오류 첫 줄을 주석으로 남김 | `7285c9a` |
+| [#39](https://github.com/Bananamlik/GS/pull/39) | 전투 C1: 3인칭 카메라 거리 11(설정 8~16)·높이 +3.5·어깨 1.6·시작 시선 아래 16°·세로 화면 시야각 72° | `e0ca241` |
+| [#40](https://github.com/Bananamlik/GS/pull/40) | 런 결과 화면의 버튼이 새 런 시작(P4), 메뉴 제목 v34 제거(P11) | `590d3c4` |
+| [#41](https://github.com/Bananamlik/GS/pull/41) | 전투 C4: 준비 동작 중 회피로 취소(궁극기 제외). 위치 테스트 대기 시간 연장 | `44cb13e` |
 
 - 닫음: [#4](https://github.com/Bananamlik/GS/pull/4) (권한 확인용).
 - 열려 있음: [#3](https://github.com/Bananamlik/GS/pull/3) (분할 전 원본. 내용이 `main`에 들어가 중복 상태. 닫을지는 사용자 결정), [#1](https://github.com/Bananamlik/GS/pull/1) (v14, 별개).
@@ -58,9 +65,10 @@
 
 | 항목 | 결과 | 환경 |
 |---|---|---|
-| `main` md5, `cmp index.html GS_Action_v34_runtime.html` | 두 파일 `10ef9fe8…`, 동일 (`886d728`) | 클라우드 세션 |
+| `main` md5, `cmp index.html GS_Action_v34_runtime.html` | 두 파일 `7ebf35e6…`, 동일 (`44cb13e`) | 클라우드 세션 |
 | `node --check` `<script>` JS 249개 + importmap 1개 (`3fc9c6e`) | 0 실패 | 클라우드 세션 |
-| 테스트 45개 (브라우저 31 + Node만 14), PR #35 헤드 `097828f` (병합 결과의 실행본 동일) | **통과** (run 37757805710) | GitHub 러너, SwiftShader, 1회. 같은 PR의 앞 커밋 `6f8b745`는 1회 실패(로그를 받지 못해 원인 미확인) |
+| 테스트 48개 (브라우저 33 + Node만 15), PR #41 헤드 `c92913d` | **통과** | GitHub 러너, SwiftShader, 1회 |
+| CI 간헐 실패 | #35·#36·#41에서 각 1회. #41에서 이름 확인: `test_poses_follow_ground_lab_length_and_shield_follows_hero`의 60초 대기 초과. 대기를 120~150초로 늘림(#41). 앞의 두 번이 같은 원인인지는 **UNVERIFIED** | 주석(annotation)으로 확인 |
 | 런 모드 실제 플레이 체감·난이도·신규 수치·새 화면 모양 | **UNVERIFIED** (자동 테스트는 무적 영웅) | |
 | VFX 위치 수정(#26) 화면 확인, 243개 전수 위치 점검 | **확인** (SwiftShader 캡처, `gs-vfx-anchor-audit_v2_261008-1811.md`). 정상 219·의심 24, 그중 8개는 #34·#35로 수정. 실제 GPU·실기기 화면은 UNVERIFIED | SwiftShader, 조준 1방향·거리 25 |
 | 브라우저 테스트 25개, PR #20 헤드 `4e474ef` | **통과** | GitHub 러너, SwiftShader, 1회 |
@@ -114,7 +122,8 @@ AMD Radeon 내장, ANGLE/D3D11, Chrome 154, 1920×922, 품질 auto, 설정 60 �
 
 0. 게임 뼈대: 로그라이트 런(`docs/design/gs-run-skeleton_v1_261006-2213.md`). S1~S5·S7 병합. 남음: S6 지역별 경기장·보스 강화형, S8 타이틀·런 결과·튜토리얼(런 종료 후 "다시 시작"이 일반 6웨이브로 감). 모든 신규 수치는 초안, 플레이 후 조정. 세션 정리 `docs/evidence/gs-session-wrapup_v1_261007-0016.md`.
 0-1. VFX 위치: 판정·1차 수정 완료(#33·#34·#35). 남음 16개 = 높이 보정이 안 듣는 `ARC-25`, 의도일 수 있는 공중 연출 5개(그대로 두기로 함), 크기·가림 10개(실기기에서 보고 결정). 평점 2 이하·폐기 효과는 작업 보류(사용자 방침, 평점 3 이상만 사용).
-0-2. 전투 설계 문서(카메라·조준·이동·가독성·빌드 축) 작성 후 S6 진행.
+0-2. 전투 설계(`docs/design/gs-combat-design_v1_261008-1914.md`) 구현: C1 카메라(#39)·C4 회피 취소(#41) 완료. C2(범위 스킬 지점·준비 중 범위 표시)는 코드에 이미 있음(`w.cast`의 사거리 제한, `showPreview`) → 추가 작업 없음. 남음: C5 가독성(적 예고 우선·피격 방향), C3 터치 조준 보조, C6 화면 가림 한도, S6 지역 구성, S8 타이틀·결과·튜토리얼(결과 버튼만 #40으로 처리). 빌드 축(§8.3)은 새 VFX 목록 반입 후.
+0-3. 수치(카메라 거리 11, 시작 시선 0.28 등)는 초안. 실제 조작감·실기기 UNVERIFIED. GPU·발열 검증은 보류(사용자 방침).
 
 1. 같은 PC·같은 조건으로 main v34(`76ddfb4`)와 현재 `main`을 3회씩 측정 (보류 중).
 2. 현재 빌드 60초 측정 후 결과 JSON(`phaseTotals`, `phaseSpans`, `longTasks`)을 `docs/evidence/`에 저장. 끊김 원인 좁히기. 품질 `낮음` 1회.
