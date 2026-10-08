@@ -14577,7 +14577,7 @@ function clearActionWorld(){V.runPreparation=null;V.runNode=null;closeDraft(true
  stopAllDeployVisuals();stopPool();for(const slot of [...V.previews.keys()])dropPreview(slot);for(const q of V.rigs.values())disposeRig(q);V.rigs.clear();
  for(const id of [...V.tele.keys()])dropTele(id);V.ledFx?.clear();
  for(const z of V.zoneFx){z.label?.remove();V.root.remove(z.o);z.o.geometry.dispose();z.o.material.dispose();}V.zoneFx=[];V.world=null;
- feedbackUntil=0;el('gaCombatFeedback').style.opacity='0';V.clock=0;V.acc=0;V.fireHeld=false;V.shake=0;V.flash=0;V.hitStop=0;V.cine=0;V.handKick=0;V.inputHintUntil=0;V.yaw=0;V.pitch=0;perfLast=0;perfSamples.length=0;
+ feedbackUntil=0;el('gaCombatFeedback').style.opacity='0';V.clock=0;V.acc=0;V.fireHeld=false;V.shake=0;V.flash=0;V.hitStop=0;V.cine=0;V.handKick=0;V.inputHintUntil=0;V.yaw=0;V.pitch=V.settings.cameraMode==='third'?.28:0; /*@V39 C1: start looking slightly down so the floor at the hero's feet is in view*/perfLast=0;perfSamples.length=0;
  el('gaResult').style.display='none';el('gaBoss').style.display='none';
 }
 function enterAction(mode){el('gaTouch').dataset.mode=mode;touchReset();if(!V.active)VFX_COMBAT.stopAll();V.active=true;V.mode=mode;V.uiCursor=false;V.altHeld=false;window.__GS_COMBAT_ACTIVE=true;
@@ -14923,7 +14923,7 @@ GS_ACTION.reviewBegin=({id,hero=V.heroKey,size='',target='center'}={})=>{
  const targets={center:{x:0,z:-25},left:{x:-12,z:-31},right:{x:12,z:-31}};
  if(!Object.hasOwn(targets,target))throw Error('고정 표적을 확인하세요.');
  const L=window.GA_SKILL_LIB?.[id];if(size&&(!L?.variants||!Object.hasOwn(L.variants,size)))throw Error('이 효과에 없는 크기입니다.');
- startTrial(hero);V.keys.clear();V.fireHeld=false;inputBuffer.clear();touchReset();V.yaw=0;V.pitch=.07;
+ startTrial(hero);V.keys.clear();V.fireHeld=false;inputBuffer.clear();touchReset();V.yaw=0;V.pitch=V.settings.cameraMode==='third'?.28:.07; /*@V39*/
  const original=trialEffects.find(x=>x.id===id);for(const k of ['gaTrialQuality','gaTrialSource','gaTrialForm','gaTrialTheme','gaTrialSearch'])el(k).value='';el('gaEquipOnly').checked=false;filterTrialEffects();el('gaTrialFx').value=id;trialPicked();el('gaEquipSize').value=size;
  V.reviewAim={...targets[target]};V.reviewCapture={events:[],truncated:false};reviewCaptureWorld=V.world;
  const p=window.GA_TRIAL_PROFILE?.(id),variant=L?libVariant(L,size,null):null,sk=variant?.skill;
