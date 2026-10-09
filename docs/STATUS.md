@@ -6,7 +6,8 @@
 
 | 항목 | 값 |
 |---|---|
-| main | `1dd0d44` (#45 병합). `index.html` = `GS_Action_v34_runtime.html`, md5 `e05d67187d3869a3f638d9399621150e` (위 + 전투 C1 카메라·C4 회피 취소 + 런 결과 버튼 + 런 S6 무대 묶음·지역 보스) |
+| main | `bcf0ef7` (#47 병합). `index.html` = `GS_Action_v34_runtime.html`, md5 `8f6c5e60e32206cdfb3c53421a78379d` (위 + 런 S6 무대 묶음·지역 보스 + 전투 C5 예고 채움·피격 방향) |
+| #45 시점 | main `1dd0d44`의 `index.html`, md5 `e05d67187d3869a3f638d9399621150e` |
 | #41 시점 | main `44cb13e`의 `index.html`, md5 `7ebf35e6745424f0f8f2b0b653e85355` |
 | 높이 보정까지(#35 시점) | main `886d728`의 `index.html`, md5 `10ef9fe87f56b0c0a9c13b92e86ff77e` |
 | 런 S7까지(#30 시점) | main `3fc9c6e`의 `index.html`, md5 `0eaa8b73a1a4ef38a48e9809a52d5bd8` |
@@ -58,9 +59,11 @@
 | [#41](https://github.com/Bananamlik/GS/pull/41) | 전투 C4: 준비 동작 중 회피로 취소(궁극기 제외). 위치 테스트 대기 시간 연장 | `44cb13e` |
 | [#44](https://github.com/Bananamlik/GS/pull/44) | 테스트: 예열 대기를 결과 모양(`ids`)이 아니라 대기열 상태로 판정(6곳) | `c28467f` |
 | [#45](https://github.com/Bananamlik/GS/pull/45) | 런 S6: 무대 묶음 `STAGES`(지역 이름·웨이브 표·지역 보스), 1·2지역 보스 = 강화된 적 1기(그 노드 한정), 지도·전투 준비에 지역·보스 이름. 저장 형식 불변 | `1dd0d44` |
+| [#47](https://github.com/Bananamlik/GS/pull/47) | 전투 C5: 적 예고 안쪽 채움(판정 순간 가득), 예고를 내 효과 뒤에 그림(renderOrder 40~43), 피격 방향 호 0.45초 | `bcf0ef7` |
+| [#48](https://github.com/Bananamlik/GS/pull/48) | 문서: 게임 기둥 v1 `docs/design/gs-game-pillars_v1_261009-1126.md` (읽고 피하고 꽂기 / 재미 3층 / 목표) | `2ae2ad3` |
 
 - 닫음: [#4](https://github.com/Bananamlik/GS/pull/4) (권한 확인용).
-- 열려 있음: [#43](https://github.com/Bananamlik/GS/pull/43) (서사 뼈대 초안, 결정 N1~N8 대기), [#3](https://github.com/Bananamlik/GS/pull/3) (분할 전 원본. 내용이 `main`에 들어가 중복 상태. 닫을지는 사용자 결정), [#1](https://github.com/Bananamlik/GS/pull/1) (v14, 별개).
+- 열려 있음: [#49](https://github.com/Bananamlik/GS/pull/49) (빌드 축 B1 형태 조합, 초안. 조합 구성·수치 결정 대기), [#43](https://github.com/Bananamlik/GS/pull/43) (서사 뼈대 초안, 결정 N1~N8 대기), [#3](https://github.com/Bananamlik/GS/pull/3) (분할 전 원본. 내용이 `main`에 들어가 중복 상태. 닫을지는 사용자 결정), [#1](https://github.com/Bananamlik/GS/pull/1) (v14, 별개).
 - 결과 수집용 브랜치(PR·병합 대상 아님, 삭제해도 됨) 12개: `claude/ci-probe-a`, `claude/ci-probe-bc`, `claude/probe-hud-capture`, `claude/probe-hud-capture-after`, `claude/probe-hud-capture-cd`, `claude/probe-hud-capture-cd2`, `claude/probe-chip`, `claude/probe-hud-hier`, `claude/probe-lab-before`, `claude/probe-lab-after`, `claude/probe-sfx`, `claude/probe-sfx-after`. 랩·HUD 위계 수치는 `docs/evidence/`로 옮김(`gs-lab-hud-capture_v1_261006-2107.md`). 캡처 JPG는 브랜치에만 있음.
 - 병합 끝난 PR 헤드 브랜치 15개와 `codex/gs-v25…v34-*` 10개도 남아 있음. 삭제는 사용자 결정.
 
@@ -68,9 +71,9 @@
 
 | 항목 | 결과 | 환경 |
 |---|---|---|
-| `main` md5, `cmp index.html GS_Action_v34_runtime.html` | 두 파일 `e05d6718…`, 동일 (`1dd0d44`) | 클라우드 세션 |
-| `node --check` `<script>` JS 249개 + importmap 1개 (`1dd0d44`) | 0 실패 | 클라우드 세션 |
-| 테스트 49개 (브라우저 33 + Node만 16), PR #45 헤드 `0dd2f9a` | **통과** | GitHub 러너, SwiftShader, 1회 |
+| `main` md5, `cmp index.html GS_Action_v34_runtime.html` | 두 파일 `8f6c5e60…`, 동일 (`bcf0ef7`) | 클라우드 세션 |
+| `node --check` `<script>` JS 249개 + importmap 1개 (`bcf0ef7`) | 0 실패 | 클라우드 세션 |
+| 테스트 51개 (브라우저 35 + Node만 16), PR #47 헤드 `10ab554` | **통과** | GitHub 러너, SwiftShader, 1회 |
 | CI 간헐 실패 | #35·#36·#41에서 각 1회. #41에서 이름 확인: `test_poses_follow_ground_lab_length_and_shield_follows_hero`의 60초 대기 초과. 대기를 120~150초로 늘림(#41). 이후 판독으로 찾은 원인: 테스트가 `vfxWarmStatus.ids`를 기다리는데 개별 예열 결과에는 `ids`가 없음 → 대기열 상태로 판정하도록 수정(#44). 재현은 못 함, 원인 확정은 **UNVERIFIED** | 주석(annotation)으로 확인 |
 | 런 모드 실제 플레이 체감·난이도·신규 수치·새 화면 모양 | **UNVERIFIED** (자동 테스트는 무적 영웅) | |
 | VFX 위치 수정(#26) 화면 확인, 243개 전수 위치 점검 | **확인** (SwiftShader 캡처, `gs-vfx-anchor-audit_v2_261008-1811.md`). 정상 219·의심 24, 그중 8개는 #34·#35로 수정. 실제 GPU·실기기 화면은 UNVERIFIED | SwiftShader, 조준 1방향·거리 25 |
@@ -125,7 +128,7 @@ AMD Radeon 내장, ANGLE/D3D11, Chrome 154, 1920×922, 품질 auto, 설정 60 �
 
 0. 게임 뼈대: 로그라이트 런(`docs/design/gs-run-skeleton_v1_261006-2213.md`). S1~S7 병합(S6은 #45: 무대 묶음·지역 보스. 지역별 기둥 배치는 `GA_SIM` 상수·뷰 메시를 함께 바꿔야 해서 새 맵 도입 시로 보류, 보스 이름 `잡귀 대장`·`대술사`와 수치 hp×3/×6은 임시). 새 맵(도시 `gs_g1`, 사이버펑크)은 `STAGES`에 묶음을 추가하는 방식. 남음: S8 타이틀·런 결과·튜토리얼(런 종료 후 "다시 시작"이 일반 6웨이브로 감). 모든 신규 수치는 초안, 플레이 후 조정. 세션 정리 `docs/evidence/gs-session-wrapup_v1_261007-0016.md`.
 0-1. VFX 위치: 판정·1차 수정 완료(#33·#34·#35). 남음 16개 = 높이 보정이 안 듣는 `ARC-25`, 의도일 수 있는 공중 연출 5개(그대로 두기로 함), 크기·가림 10개(실기기에서 보고 결정). 평점 2 이하·폐기 효과는 작업 보류(사용자 방침, 평점 3 이상만 사용).
-0-2. 전투 설계(`docs/design/gs-combat-design_v1_261008-1914.md`) 구현: C1 카메라(#39)·C4 회피 취소(#41) 완료. C2(범위 스킬 지점·준비 중 범위 표시)는 코드에 이미 있음(`w.cast`의 사거리 제한, `showPreview`) → 추가 작업 없음. 남음: C5 가독성(적 예고 우선·피격 방향), C3 터치 조준 보조, C6 화면 가림 한도, S8 타이틀·결과·튜토리얼(결과 버튼만 #40으로 처리). 빌드 축(§8.3)은 새 VFX 목록 반입 후.
+0-2. 전투 설계(`docs/design/gs-combat-design_v1_261008-1914.md`) 구현: C1 카메라(#39)·C4 회피 취소(#41)·C5 가독성(#47, 화면에서의 보임 정도는 UNVERIFIED) 완료. 상위 방향은 `docs/design/gs-game-pillars_v1_261009-1126.md`(작업 순서: 빌드 축 → 적 패턴 → C6 → S8 → C3). C2(범위 스킬 지점·준비 중 범위 표시)는 코드에 이미 있음(`w.cast`의 사거리 제한, `showPreview`) → 추가 작업 없음. 남음: 빌드 축 B1(#49 초안), 적 패턴 점검, C3 터치 조준 보조, C6 화면 가림 한도, S8 타이틀·결과·튜토리얼(결과 버튼만 #40으로 처리). 빌드 축(§8.3)은 새 VFX 목록 반입 후.
 0-3. 수치(카메라 거리 11, 시작 시선 0.28 등)는 초안. 실제 조작감·실기기 UNVERIFIED. GPU·발열 검증은 보류(사용자 방침).
 
 1. 같은 PC·같은 조건으로 main v34(`76ddfb4`)와 현재 `main`을 3회씩 측정 (보류 중).
