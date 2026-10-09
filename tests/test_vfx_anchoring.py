@@ -36,7 +36,10 @@ class VfxAnchoring(performance.BrowserSession):
         before = self.page.evaluate("STAGE3D.getEffect('ARC-04').__gsRoots.map(r=>r.position.x)")
         self.assertTrue(before)
         self.page.evaluate("GS_ACTION.sim.hero.x+=12")
-        self.page.wait_for_timeout(500)
+        try:  # a slow runner can draw no frame in a fixed 500 ms; wait for the follow itself, the assert below still decides
+            self.page.wait_for_function("(b=>STAGE3D.getEffect('ARC-04').__gsRoots.some((r,i)=>Math.abs(r.position.x-b[i])>8))", arg=before, timeout=20000)
+        except Exception:
+            pass
         after = self.page.evaluate("STAGE3D.getEffect('ARC-04').__gsRoots.map(r=>r.position.x)")
         moved = max(a - b for a, b in zip(after, before))
         self.assertGreater(moved, 8, (before, after))
