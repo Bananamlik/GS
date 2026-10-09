@@ -33,7 +33,7 @@ jobs:
           cmp index.html GS_Action_v34_runtime.html
           md5sum index.html GS_Action_v34_runtime.html
 
-      - name: Check test count (expect 49)
+      - name: Check test count (expect 51)
         run: |
           python - <<'PY'
           import sys, unittest
@@ -42,7 +42,7 @@ jobs:
               return sum(count(x) if isinstance(x, unittest.TestSuite) else 1 for x in s)
           n = count(unittest.defaultTestLoader.discover('tests'))
           print('tests collected:', n)
-          sys.exit(0 if n == 49 else 1)
+          sys.exit(0 if n == 51 else 1)
           PY
 
       - name: Serve repo

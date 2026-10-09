@@ -12696,6 +12696,7 @@ body.ga-on #ga{display:block}
 #gaSkills .skill.ready{border-color:#60d9e5}#gaSkills .skill.ult{border-color:#b58ad6}#gaSkills .skill.ult.ready{box-shadow:0 0 15px #b56df07c}
 #gaToast{position:absolute;top:23%;left:50%;transform:translateX(-50%);text-align:center;font-size:23px;font-weight:800;letter-spacing:.12em;text-shadow:0 3px 16px #000;opacity:0;transition:opacity .2s}
 #gaDamage{position:absolute;inset:0;pointer-events:none;border:0 solid #d53240;opacity:0;box-shadow:inset 0 0 100px #d5203880}
+#gaHitDir{position:absolute;left:50%;top:50%;width:0;height:0;opacity:0;pointer-events:none}#gaHitDir i{position:absolute;left:-70px;top:calc(-1*min(36vh,36vw));width:140px;height:16px;border-radius:70px 70px 0 0/16px 16px 0 0;background:#ff4d4d;border:1px solid #2a0d12;box-shadow:0 0 18px #ff2a2acc}
 #gaMenu{position:absolute;inset:0;display:grid;place-items:center;background:#030a10c9;pointer-events:auto}
 #gaMenu .card{width:min(460px,calc(100vw - 32px));padding:27px;background:#101b27ee;border:1px solid #587784;border-radius:14px;box-shadow:0 20px 80px #000c;text-align:center}
 #gaMenu h1{font-size:29px;margin:0 0 8px;color:#d9f5f3;letter-spacing:.08em}#gaMenu p{color:#a9b8c1;margin:8px 0 20px}#gaMenu button,#gaExit{font:700 14px inherit;cursor:pointer;background:#286e7d;color:white;border:1px solid #7ed7d8;border-radius:7px;padding:9px 18px;pointer-events:auto}
@@ -12949,7 +12950,7 @@ body.ga-touch.ga-trial #gaSkills{display:none}
 <div id="gaTTop"><button type="button" class="gaTTrial" data-act="fx" aria-label="선택 효과 시각 시전">연출</button><button type="button" class="gaTTrial" data-act="ui" aria-label="시험장 패널 접기/펴기">패널</button><button type="button" data-act="pause" aria-label="일시정지">II</button></div>
 <div id="gaTBtns"><button type="button" data-slot="0">기본</button><button type="button" data-slot="1">보조</button><button type="button" data-slot="3">E</button><button type="button" data-slot="5">R</button><button type="button" data-slot="4">궁극</button><button type="button" data-slot="2">회피</button></div></div>
  <div class="top"><div id="gaWave">GS ACTION · 6 WAVES</div><small id="gaCount"></small><small id="gaWaveWait"></small></div><div id="gaBoss"><span id="gaBossName">두억시니</span><div id="gaBossTrack"><i></i></div></div><div id="gaEnemyBars"></div>
- <div id="gaReticle"></div><div id="gaFloaters" aria-hidden="true"></div><div id="gaThreats" aria-hidden="true"></div><div id="gaToast"></div><div id="gaDamage"></div>
+ <div id="gaReticle"></div><div id="gaFloaters" aria-hidden="true"></div><div id="gaThreats" aria-hidden="true"></div><div id="gaToast"></div><div id="gaDamage"></div><div id="gaHitDir" aria-hidden="true"><i></i></div>
  <div class="vitals"><div><span id="gaHero">벼락 · 뇌신</span><span id="gaHpText">300 / 300</span></div><div id="gaHp"><i></i></div><div id="gaShield"><i></i></div><small id="gaShieldText"></small><div id="gaUlt"><i></i></div><small id="gaUltText">궁극기 0%</small><div id="gaStatuses" aria-live="polite"></div></div>
  <div id="gaSkills"></div><div id="gaInputHint" role="status" aria-live="polite"></div><div id="gaHint">WASD 이동 · 마우스 시점/조준<br>좌/우클릭 · E · Q · R · Shift　|　Alt UI · Esc 메뉴</div><div id="gaPerf"></div><div id="gaCursorHint">UI 조작 중 · Alt를 놓거나 화면 클릭으로 시점 복귀</div>
  <div id="gaTrialBar"><strong>스킬 시험장</strong><div class="row"><select id="gaTrialHero" aria-label="시험할 영웅"></select><button id="gaTrialReset">표적 리셋</button><button id="gaTrialGame">게임 진입</button></div><div class="row"><select id="gaTrialQuality" aria-label="품질"><option value="">품질 전체</option><option value="S">S · 5점</option><option value="A">A · 4점</option><option value="B">B · 3점</option><option value="C">C · 1~2점</option><option value="U">미평가</option><option value="X">폐기</option></select><select id="gaTrialSource" aria-label="원본"><option value="">원본 전체</option><option value="CH">CHROMA</option><option value="VA">Violet</option><option value="RJ">Raijin</option><option value="GS">GS</option><option value="C">Concept</option><option value="D">Dream</option><option value="FX">FX/ARC</option></select><select id="gaTrialForm" aria-label="형태"><option value="">형태 전체</option><option value="flight">비행</option><option value="beam">방사</option><option value="point">좌표</option><option value="zone">영역</option><option value="structure">구조</option><option value="summon">소환</option><option value="self">자기</option></select></div><div class="row"><select id="gaTrialTheme" aria-label="Beam Lab 테마"><option value="">테마 전체</option></select><input id="gaTrialSearch" type="search" placeholder="VFX 이름·ID 검색" aria-label="VFX 검색"><select id="gaTrialFx" aria-label="VFX 선택"></select><button id="gaTrialCast" title="선택 효과 종류에 따라 스킬 판정 또는 시각 효과를 시전합니다">선택 효과 시전 · F</button></div><div class="row"><select id="gaEquipSlot" aria-label="장착 슬롯"><option value="0">좌클릭</option><option value="1">우클릭</option><option value="3">E</option><option value="5">R</option><option value="4">Q 궁극</option></select><select id="gaEquipSize" aria-label="스킬 크기"><option value="">크기 자동</option></select><button id="gaEquip" type="button">선택 효과 장착</button><button id="gaEquipReset" type="button">기본 키트</button><label><input id="gaEquipOnly" type="checkbox"> 스킬만</label></div><small id="gaEquipInfo"></small><small id="gaTrialHint">키 입력 = 장착 스킬 · F = 목록 효과 시전([스킬]은 판정 포함) · G = 다음 · Alt = UI</small><small id="gaTrialMeta"></small><details id="gaBeamCoverage"><summary>시험 판정 연결 현황 · Beam 43 + FX 125 = 168종</summary><small>Beam Lab 43 (전투 키트 4 포함) · Violet Arcana 16 · Raijin Atelier 17 · GS 마스터 44 · C 투사체 48 · 크기 실측 / 밸런스 승인 0종</small><div id="gaBeamCoverageRows" style="max-height:180px;overflow:auto"></div><small>Beam: 폭 4 / 반경 2 / 피해 1 시험값. FX: 단계 시간 = 원본 계약(VA kicks · RJ hit() · GS onKick · C 비행 2.3s), 폭·반경 = 화면 추정치. 표적 몸체 반경과 엄폐를 함께 검사. 2D 판정 · 실측·밸런스 미승인.</small></details><details id="gaScaleAudit"><summary>크기 · 판정 대조</summary><div id="gaScaleFacts" style="white-space:pre-line;line-height:1.6"></div><label><input id="gaKeepJudge" type="checkbox"> 판정 범위 유지 · 실제 시전 후</label><button id="gaJudgeCast" type="button">키트 판정 시전</button><small>F는 시각만 · 범위는 게임 좌표 · 연출 일치 미검증</small><hr><strong>시간 · 판정 기록</strong><div id="gaTimingFacts" style="white-space:pre-line;line-height:1.6"></div><pre id="gaTimingLog" style="white-space:pre-wrap;max-height:145px;overflow:auto;font-size:11px" aria-label="실제 시전 이벤트 기록"></pre><button id="gaTimingClear" type="button">기록 지우기</button><small>시뮬레이션 절대 시간 · 화면 접촉 시점은 별도 검증</small></details><div id="gaTrialStatus" role="status">목록에서 효과를 고르세요.</div></div>
@@ -14117,7 +14118,9 @@ function threatGeometry(e){
  else{g=judgeGeometry('circle');o=mesh(g,m);o.scale.set(e.radius||8,e.radius||8,1);o.rotation.x=-Math.PI/2;o.position.set(center.x,.16,center.z);}
  o.name='GS_ENEMY_THREAT';o.userData.judge={shape:e.shape,range:e.range,radius:e.radius,angle:e.angle,width:3.5};
  const geom=judgeEdge(g),dark=new T.LineSegments(geom,new T.LineBasicMaterial({color:0x1b1019,transparent:true,opacity:.95,depthWrite:false,toneMapped:false})),rim=new T.LineSegments(geom,new T.LineBasicMaterial({color:0xffb4a2,transparent:true,opacity:1,depthWrite:false,toneMapped:false}));
- dark.position.z=.005;rim.position.z=.012;o.add(dark,rim);return {o,m};
+ dark.position.z=.005;rim.position.z=.012;o.add(dark,rim);
+ {const fill=mesh(g,new T.MeshBasicMaterial({color:color(0xff5a4a),transparent:true,opacity:.34,depthWrite:false,side:T.DoubleSide,toneMapped:false}),o);fill.name='GS_ENEMY_THREAT_FILL';fill.position.z=.002;fill.scale.set(.001,e.shape==='line'?1:.001,1);o.userData.fill=fill;o.renderOrder=40;fill.renderOrder=41;dark.renderOrder=42;rim.renderOrder=43;} /*@C5 fill grows with the time left; enemy warnings draw after the hero's own effects*/
+ return {o,m};
 }
 
 function emit(e){
@@ -14133,6 +14136,7 @@ function emit(e){
  else if(e.type==='hit'){
    if(V.settings.shake)V.shake=Math.max(V.shake,e.heavy?.3:.14); /*@V12 no stacking, only with the feedback setting on*/
    if(e.dst==='hero')V.flash=.48;
+   if(e.dst==='hero'&&(e.dmg>0||e.shield>0)){const es=V.world.enemies;for(let i=0;i<es.length;i++)if(es[i].id===e.src){V.hitDirX=es[i].x;V.hitDirZ=es[i].z;V.hitDirT=.45;V.hitDirNew=true;break;}} /*@C5 where the hit came from (status ticks have no direction)*/
    floatDamage(e);
  }
  else if(e.type==='telegraph:start'){
@@ -14589,7 +14593,7 @@ function clearActionWorld(){V.runPreparation=null;V.runNode=null;closeDraft(true
  stopAllDeployVisuals();stopPool();for(const slot of [...V.previews.keys()])dropPreview(slot);for(const q of V.rigs.values())disposeRig(q);V.rigs.clear();
  for(const id of [...V.tele.keys()])dropTele(id);V.ledFx?.clear();
  for(const z of V.zoneFx){z.label?.remove();V.root.remove(z.o);z.o.geometry.dispose();z.o.material.dispose();}V.zoneFx=[];V.world=null;
- feedbackUntil=0;el('gaCombatFeedback').style.opacity='0';V.clock=0;V.acc=0;V.fireHeld=false;V.shake=0;V.flash=0;V.hitStop=0;V.cine=0;V.handKick=0;V.inputHintUntil=0;V.yaw=0;V.pitch=V.settings.cameraMode==='third'?.28:0; /*@V39 C1: start looking slightly down so the floor at the hero's feet is in view*/perfLast=0;perfSamples.length=0;
+ feedbackUntil=0;el('gaCombatFeedback').style.opacity='0';V.clock=0;V.acc=0;V.fireHeld=false;V.shake=0;V.flash=0;V.hitDirT=0;V.hitDirNew=false;V.hitStop=0;V.cine=0;V.handKick=0;V.inputHintUntil=0;V.yaw=0;V.pitch=V.settings.cameraMode==='third'?.28:0; /*@V39 C1: start looking slightly down so the floor at the hero's feet is in view*/perfLast=0;perfSamples.length=0;
  el('gaResult').style.display='none';el('gaBoss').style.display='none';
 }
 function enterAction(mode){el('gaTouch').dataset.mode=mode;touchReset();if(!V.active)VFX_COMBAT.stopAll();V.active=true;V.mode=mode;V.uiCursor=false;V.altHeld=false;window.__GS_COMBAT_ACTIVE=true;
@@ -14725,7 +14729,7 @@ function syncRigs(dt){const w=V.world;if(!w)return;renderEnemies.clear();for(con
  {const win=barCandidates.sort((a,b)=>a.score-b.score)[0]?.bar||null;for(const r of V.rigs.values())if(r.bar){const on=r.bar===win;if(r.bar.__on!==on){r.bar.__on=on;r.bar.style.display=on?'block':'none';}}} /*@V11 one display write per change, not per frame*/
  for(let i=V.floaters.length-1;i>=0;i--){const f=V.floaters[i],age=V.clock-f.born;if(age>.85){f.o.remove();V.floaters.splice(i,1);continue;}
   const p=(syncRigs.floaterPoint||(syncRigs.floaterPoint=new T.Vector3())).set(f.x,f.y+age*3,f.z).project(camera);f.o.style.display=p.z>1?'none':'block';f.o.style.left=((p.x+1)*innerWidth/2+f.side)+'px';f.o.style.top=((1-p.y)*innerHeight/2)+'px';f.o.style.opacity=String(Math.min(1,(.85-age)*2.2));}
- for(const [id,t] of V.tele){const f=S.clamp((V.clock-t.start)/(t.until-t.start),0,1);t.o.material.opacity=.18+.36*f;}
+ for(const [id,t] of V.tele){const f=S.clamp((V.clock-t.start)/(t.until-t.start),0,1);t.o.material.opacity=.18+.36*f;const fl=t.o.userData.fill;if(fl){const k=Math.max(.001,f);fl.scale.set(k,t.o.userData.judge.shape==='line'?1:k,1);}}
  for(const [slot,p] of V.previews){if(w.t>=p.until){dropPreview(slot);continue;}if(p.edge)p.edge.opacity=.65+.3*(1-(p.until-w.t)/Math.max(.01,p.duration));}
  let shownThreats=0;const threatPoint=syncRigs.threatPoint||(syncRigs.threatPoint=new T.Vector3()),threatProjected=syncRigs.threatProjected||(syncRigs.threatProjected=new T.Vector3()),threatInverse=(syncRigs.threatInverse||(syncRigs.threatInverse=new T.Quaternion())).copy(camera.quaternion).invert();
  for(const t of [...V.tele.values()].sort((a,b)=>a.until-b.until)){
@@ -14738,6 +14742,9 @@ function syncRigs(dt){const w=V.world;if(!w)return;renderEnemies.clear();for(con
   t.marker.querySelector('b').style.transform=`rotate(${Math.atan2(dy,dx)*180/Math.PI+90}deg)`;
   t.marker.querySelector('span').textContent=Math.max(0,t.until-V.clock).toFixed(1)+'s';shownThreats++;
  }
+ {const n=el('gaHitDir'); /*@C5 hit direction: 0deg = ahead (top of screen), 180deg = behind*/
+  if(V.hitDirNew){V.hitDirNew=false;const local=threatPoint.set(V.hitDirX,camera.position.y,V.hitDirZ).sub(camera.position).applyQuaternion(threatInverse),deg=Math.round(Math.atan2(local.x,-local.z)*180/Math.PI);n.dataset.deg=String(deg);n.style.transform='rotate('+deg+'deg)';}
+  const v=V.hitDirT>0?String(Math.round(Math.min(1,V.hitDirT/.3)*100)/100):'0';if(n.style.opacity!==v)n.style.opacity=v;}
  const labelRects=[];
  for(let i=0;i<V.zoneFx.length;i++){const z=V.zoneFx[i];if(!z.label)continue;
   const zone=renderZones.get(z.zoneId),left=Math.max(0,(zone?.expires??w.t)-w.t),p=z.projected.copy(z.point).project(camera);
@@ -14765,7 +14772,7 @@ window.__GS_TICK=function(dt){
  const realDt=dt/Math.max(.001,window.__GS_TIMESCALE??1);
  if(V.bench?.on){const B=V.bench,c=B.runConfig;if(c.quality!==V.settings.quality||c.fpsCap!==V.settings.fpsCap||c.width!==innerWidth||c.height!==innerHeight||c.dpr!==devicePixelRatio){finishBench('configuration-changed');return;}}
  V.clock+=dt;V.hitStop=0;V.cine=0;window.__GS_TIMESCALE=V.speed; /*@V12 hit-stop and ultimate slow motion removed: time never stalls for effect*/
- V.cine=Math.max(0,(V.cine||0)-realDt);V.flash=Math.max(0,V.flash-realDt*2.8);V.handKick=Math.max(0,V.handKick-realDt*3.4);
+ V.cine=Math.max(0,(V.cine||0)-realDt);V.flash=Math.max(0,V.flash-realDt*2.8);V.hitDirT=Math.max(0,(V.hitDirT||0)-realDt);V.handKick=Math.max(0,V.handKick-realDt*3.4);
  V.toastT=Math.max(0,V.toastT-realDt);if(!V.toastT)el('gaToast').style.opacity=0;
  if(V.inputHintUntil&&V.clock>=V.inputHintUntil){V.inputHintUntil=0;el('gaInputHint').textContent='';el('gaInputHint').style.opacity=0;}
  const f={x:Math.sin(V.yaw),z:-Math.cos(V.yaw)},r={x:Math.cos(V.yaw),z:Math.sin(V.yaw)};
