@@ -1,0 +1,50 @@
+[
+  {
+    "name": "control",
+    "first": 0.7,
+    "last": 0.7999773242630386,
+    "nonzeroSamples": 4410
+  },
+  {
+    "name": "shifted",
+    "first": 0.2,
+    "last": 0.2999773242630385,
+    "nonzeroSamples": 4410
+  },
+  {
+    "name": "loop",
+    "first": 0.2,
+    "last": 0.2999773242630385,
+    "nonzeroSamples": 4410
+  },
+  {
+    "name": "offset",
+    "first": 0.2,
+    "last": 0.24997732426303854,
+    "nonzeroSamples": 2205
+  },
+  {
+    "name": "oscillator",
+    "first": 0.20002267573696145,
+    "last": 0.2999773242630385,
+    "nonzeroSamples": 4380
+  },
+  {
+    "name": "expired",
+    "first": null,
+    "last": null,
+    "nonzeroSamples": 0
+  },
+  {
+    "name": "expired-duration",
+    "first": null,
+    "last": null,
+    "nonzeroSamples": 0
+  },
+  {
+    "name": "preroll-tail",
+    "first": 0,
+    "last": 0.049977324263038546,
+    "nonzeroSamples": 2205
+  }
+]

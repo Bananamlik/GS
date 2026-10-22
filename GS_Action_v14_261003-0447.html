@@ -12,15 +12,19 @@
  {const o=AP.setTargetAtTime;if(o)AP.setTargetAtTime=function(v,t,c){if(window.__GS_ASHIFT>0){try{return o.call(this,v,sh(this.__gsCtx||this.context||window.__GS_ACTX,t),c);}catch(e){}}return o.call(this,v,t,c);};}
  {const o=AP.setValueCurveAtTime;if(o)AP.setValueCurveAtTime=function(cv,t,d){if(window.__GS_ASHIFT>0){try{const ctx=this.__gsCtx||this.context||window.__GS_ACTX,t2=sh(ctx,t),cut=Math.max(0,t2-(t-window.__GS_ASHIFT));return o.call(this,cv,t2,Math.max(.005,d-cut));}catch(e){}}return o.call(this,cv,t,d);};}
  for(const name of ['cancelScheduledValues','cancelAndHoldAtTime']){const o=AP[name];if(!o)continue;AP[name]=function(t){if(window.__GS_ASHIFT>0){try{return o.call(this,sh(this.__gsCtx||this.context||window.__GS_ACTX,t));}catch(e){}}return o.call(this,t);};}
- const SP=AudioScheduledSourceNode.prototype,st=SP.start,sp=SP.stop;
- SP.start=function(when,offset,dur){const S=window.__GS_ASHIFT;if(S>0){try{const ctx=this.context;window.__GS_ACTX=ctx;const now=ctx.currentTime,w0=(when||now),w=w0-S;window.__GS_ASHIFT_LOG?.push(w-now);
+ const SP=AudioScheduledSourceNode.prototype,sp=SP.stop;
+ const bufferProto=typeof AudioBufferSourceNode==='undefined'?null:AudioBufferSourceNode.prototype;
+ const bufferStart=bufferProto&&Object.hasOwn(bufferProto,'start')?bufferProto.start:null;
+ function shiftedStart(st){return function(when,offset,dur){const S=window.__GS_ASHIFT;if(S>0){try{const ctx=this.context;window.__GS_ACTX=ctx;const now=ctx.currentTime,w0=(when||now),w=w0-S;window.__GS_ASHIFT_LOG?.push(w-now);
     if(w>=now)return dur===undefined?(offset===undefined?st.call(this,w):st.call(this,w,offset)):st.call(this,w,offset,dur);
     const skip=now-w;
     if(this.buffer){const len=this.buffer.duration,off=(offset||0)+skip;if(this.loop)return st.call(this,now,off%Math.max(.001,len));
      if(off>=len-.002||(dur!==undefined&&skip>=dur)){this.__gsCut=true;st.call(this,now,Math.max(0,len-.002));try{sp.call(this,now);}catch(e){}return;}
      return dur===undefined?st.call(this,now,off):st.call(this,now,off,Math.max(.005,dur-skip));}
     return st.call(this,now);}catch(e){}}
-   return dur===undefined?(offset===undefined?st.call(this,when):st.call(this,when,offset)):st.call(this,when,offset,dur);};
+   return dur===undefined?(offset===undefined?st.call(this,when):st.call(this,when,offset)):st.call(this,when,offset,dur);};}
+ SP.start=shiftedStart(SP.start);
+ if(bufferStart)bufferProto.start=shiftedStart(bufferStart); /* Buffer sources override the parent's start; shift that implementation exactly once. */
  SP.stop=function(when){if(this.__gsCut){try{return sp.call(this,this.context.currentTime);}catch(e){return;}}if(window.__GS_ASHIFT>0&&when!==undefined){try{return sp.call(this,sh(this.context,when));}catch(e){}}return when===undefined?sp.call(this):sp.call(this,when);};
  // AudioParam has no .context: remember the owning context when a node is created.
  for(const make of ['createGain','createOscillator','createBiquadFilter','createBufferSource','createStereoPanner','createDelay','createDynamicsCompressor','createConstantSource']){const BP=BaseAudioContext.prototype,o=BP[make];if(!o)continue;BP[make]=function(...a){const n=o.apply(this,a);try{for(const k in n){const v=n[k];if(v instanceof AudioParam)v.__gsCtx=this;}}catch(e){}return n;};}
@@ -12822,7 +12826,7 @@ window.GA_SIM=(function(){
  const pillars=Array.from({length:8},(_,i)=>({x:Math.cos((i+.5)*Math.PI/4)*92,z:Math.sin((i+.5)*Math.PI/4)*92}));
  /*@V9 distance along a ray to the first pillar (Infinity if none)*/
  function rayPillar(o,d,max){let best=Infinity;for(const p of pillars){const px=p.x-o.x,pz=p.z-o.z,a=px*d.x+pz*d.z;if(a<=0)continue;const c2=px*px+pz*pz-a*a;if(c2>=PILLAR_HIT*PILLAR_HIT)continue;const t=a-Math.sqrt(PILLAR_HIT*PILLAR_HIT-c2);if(t<best&&t<=max)best=Math.max(0,t);}return best;}
- function blocked(a,b){const dx=b.x-a.x,dz=b.z-a.z,n=dx*dx+dz*dz;return pillars.some(p=>{const t=clamp(((p.x-a.x)*dx+(p.z-a.z)*dz)/(n||1),0,1);return Math.hypot(a.x+dx*t-p.x,a.z+dz*t-p.z)<PILLAR_HIT;});}
+ function blocked(a,b){const dx=b.x-a.x,dz=b.z-a.z,n=dx*dx+dz*dz;return pillars.some(p=>{const t=clamp(((p.x-a.x)*dx+(p.z-a.z)*dz)/(n||1),0,1);return Math.hypot(a.x+dx*t-p.x,a.z+dz*t-p.z)<PILLAR_HIT-1e-7;});} // Contact with the surface is not penetration; tolerate ray-intersection roundoff.
  function resolveSolid(e){
   const pad=e.team==='P'?PILLAR_BODY:PILLAR_HIT;
   for(const p of pillars){const dx=e.x-p.x,dz=e.z-p.z,d=Math.hypot(dx,dz),min=e.radius+pad;
@@ -12841,7 +12845,7 @@ window.GA_SIM=(function(){
   w.beamTrialStats={casts:0,hits:0,damage:0};w.beamTrialCds={};
   const stageAt=(o,d,len,tgt,s)=>s&&Number.isFinite(s.along)?{x:o.x+d.x*len*s.along,z:o.z+d.z*len*s.along}:tgt; /*@V5 stage anchor*/
   w.castTrialBeam=(id,aim)=>{const p=window.GA_TRIAL_PROFILE?.(id);if(!w.trial||w.over||w.pending.some(p=>p.type==='trialBeamImpact')||!p||!aim||![aim.x,aim.z].every(Number.isFinite)||w.t<(w.beamTrialCds[id]||0))return false;
-   const origin={x:w.hero.x,z:w.hero.z},dx=aim.x-origin.x,dz=aim.z-origin.z,length=Math.min(p.range,Math.hypot(dx,dz));if(length<.01)return false;const dir=norm(dx,dz),target={x:origin.x+dir.x*length,z:origin.z+dir.z*length},slot='beam:'+id,start=w.t,stages=p.stages.map(s=>({...s}));
+   const origin={x:w.hero.x,z:w.hero.z},dx=aim.x-origin.x,dz=aim.z-origin.z,wanted=Math.min(p.range,Math.hypot(dx,dz));if(wanted<.01)return false;const dir=norm(dx,dz),travels=p.kind==='beam'||id.startsWith('CH:')||id.startsWith('C:'),length=travels?Math.min(wanted,rayPillar(origin,dir,wanted)):wanted,target={x:origin.x+dir.x*length,z:origin.z+dir.z*length},slot='beam:'+id,start=w.t,stages=p.stages.map(s=>({...s}));
    w.beamTrialCds[id]=start+p.cd;w.beamTrialStats.casts++;stages.forEach((stage,index)=>w.pending.push({type:'trialBeamImpact',when:start+stage.time,start,id,origin,target,dir,length,slot,index,stages,profile:{...p},stage}));
    w.emit('trial:cast',{id,slot,contactTime:p.contactTime});const first=stages[0];w.emit('windup',{id,trial:true,slot,origin,target:stageAt(origin,dir,length,target,first),dir,kind:first.shape==='beam'?'beam':'circle',width:first.width||4,radius:first.radius||2,range:length,duration:first.time});w.emit('fx:cast',{id,slot,caster:'trial',origin,target,dir,kind:p.poseKind===undefined?'beam':p.poseKind,pool:1,hold:6.2,size:'M'});return true;};
   function addStatus(e,id,duration){const old=e.statuses.find(s=>s.id===id);if(old)old.left=Math.max(old.left,duration);else e.statuses.push({id,left:duration,tick:0});w.emit('status:add',{id:e.id,status:id});}
@@ -12877,9 +12881,9 @@ window.GA_SIM=(function(){
    const pre=s.fxStart||0,early=s.kind!=='chain',wEff=early?(pre>=s.windup?s.windup:Math.max(2*STEP,pre)):s.windup,origin0={x:h.x,z:h.z};
    h.facing=Math.atan2(dir.x,dir.z);h.state='windup';h.stateT=wEff;h.windupSlot=slot;h.windupSk=lab||null;h.cds[slot]=s.cd;
    if(s.ult){h.ult=0;h.invuln=Math.max(h.invuln,.8);}
-   w.stats.casts[slot]++;w.pending.push({when:w.t+wEff,type:'release',slot,sk:s,dir,target,origin:origin0,fxDone:early,blk:wall<range1?range:undefined}); /*@V8 F01 sk*/
+   w.stats.casts[slot]++;w.pending.push({when:w.t+wEff,type:'release',slot,sk:s,dir,target,origin:origin0,fxDone:early,travels,blk:wall<range1?range:undefined}); /*@V8 F01 sk*/
    if(early)w.emit('fx:cast',{slot,id:s.id,sk:s,caster:'hero',origin:origin0,target:{...target},dir:{...dir},hold:s.hold,size:s.size,startAt:Math.max(0,pre-wEff)});
-   w.emit('windup',{slot,origin:{x:h.x,z:h.z},target:{...target},dir:{...dir},kind:s.kind,radius:s.radius||8,width:s.width||6,range:s.kind==='beam'?Math.max(12,range):s.range||0,duration:wEff+s.hitT+(s.hitV?Math.max(.03-s.hitT,range/s.hitV+(s.hitA||0)):0)});return true;}; /*@V5 beam length = cast length*/
+   w.emit('windup',{slot,origin:{x:h.x,z:h.z},target:{...target},dir:{...dir},kind:s.kind,radius:s.radius||8,width:s.width||6,range:s.kind==='beam'?range:s.range||0,duration:wEff+s.hitT+(s.hitV?Math.max(.03-s.hitT,range/s.hitV+(s.hitA||0)):0)});return true;}; /*@V5 beam length = cast length*/
   w.castLib=(sk,aim)=>{const h=w.hero;if(!w.trial||!sk||sk.kind==='dodge'||sk.kind==='dash')return false;const u=h.ult;if(sk.ult)h.ult=100;h.cds[6]=0;const ok=w.cast(6,aim,sk);h.ult=u;if(ok)h.cds[6]=.5;return ok;}; /*@V10 trial: cast any library skill with its real judgement, no slot needed*/
   w.dodge=(dx,dz)=>{const h=w.hero,s=skills[2];if(w.over||h.cds[2]>0||h.state==='windup'||h.state==='dodge')return false;
    const hasMove=Math.hypot(dx,dz)>1e-5,d=norm(hasMove?dx:Math.sin(h.facing),hasMove?dz:Math.cos(h.facing)),dash=s.kind==='dash';h.facing=Math.atan2(d.x,d.z);
@@ -12907,7 +12911,7 @@ window.GA_SIM=(function(){
   }if(p.type==='enemyImpact'){resolveEnemy(p);return;}const h=w.hero,s=p.sk||skills[p.slot]; /*@V8 F01: skill as cast, not as currently equipped*/
    if(p.type==='chainHit'){
     const e=w.enemies.find(x=>x.id===p.id);
-    const connected=!!e&&e.hp>0&&inCircle(e,p.point,4.5);
+    const connected=!!e&&e.hp>0&&inCircle(e,p.point,4.5)&&!blocked(p.from,e);
     if(connected){hit(e,s.damage*(p.index?.6:1),p.slot,p.dir,s);p.chain.hits++;if(!p.chain.connected){p.chain.connected=true;w.stats.connects[p.slot]++;}}
     w.emit('chain:hop',{slot:p.slot,index:p.index,x:p.point.x,z:p.point.z,hit:connected});
     if(p.last)w.emit('impact',{slot:p.slot,x:p.point.x,z:p.point.z,hits:p.chain.hits});
@@ -12916,13 +12920,14 @@ window.GA_SIM=(function(){
    if(p.type==='chainEnd'){w.emit('impact',{slot:p.slot,x:p.target.x,z:p.target.z,hits:0});return;}
    if(p.type==='release'){
     h.state='recover';h.stateT=.13;h.windupSlot=-1;if(!p.fxDone)p.origin={x:h.x,z:h.z}; /*@V14 early effects keep the origin they were drawn from*/
-    if(s.kind==='beam'||s.kind==='radial')w.emit('windup',{slot:p.slot,origin:{...p.origin},target:{...p.target},dir:{...p.dir},kind:s.kind,radius:s.radius||8,width:s.width||6,range:s.kind==='beam'?Math.max(12,(p.target.x-p.origin.x)*p.dir.x+(p.target.z-p.origin.z)*p.dir.z):s.range||0,duration:s.hitT});
+    if(s.kind==='beam'||s.kind==='radial')w.emit('windup',{slot:p.slot,origin:{...p.origin},target:{...p.target},dir:{...p.dir},kind:s.kind,radius:s.radius||8,width:s.width||6,range:s.kind==='beam'?p.blk??Math.max(12,(p.target.x-p.origin.x)*p.dir.x+(p.target.z-p.origin.z)*p.dir.z):s.range||0,duration:s.hitT});
     if(s.kind==='chain'){
-     const alive=w.enemies.filter(e=>e.hp>0),primary=alive.filter(e=>inCircle(e,p.target,8)).sort((a,b)=>dist(a,p.target)-dist(b,p.target))[0];
-     const picked=primary?[primary,...alive.filter(e=>e!==primary&&dist(e,primary)<18).sort((a,b)=>dist(a,primary)-dist(b,primary)).slice(0,2)]:[];
+     const alive=w.enemies.filter(e=>e.hp>0),primary=alive.filter(e=>inCircle(e,p.target,8)&&!blocked(p.origin,e)).sort((a,b)=>dist(a,p.target)-dist(b,p.target))[0];
+     const picked=primary?[primary]:[];
+     if(primary)for(const e of alive.filter(e=>e!==primary&&dist(e,primary)<18).sort((a,b)=>dist(a,primary)-dist(b,primary))){if(!blocked(picked[picked.length-1],e))picked.push(e);if(picked.length===3)break;}
      const points=picked.map(e=>({x:e.x,z:e.z})),target=points[0]||p.target;
      w.emit('fx:cast',{slot:p.slot,id:s.id,sk:s,caster:'hero',origin:p.origin,target,chainPoints:points,chainHopDur:s.hitT,dir:p.dir,hold:s.hold,size:s.size});
-     if(picked.length){const chain={hits:0,connected:false};picked.forEach((e,index)=>w.pending.push({when:w.t+(index+1)*s.hitT,type:'chainHit',slot:p.slot,sk:s,id:e.id,index,point:points[index],dir:p.dir,last:index===picked.length-1,chain}));}
+     if(picked.length){const chain={hits:0,connected:false};picked.forEach((e,index)=>w.pending.push({when:w.t+(index+1)*s.hitT,type:'chainHit',slot:p.slot,sk:s,id:e.id,index,from:index?points[index-1]:p.origin,point:points[index],dir:p.dir,last:index===picked.length-1,chain}));}
      else w.pending.push({when:w.t+4*s.hitT,type:'chainEnd',slot:p.slot,sk:s,target:p.target});
      return;
     }
@@ -12946,6 +12951,7 @@ window.GA_SIM=(function(){
    else if(s.kind==='radial')hits=alive.filter(e=>inCircle(e,origin,st?.r??s.radius));
    else if(st?st.shape==='circle':(s.kind==='projectile'||s.kind==='circle'))hits=alive.filter(e=>inCircle(e,target,(st?.r??s.radius)||2));
    else{const len=s.kind==='dash'?30:p.blk??Math.max(12,(target.x-origin.x)*dir.x+(target.z-origin.z)*dir.z); /*@V9 p.blk = pillar-stopped length*/hits=alive.filter(e=>inBeam(e,origin,dir,len,(st?.w??s.width)||6));}
+   if(p.travels)hits=hits.filter(e=>!blocked(origin,e)); /* Traveling attacks cannot deliver damage through a pillar; ground/self effects retain their rules. */
    if(hits.length&&!p.pack?.connected){w.stats.connects[p.slot]++;if(p.pack)p.pack.connected=true;}
    hits.forEach((e,i)=>hit(e,s.damage*(st?.share??1)*(s.kind==='chain'&&i?.6:1),p.slot,dir,s));
    w.emit(st&&!p.lastStage?'impact:stage':'impact',{slot:p.slot,x:target.x,z:target.z,hits:hits.length});
@@ -13338,7 +13344,7 @@ function poseFor(entry){
  const heroCast=entry.caster==='hero'||entry.caster==='test'||entry.caster==='trial',chroma=/^CH:/.test(id),raijin=/^RJ:/.test(id);
  const base={form,direction:{x:dir.x,y:0,z:dir.z},pending:form==='unknown'};
  if(heroCast&&(form==='beam'||chroma||form==='flight')){
-  const m=muzzleOf(),aim3={x:tx,y:Number.isFinite(entry.target?.y)?entry.target.y:m.y,z:tz},tgt=alongLook(m,(chroma||form==='flight')?.001:18,aim3); // Authored flights must terminate at the selected near target.
+  const m=muzzleOf(),aim3={x:tx,y:Number.isFinite(entry.target?.y)?entry.target.y:m.y,z:tz},tgt=entry.target?aim3:alongLook(m,(chroma||form==='flight')?.001:18,aim3); // Keep the combat endpoint, including pillar-clipped short beams.
   return {...base,form:form==='flight'?'flight':'beam',origin:{x:m.x,y:m.y,z:m.z},target:tgt,direction:{x:m.f.x,y:m.f.y,z:m.f.z},hold:entry.hold||(form==='flight'?2.4:2.8),size:entry.size||(form==='flight'?'M':'L')};
  }
  if(heroCast&&raijin){
